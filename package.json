@@ -1,10 +1,15 @@
 {
-  "name": "yeoman-app",
+  "name": "generator-app",
   "version": "0.1.0",
   "description": "a yeoman generator for an app",
-  "main": "index.js",
+  "files": [
+    "app"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "yeoman-generator": "^0.17.3"
   },
   "author": "alan",
   "license": "ISC"

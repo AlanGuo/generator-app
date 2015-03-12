@@ -47,41 +47,65 @@ module.exports = generators.Base.extend({
 		//配置目录
 		this.mkdir('app');
 		if(!options.useangular){
+			//no angular
 			this.mkdir('app/script');
 			this.mkdir('app/style');
 			this.mkdir('app/view');
 			this.mkdir('app/image');
+		}
+		else{
+			//angular
 		}
 		this.mkdir('test');
 		this.mkdir('dist');
 	},
 
 	writing:function(){
-		this.fs.copyTpl(
-	      this.templatePath('package.json'),
-	      this.destinationPath('package.json'),
-	      options
-	    );
-
-		//复制Gruntfile.js
-	    this.fs.copyTpl(
-	      this.templatePath('Gruntfile.js'),
-	      this.destinationPath('Gruntfile.js'),
-	      options
-	    );
-
-	    this.fs.copyTpl(
-	      this.templatePath('.jshintrc'),
-	      this.destinationPath('.jshintrc'),
-	      options
-	    );
+		this.template('package.json','package.json',options);
+		this.template('Gruntfile.js','Gruntfile.js',options);
+		this.src.copy('.jshintrc','.jshintrc',true);
 
 		//复制首页文件
-	    this.fs.copyTpl(this.templatePath('app/index.html'), this.destinationPath('app/index.html'), options);
+		this.src.copy('app/index.html','app/index.html',true);
+		this.src.copy('app/favicon.ico','app/favicon.ico',true);
 	},
 
 	install:function(){
-
+		this.npmInstall([
+			"connect-livereload",
+		    "grunt",
+		    "grunt-autoprefixer",
+		    "grunt-concurrent",
+		    "grunt-connect-rewrite",
+		    "grunt-contrib-clean",
+		    "grunt-contrib-compass",
+		    "grunt-contrib-concat",
+		    "grunt-contrib-connect",
+		    "grunt-contrib-copy",
+		    "grunt-contrib-cssmin",
+		    "grunt-contrib-htmlmin",
+		    "grunt-contrib-imagemin",
+		    "grunt-contrib-jshint",
+		    "grunt-contrib-uglify",
+		    "grunt-contrib-watch",
+		    "grunt-filerev",
+		    "grunt-ftp-deploy",
+		    "grunt-ftpush",
+		    "grunt-google-cdn",
+		    "grunt-karma",
+		    "grunt-livereload",
+		    "grunt-newer",
+		    "grunt-sftp-deploy",
+		    "grunt-svgmin",
+		    "grunt-tmod",
+		    "grunt-usemin",
+		    "grunt-wiredep",
+		    "jshint-stylish",
+		    "karma-jasmine",
+		    "karma-phantomjs-launcher",
+		    "load-grunt-tasks",
+		    "time-grunt"
+		], { 'saveDev': true });
 	},
 
 	end:function(){
