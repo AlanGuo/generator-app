@@ -25,12 +25,12 @@ module.exports = generators.Base.extend({
 		      options.useangular = answers2.useangular;
 		      //其他组件
 		      this.prompt({
-		      	type:'list',
+		      	type:'checkbox',
 		      	name:'pluginlist',
 		      	message:'Other plugins you may need',
 		      	choices:[
 		      		'seajs',
-		      		'scss',
+		      		'compass',
 		      		'tmodjs',
 		      		'confui',
 		      		'spaseed'
@@ -61,6 +61,7 @@ module.exports = generators.Base.extend({
 	},
 
 	writing:function(){
+		console.log(options)
 		this.template('package.json','package.json',options);
 		this.template('Gruntfile.js','Gruntfile.js',options);
 		this.src.copy('.jshintrc','.jshintrc',true);
@@ -71,14 +72,14 @@ module.exports = generators.Base.extend({
 	},
 
 	install:function(){
-		this.npmInstall([
+		var npmPackage = [
 			"connect-livereload",
 		    "grunt",
 		    "grunt-autoprefixer",
 		    "grunt-concurrent",
 		    "grunt-connect-rewrite",
+		    "grunt-connect-proxy",
 		    "grunt-contrib-clean",
-		    "grunt-contrib-compass",
 		    "grunt-contrib-concat",
 		    "grunt-contrib-connect",
 		    "grunt-contrib-copy",
@@ -89,15 +90,12 @@ module.exports = generators.Base.extend({
 		    "grunt-contrib-uglify",
 		    "grunt-contrib-watch",
 		    "grunt-filerev",
-		    "grunt-ftp-deploy",
 		    "grunt-ftpush",
-		    "grunt-google-cdn",
+		    "grunt-qc-cdnify",
 		    "grunt-karma",
 		    "grunt-livereload",
 		    "grunt-newer",
-		    "grunt-sftp-deploy",
 		    "grunt-svgmin",
-		    "grunt-tmod",
 		    "grunt-usemin",
 		    "grunt-wiredep",
 		    "jshint-stylish",
@@ -105,7 +103,19 @@ module.exports = generators.Base.extend({
 		    "karma-phantomjs-launcher",
 		    "load-grunt-tasks",
 		    "time-grunt"
-		], { 'saveDev': true });
+		];
+		var bowerPackage = [];
+
+		var pluginlist = options.plugins.pluginlist;
+		if(pluginlist.indexOf('compass')>-1){
+			//compass
+			npmPackage.push("grunt-contrib-compass");
+		}
+		if(pluginlist.indexOf('tmodjs')>-1){
+			//tmodjs
+			npmPackage.push("grunt-alan-tmod");
+		}
+		this.npmInstall(npmPackage, { 'saveDev': true });
 	},
 
 	end:function(){
