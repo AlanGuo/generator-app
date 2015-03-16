@@ -56,6 +56,7 @@ module.exports = generators.Base.extend({
 		else{
 			//angular
 		}
+		this.mkdir('bower_components');
 		this.mkdir('test');
 		this.mkdir('dist');
 	},
@@ -63,6 +64,7 @@ module.exports = generators.Base.extend({
 	writing:function(){
 		console.log(options)
 		this.template('package.json','package.json',options);
+		this.template('bower.json','bower.json',options);
 		this.template('Gruntfile.js','Gruntfile.js',options);
 		this.src.copy('.jshintrc','.jshintrc',true);
 
