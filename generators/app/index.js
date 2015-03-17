@@ -32,6 +32,7 @@ module.exports = generators.Base.extend({
 		      		'seajs',
 		      		'compass',
 		      		'tmodjs',
+		      		'bootstrap',
 		      		'confui',
 		      		'spaseed'
 		      	]
@@ -71,6 +72,16 @@ module.exports = generators.Base.extend({
 		//复制首页文件
 		this.src.copy('app/index.html','app/index.html',true);
 		this.src.copy('app/favicon.ico','app/favicon.ico',true);
+
+		//css
+
+		var pluginlist = options.plugins.pluginlist;
+		if(pluginlist.indexOf('compass')>-1){
+			this.src.copy('app/style/main.scss','app/style/main.scss',true);
+		}
+		else{
+			this.src.copy('app/style/main.css','app/style/main.css',true);
+		}
 	},
 
 	install:function(){
