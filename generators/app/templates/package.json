@@ -8,5 +8,41 @@
     "test": "grunt test"
   },
   "devDependencies": {
+    "connect-livereload":"*",
+    "grunt":"*",
+    "grunt-autoprefixer":"*",
+    "grunt-concurrent":"*",
+    "grunt-connect-rewrite":"*",
+    "grunt-connect-proxy":"*",
+    "grunt-contrib-clean":"*",
+    "grunt-contrib-concat":"*",
+    "grunt-contrib-connect":"*",
+    "grunt-contrib-copy":"*",
+    "grunt-contrib-cssmin":"*",
+    "grunt-contrib-htmlmin":"*",
+    "grunt-contrib-imagemin":"*",
+    "grunt-contrib-jshint":"*",
+    "grunt-contrib-uglify":"*",
+    "grunt-contrib-watch":"*",
+    "grunt-filerev":"*",
+    "grunt-ftpush":"*",
+    "grunt-qc-cdnify":"*",
+    "grunt-karma":"*",
+    "grunt-livereload":"*",
+    "grunt-newer":"*",
+    "grunt-svgmin":"*",
+    "grunt-usemin":"*",
+    "grunt-wiredep":"*",
+    "jshint-stylish":"*",
+    "karma-jasmine":"*",
+    "karma-phantomjs-launcher":"*",
+    "load-grunt-tasks":"*",
+    "time-grunt":"*",
+    <%if(plugins.pluginlist.indexOf('compass')>-1){%>
+    "grunt-contrib-compass":"*",
+    <%}%>
+    <%if(plugins.pluginlist.indexOf('tmodjs')>-1){%>
+    "grunt-alan-tmod":"*"
+    <%}%>
   }
 }

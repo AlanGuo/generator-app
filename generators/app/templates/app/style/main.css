@@ -11,12 +11,36 @@ body {
   padding-bottom: 20px;
 }
 
+.container{
+  margin: 0 auto;
+}
+
+
+.nav{
+  list-style: none;
+  text-align: center;
+}
+
+.nav li{
+  display: inline-block;
+  margin-right: 20px;
+}
+.nav li a{
+  color:#777;
+  text-decoration: none;
+  font-weight: bold;
+}
+
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
 .marketing,
 .footer {
   padding-left: 15px;
   padding-right: 15px;
+}
+
+.body{
+  padding: 15px;
 }
 
 /* Custom page header */
