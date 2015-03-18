@@ -27,22 +27,35 @@
     "grunt-filerev":"*",
     "grunt-ftpush":"*",
     "grunt-qc-cdnify":"*",
-    "grunt-karma":"*",
     "grunt-livereload":"*",
     "grunt-newer":"*",
     "grunt-svgmin":"*",
     "grunt-usemin":"*",
     "grunt-wiredep":"*",
     "jshint-stylish":"*",
-    "karma-jasmine":"*",
-    "karma-phantomjs-launcher":"*",
     "load-grunt-tasks":"*",
-    "time-grunt":"*",
+    "time-grunt":"*"
     <%if(plugins.pluginlist.indexOf('compass')>-1){%>
-    "grunt-contrib-compass":"*",
+    ,"grunt-contrib-compass":"*"
     <%}%>
     <%if(plugins.pluginlist.indexOf('tmodjs')>-1){%>
-    "grunt-alan-tmod":"*"
+    ,"grunt-alan-tmod":"*"
     <%}%>
+    <%if(plugins.pluginlist.indexOf('seajs')>-1){%>
+    ,"grunt-seajs-combo":"*"
+    <%}%>
+    ,"karma-jasmine":"*",
+    "grunt-karma":"*",
+    "karma-phantomjs-launcher":"*"
   }
+  <%if(plugins.pluginlist.indexOf('seajs')>-1){%>
+  ,"spm": {
+    "dependencies": {
+      "seajs": "*"
+      <%if(plugins.pluginlist.indexOf('spaseed')>-1){%>
+      ,"spaseed":"*"
+      <%}%>
+    }
+  }
+  <%}%>
 }

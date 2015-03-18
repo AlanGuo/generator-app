@@ -32,7 +32,7 @@ module.exports = generators.Base.extend({
 		      		'seajs',
 		      		'compass',
 		      		'tmodjs',
-		      		'bootstrap',
+		      		'bootstrap(jquery dependency)',
 		      		'confui',
 		      		'spaseed'
 		      	]
@@ -74,7 +74,6 @@ module.exports = generators.Base.extend({
 		this.src.copy('app/favicon.ico','app/favicon.ico',true);
 
 		//css
-
 		var pluginlist = options.plugins.pluginlist;
 		if(pluginlist.indexOf('compass')>-1){
 			this.src.copy('app/style/main.scss','app/style/main.scss',true);
@@ -82,6 +81,13 @@ module.exports = generators.Base.extend({
 		else{
 			this.src.copy('app/style/main.css','app/style/main.css',true);
 		}
+
+		//image
+		this.src.copy('app/image/yeoman.png','app/image/yeoman.png',true);
+
+		//test
+		this.src.copy('test/.jshintrc','test/.jshintrc',true);
+		this.src.copy('test/karma.conf.js','test/karma.conf.js',true);
 	},
 
 	install:function(){
@@ -112,23 +118,31 @@ module.exports = generators.Base.extend({
 		    "grunt-usemin",
 		    "grunt-wiredep",
 		    "jshint-stylish",
-		    "karma-jasmine",
-		    "karma-phantomjs-launcher",
 		    "load-grunt-tasks",
-		    "time-grunt"
+		    "time-grunt",
+		    "karma-jasmine",
+		    "karma-phantomjs-launcher"
 		];
 		var bowerPackage = [];
 
 		var pluginlist = options.plugins.pluginlist;
 		if(pluginlist.indexOf('compass')>-1){
 			//compass
-			npmPackage.push("grunt-contrib-compass");
+			npmPackage.unshift('grunt-contrib-compass');
 		}
 		if(pluginlist.indexOf('tmodjs')>-1){
 			//tmodjs
-			npmPackage.push("grunt-alan-tmod");
+			npmPackage.unshift('grunt-alan-tmod');
 		}
+		if(pluginlist.indexOf('bootstrap')>-1){
+			//bootstrap
+			bowerPackage.push('bootstrap');
+		}
+
+		this.log('you can run "npm install & bower install & spm install to install dependencies."');
+
 		this.npmInstall(npmPackage, { 'saveDev': true });
+		this.bowerInstall(bowerPackage, { 'save': true });
 	},
 
 	end:function(){

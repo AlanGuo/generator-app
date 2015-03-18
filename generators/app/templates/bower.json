@@ -1,5 +1,8 @@
 {
   "name": "<%=name%>",
   "version": "0.0.0",
-  "appPath": "app"
+  "appPath": "app",
+  "dependencies":{
+  	"bootstrap":"*"
+  }
 }

@@ -94,7 +94,7 @@ module.exports = function (grunt) {
       ],
       livereload: {
         options: {
-          open: 'http://qqswitcher.com:9000/',
+          open: 'http://localhost:9000/',
           middleware: function (connect) {
             return [
               rewriteRulesSnippet,
@@ -447,7 +447,7 @@ module.exports = function (grunt) {
         options: {
             base: '<%%= yeoman.app %>/view',
             minify:false,
-            namespace:'QQSwitcherTmpl'
+            namespace:'<%= name %>tmpl'
         } 
       }
     }
