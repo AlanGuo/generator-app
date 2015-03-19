@@ -70,7 +70,7 @@ module.exports = generators.Base.extend({
 		this.src.copy('.jshintrc','.jshintrc',true);
 
 		//复制首页文件
-		this.src.copy('app/index.html','app/index.html',true);
+		this.template('app/index.html','app/index.html',options);
 		this.src.copy('app/favicon.ico','app/favicon.ico',true);
 
 		//css
@@ -84,6 +84,16 @@ module.exports = generators.Base.extend({
 
 		//image
 		this.src.copy('app/image/yeoman.png','app/image/yeoman.png',true);
+
+		if(!options.useangular && pluginlist.indexOf('seajs')==-1){
+			//javascript
+			this.template('app/script/global/entry.js','app/script/entry.js',options);
+			this.template('app/script/global/event.js','app/script/event.js',options);
+			this.template('app/script/global/router.js','app/script/router.js',options);
+			this.template('app/script/global/home.js','app/script/home.js',options);
+			this.template('app/script/global/about.js','app/script/about.js',options);
+			this.template('app/script/global/contact.js','app/script/contact.js',options);
+		}
 
 		//test
 		this.src.copy('test/.jshintrc','test/.jshintrc',true);
