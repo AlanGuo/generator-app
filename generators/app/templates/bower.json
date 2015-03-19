@@ -3,6 +3,11 @@
   "version": "0.0.0",
   "appPath": "app",
   "dependencies":{
+  	<%if(plugins.pluginlist.indexOf('bootstrap')>-1){%>
   	"bootstrap":"*"
+  	<%}%>
+  	<%if(plugins.pluginlist.indexOf('confui')>-1){%>
+  	,"confui":"*"
+  	<%}%>
   }
 }

@@ -32,7 +32,7 @@ module.exports = generators.Base.extend({
 		      		'seajs',
 		      		'compass',
 		      		'tmodjs',
-		      		'bootstrap(jquery dependency)',
+		      		'bootstrap',
 		      		'confui',
 		      		'spaseed'
 		      	]
@@ -137,6 +137,10 @@ module.exports = generators.Base.extend({
 		if(pluginlist.indexOf('bootstrap')>-1){
 			//bootstrap
 			bowerPackage.push('bootstrap');
+		}
+		if(pluginlist.indexOf('confui')>-1){
+			//confui
+			bowerPackage.push('confui');
 		}
 
 		this.log('you can run "npm install & bower install & spm install to install dependencies."');
