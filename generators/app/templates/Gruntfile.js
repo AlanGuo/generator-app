@@ -7,9 +7,10 @@
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
 
-<% var tmodjs = false,compass = false; %>
+<% var tmodjs = false,compass = false, seajs = false; %>
 <% if(plugins.pluginlist.indexOf('tmodjs')>-1){tmodjs=true}%>
 <% if(plugins.pluginlist.indexOf('compass')>-1){compass=true}%>
+<% if(plugins.pluginlist.indexOf('seajs')>-1){seajs=true}%>
 
 module.exports = function (grunt) {
 
@@ -454,7 +455,23 @@ module.exports = function (grunt) {
             namespace:'<%= name %>tmpl'
         } 
       }
-    }
+    },
+    <%}%>
+
+    <%if(seajs){%>
+    combo: {
+          options: {
+            base:'/',
+            dest:'dest/app.combo.js'
+          },
+          build: {
+              files: [{
+                  expand: true,
+                  cwd: './',
+                  src: ['app/script/entry.js','app/script/home.js','app/script/about.js','app/script/contact.js']
+              }]
+          }
+      }
     <%}%>
   });
 

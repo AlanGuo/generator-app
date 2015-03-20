@@ -94,6 +94,11 @@
     <script type="text/javascript" src="script/entry.js"></script>
     <!-- endbuild -->
     <%}else if(useangular==false && plugins.pluginlist.indexOf('seajs')>-1){%>
+
+    <!--合并之后的文件
+    <script type="text/javascript" src="dist/app.combo.js"></script>
+    合并之后的文件-->
+    
     <script type="text/javascript" src="spm_modules/seajs/2.3.0/dist/sea.js"></script>
     <script type="text/javascript">
       seajs.config({

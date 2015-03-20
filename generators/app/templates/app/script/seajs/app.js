@@ -6,8 +6,11 @@ define(function(require, exports) {
 	var webapp = {
 		_container:document.getElementById('body-container'),
 		show:function(page){
-			var viewName = page+'View';
-			this._container.innerHTML = this[viewName].show();
+			var self = this;
+			require.async('script/'+page,function(result){
+				var pageView = result[page];
+				self._container.innerHTML = pageView.show();
+			});
 		},
 		/**
 		 * 隐藏主界面

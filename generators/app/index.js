@@ -161,6 +161,9 @@ module.exports = generators.Base.extend({
 			//confui
 			bowerPackage.push('confui');
 		}
+		if(pluginlist.indexOf('seajs')>-1){
+			npmPackage.push('grunt-seajs-combo');
+		}
 
 		this.log('you can run "npm install & bower install & spm install to install dependencies."');
 
