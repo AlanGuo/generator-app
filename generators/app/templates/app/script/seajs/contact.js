@@ -1,6 +1,6 @@
 'use strict';
 
-(function(exports){
+define(function(require, exports) {
 	var contactView = {
 		/** 
 		 * 显示指定内容
@@ -23,4 +23,4 @@
 	};
 
 	exports.contactView = contactView;
-})(webapp);
+});

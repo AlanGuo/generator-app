@@ -94,6 +94,15 @@ module.exports = generators.Base.extend({
 			this.template('app/script/global/about.js','app/script/about.js',options);
 			this.template('app/script/global/contact.js','app/script/contact.js',options);
 		}
+		else if(!options.useangular && pluginlist.indexOf('seajs')>-1){
+			//javascript
+			this.template('app/script/seajs/entry.js','app/script/entry.js',options);
+			this.template('app/script/seajs/event.js','app/script/event.js',options);
+			this.template('app/script/seajs/router.js','app/script/router.js',options);
+			this.template('app/script/seajs/home.js','app/script/home.js',options);
+			this.template('app/script/seajs/about.js','app/script/about.js',options);
+			this.template('app/script/seajs/contact.js','app/script/contact.js',options);
+		}
 
 		//test
 		this.src.copy('test/.jshintrc','test/.jshintrc',true);

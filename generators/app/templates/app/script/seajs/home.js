@@ -1,6 +1,6 @@
 'use strict';
 
-(function(exports){
+define(function(require, exports) {
 	var homeView = {
 		/** 
 		 * 显示指定内容
@@ -44,4 +44,4 @@
 	};
 
 	exports.homeView = homeView;
-})(webapp);
+});

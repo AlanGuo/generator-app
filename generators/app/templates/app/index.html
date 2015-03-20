@@ -82,8 +82,9 @@
 
     <!--主程序脚本-->
     
-    <!-- build:js({.tmp,app}) script/scripts.js -->
+    
     <%if(plugins.pluginlist.indexOf('seajs')==-1 && useangular==false){%>
+    <!-- build:js({.tmp,app}) script/scripts.js -->
     <script type="text/javascript" src="script/app.js"></script>
     <script type="text/javascript" src="script/event.js"></script>
     <script type="text/javascript" src="script/router.js"></script>
@@ -91,7 +92,15 @@
     <script type="text/javascript" src="script/about.js"></script>
     <script type="text/javascript" src="script/contact.js"></script>
     <script type="text/javascript" src="script/entry.js"></script>
-    <%}%>
     <!-- endbuild -->
+    <%}else if(useangular==false && plugins.pluginlist.indexOf('seajs')>-1){%>
+    <script type="text/javascript" src="spm_modules/seajs/2.3.0/dist/sea.js"></script>
+    <script type="text/javascript">
+      seajs.config({
+        base:'/'
+      });
+      seajs.use('/script/entry.js');
+    </script>
+    <%}%>
 </body>
 </html>

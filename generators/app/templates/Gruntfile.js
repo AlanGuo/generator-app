@@ -119,6 +119,10 @@ module.exports = function (grunt) {
                 '/bower_components',
                 connect.static('./bower_components')
               ),
+              connect().use(
+                '/spm_modules',
+                connect.static('./spm_modules')
+              ),
               connect.static(appConfig.app)
             ];
           }

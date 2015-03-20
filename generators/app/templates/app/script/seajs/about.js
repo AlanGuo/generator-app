@@ -1,6 +1,6 @@
 'use strict';
 
-(function(exports){
+define(function(require, exports) {
 	var aboutView = {
 		/** 
 		 * 显示指定内容
@@ -21,6 +21,5 @@
 			}
 		}
 	};
-
 	exports.aboutView = aboutView;
-})(webapp);
+});
