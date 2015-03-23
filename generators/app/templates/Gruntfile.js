@@ -244,7 +244,9 @@ module.exports = function (grunt) {
     filerev: {
       dist: {
         src: [
+          <% if(!seajs){ %>
           '<%%= yeoman.dist %>/script/**/*.js',
+          <%}%>
           '<%%= yeoman.dist %>/style/**/*.css',
           '<%%= yeoman.dist %>/image/**/*.{png,jpg,jpeg,gif,webp,svg}'
           //'<%%= yeoman.dist %>/style/font/**/*.{eot,svg,ttf,woff}'
@@ -378,6 +380,9 @@ module.exports = function (grunt) {
   //   }
   // }
     cdnify: {
+      options: {
+        base: ''
+      },
       dist: {
         html: ['<%%= yeoman.dist %>/*.html']
       }
@@ -396,7 +401,12 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '.htaccess',
             '*.html',
+            <%if(seajs && !usecombo){%>
+            'script/**/*.js', //for no combo
+            <%}else{%>
             '*.js',
+            <%}%>
+            //'*.js', //for combo
             'image/**/*.{webp}',
             'style/font/*.*'
           ]
@@ -462,11 +472,11 @@ module.exports = function (grunt) {
     },
     <%}%>
 
-    <%if(seajs){%>
+    <%if(seajs && usecombo){%>
     combo: {
           options: {
-            base:'/',
-            dest:'dest/app.combo.js'
+            base:'/app/',
+            dest:'dist/script/app.js'
           },
           build: {
               files: [{
@@ -484,7 +494,6 @@ module.exports = function (grunt) {
     if (target === 'dist') {
       return grunt.task.run(['build', 'connect:dist:keepalive']);
     }
-
     grunt.task.run([
       'clean:server',
       'wiredep',

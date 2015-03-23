@@ -38,7 +38,24 @@ module.exports = generators.Base.extend({
 		      	]
 		      },function(answers3){
 		      	options.plugins = answers3;
-		      	done();
+
+		      	//如果选择的seajs
+		      	if(options.plugins.indexOf('seajs') > -1){
+
+		      		this.prompt({
+				      type    : 'confirm',
+				      name    : 'usecombo',
+				      message : 'Use seajs combo?',
+				      default : false // Default to current folder name
+				    }, function (answers4) {
+				    	options.usecombo = answers4.usecombo;
+				    	done();
+				    });
+				    
+		      	}else{
+		      		done();
+		      	}
+
 		      });
 		    }.bind(this));
 	    }.bind(this));
