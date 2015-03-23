@@ -99,6 +99,7 @@ module.exports = generators.Base.extend({
 			this.template('app/script/seajs/entry.js','app/script/entry.js',options);
 			this.template('app/script/seajs/event.js','app/script/event.js',options);
 			this.template('app/script/seajs/router.js','app/script/router.js',options);
+			this.template('app/script/seajs/app.js','app/script/app.js',options);
 			this.template('app/script/seajs/home.js','app/script/home.js',options);
 			this.template('app/script/seajs/about.js','app/script/about.js',options);
 			this.template('app/script/seajs/contact.js','app/script/contact.js',options);
@@ -165,7 +166,7 @@ module.exports = generators.Base.extend({
 			npmPackage.push('grunt-seajs-combo');
 		}
 
-		this.log('you can run "npm install & bower install & spm install to install dependencies."');
+		this.log('you can run "npm install & bower install & spm install" to install dependencies.');
 
 		this.npmInstall(npmPackage, { 'saveDev': true });
 		this.bowerInstall(bowerPackage, { 'save': true });

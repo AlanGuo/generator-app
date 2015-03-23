@@ -51,7 +51,7 @@
   <%if(plugins.pluginlist.indexOf('seajs')>-1){%>
   ,"spm": {
     "dependencies": {
-      "seajs": "*"
+      "seajs": "2.3.0"
       <%if(plugins.pluginlist.indexOf('spaseed')>-1){%>
       ,"spaseed":"*"
       <%}%>

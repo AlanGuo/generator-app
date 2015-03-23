@@ -8,7 +8,7 @@ define(function(require, exports) {
 		show:function(page){
 			var self = this;
 			require.async('script/'+page,function(result){
-				var pageView = result[page];
+				var pageView = result[page+'View'];
 				self._container.innerHTML = pageView.show();
 			});
 		},

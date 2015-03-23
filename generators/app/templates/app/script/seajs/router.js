@@ -1,7 +1,7 @@
 'use strict';
 
 define(function(require, exports) {
-	var webapp = require('script/app');
+	var webapp = require('script/app').webapp;
 	
 	var router = {
 		route:function(hash){

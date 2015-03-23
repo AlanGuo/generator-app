@@ -104,6 +104,10 @@ module.exports = function (grunt) {
                 '/bower_components',
                 connect.static('./bower_components')
               ),
+              connect().use(
+                '/spm_modules',
+                connect.static('./spm_modules')
+              ),
               connect.static(appConfig.app)
             ];
           }
@@ -516,9 +520,11 @@ module.exports = function (grunt) {
     'autoprefixer',
     'concat',
     <%if(tmodjs){%>
-      'tmod',
+    'tmod',
     <%}%>
+    <%if(useangular){%>
     'ngAnnotate',
+    <%}%>
     'copy:dist',
     'cdnify',
     'cssmin',
