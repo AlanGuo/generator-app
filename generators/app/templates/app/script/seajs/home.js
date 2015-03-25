@@ -13,7 +13,7 @@ define(function(require, exports) {
 			<%if(plugins.pluginlist.indexOf('tmodjs')>-1){%>
 			return webapptmpl.template('frame')({page:'home',content:webapptmpl.template('home')()});
 			<%}else{%>
-				return 'My father was a self-taught mandolin player. \
+				var str = 'My father was a self-taught mandolin player. \
 				He was one of the best string instrument players in our town. \
 				He could not read music, but if he heard a tune a few times, \
 				he could play it. When he was younger, he was a member of a small country music band. \
@@ -35,6 +35,7 @@ define(function(require, exports) {
 				He knew we enjoyed the song and the program and would often get out the mandolin after the program was over. \
 				I could never get over how he could play the songs so well after only hearing them a few times. \
 				I loved to sing, but I never learned how to play the mandolin. This is something I regret to this day.';
+				return str;
 			<%}%>
 		},
 		events:{

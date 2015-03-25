@@ -82,8 +82,8 @@
 
     <!--主程序脚本-->
     
-    
-    <%if(plugins.pluginlist.indexOf('seajs')==-1 && useangular==false){%>
+    <%if(useangular==false){%>
+    <%if(plugins.pluginlist.indexOf('seajs')==-1){%>
     <!-- build:js({.tmp,app}) script/scripts.js -->
     <script type="text/javascript" src="script/app.js"></script>
     <script type="text/javascript" src="script/event.js"></script>
@@ -93,21 +93,24 @@
     <script type="text/javascript" src="script/contact.js"></script>
     <script type="text/javascript" src="script/entry.js"></script>
     <!-- endbuild -->
-    <%}else if(useangular==false && plugins.pluginlist.indexOf('seajs')>-1){%>
+    <%}else if(plugins.pluginlist.indexOf('seajs')>-1){%>
 
     <!-- build:js(.) script/sea.js -->
     <script type="text/javascript" src="spm_modules/seajs/2.3.0/dist/sea.js"></script>
     <!-- endbuild -->
 
-    <%if(plugins.pluginlist.indexOf('seajs')>1 && usecombo==true){%>
+    <%if(usecombo==true){%>
     <!--{{combo}}-->
     <%}%>
+
     <script type="text/javascript">
       seajs.config({
         base:'/'
       });
       seajs.use('/script/entry.js');
     </script>
+    
+    <%}%>
     <%}%>
 </body>
 </html>

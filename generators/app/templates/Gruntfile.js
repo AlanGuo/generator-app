@@ -245,6 +245,7 @@ module.exports = function (grunt) {
       dist: {
         src: [
           '<%%= yeoman.dist %>/script/**/*.js',
+          '!**/script/sea.js**',
           '<%%= yeoman.dist %>/style/**/*.css',
           '<%%= yeoman.dist %>/image/**/*.{png,jpg,jpeg,gif,webp,svg}'
           //'<%%= yeoman.dist %>/style/font/**/*.{eot,svg,ttf,woff}'
@@ -399,10 +400,14 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '.htaccess',
             '*.html',
-            <%if(seajs && !usecombo){%>
+            <%if(seajs){%>
+            '../spm_modules/seajs/2.3.0/dist/sea.js',
+            <%if(!usecombo){%>
             'script/**/*.js', //for no combo
+            <%}%>
             <%}else{%>
             '*.js',
+            <%}%>
             <%}%>
             //'*.js', //for combo
             'image/**/*.{webp}',
@@ -414,8 +419,16 @@ module.exports = function (grunt) {
           cwd: '.tmp/image',
           dest: '<%%= yeoman.dist %>/image',
           src: ['generated/*']
-        //字体
+        //seajs
         }
+        <%if(seajs){%>
+        ,{
+          expand:true,
+          cwd:'spm_modules/seajs/2.3.0/dist/',
+          dest:'<%=yeoman.dist%>/script',
+          src:['sea.js']
+        }
+        <%}%>
         <%if(compass){%>
         , {
           expand: true,
@@ -473,7 +486,7 @@ module.exports = function (grunt) {
     <%if(seajs && usecombo){%>
     combo: {
         options: {
-          base:'/app/',
+          base:'/',
           dest:'dist/script/app.js'
         },
         build: {
