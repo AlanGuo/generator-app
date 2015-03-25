@@ -11,7 +11,7 @@ define(function(require, exports) {
 		show:function(){
 			ga('send', 'event', 'page', 'view', {'pageName': '#/contact'});
 			<%if(plugins.pluginlist.indexOf('tmodjs')>-1){%>
-			return webapptmpl.template('frame')({page:'contact',content:webapptmpl.template('contact')()});
+			return <%=name%>tmpl.template('contact')();
 			<%}else{%>
 				return 'contact view';
 			<%}%>

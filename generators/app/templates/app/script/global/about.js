@@ -11,7 +11,7 @@
 		show:function(){
 			ga('send', 'event', 'page', 'view', {'pageName': '#/about'});
 			<%if(plugins.pluginlist.indexOf('tmodjs')>-1){%>
-			return webapptmpl.template('frame')({page:'about',content:webapptmpl.template('about')()});
+			return <%=name%>tmpl.template('about')();
 			<%}else{%>
 				return 'about view';
 			<%}%>

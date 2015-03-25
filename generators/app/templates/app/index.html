@@ -76,6 +76,9 @@
      </script>
     
     <!-- build:js(app) script/vendors.js -->
+    <%if(plugins.pluginlist.indexOf('tmodjs')){%>
+    <script type="text/javascript" src="view/compiled/view.js"></script>
+    <%}%>
     <!-- bower:js -->
     <!-- endbower -->
     <!-- endbuild -->

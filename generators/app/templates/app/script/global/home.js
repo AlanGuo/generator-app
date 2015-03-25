@@ -11,7 +11,7 @@
 		show:function(){
 			ga('send', 'event', 'page', 'view', {'pageName': '#/home'});
 			<%if(plugins.pluginlist.indexOf('tmodjs')>-1){%>
-			return webapptmpl.template('frame')({page:'home',content:webapptmpl.template('home')()});
+			return <%=name%>tmpl.template('home')();
 			<%}else{%>
 				return 'My father was a self-taught mandolin player. \
 				He was one of the best string instrument players in our town. \

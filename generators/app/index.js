@@ -107,6 +107,7 @@ module.exports = generators.Base.extend({
 			this.template('app/script/global/entry.js','app/script/entry.js',options);
 			this.template('app/script/global/event.js','app/script/event.js',options);
 			this.template('app/script/global/router.js','app/script/router.js',options);
+			this.template('app/script/global/app.js','app/script/app.js',options);
 			this.template('app/script/global/home.js','app/script/home.js',options);
 			this.template('app/script/global/about.js','app/script/about.js',options);
 			this.template('app/script/global/contact.js','app/script/contact.js',options);
