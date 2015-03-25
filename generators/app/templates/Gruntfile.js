@@ -244,9 +244,7 @@ module.exports = function (grunt) {
     filerev: {
       dist: {
         src: [
-          <% if(!seajs){ %>
           '<%%= yeoman.dist %>/script/**/*.js',
-          <%}%>
           '<%%= yeoman.dist %>/style/**/*.css',
           '<%%= yeoman.dist %>/image/**/*.{png,jpg,jpeg,gif,webp,svg}'
           //'<%%= yeoman.dist %>/style/font/**/*.{eot,svg,ttf,woff}'
@@ -474,17 +472,25 @@ module.exports = function (grunt) {
 
     <%if(seajs && usecombo){%>
     combo: {
-          options: {
-            base:'/app/',
-            dest:'dist/script/app.js'
-          },
-          build: {
-              files: [{
-                  expand: true,
-                  cwd: './',
-                  src: ['app/script/entry.js','app/script/home.js','app/script/about.js','app/script/contact.js']
-              }]
+        options: {
+          base:'/app/',
+          dest:'dist/script/app.js'
+        },
+        build: {
+          files: [{
+              expand: true,
+              cwd: './',
+              src: ['app/script/entry.js','app/script/home.js','app/script/about.js','app/script/contact.js']
+          }]
+        }
+      },
+      rewrite: {
+        dist: {
+          src: 'dist/index.html',
+          editor: function(contents, filePath) {
+            return contents.replace(/<\!\-\-\{\{combo\}\}\-\->/ig,'<!-- build:js(dist) script/app.js -->\n<script type="text/javascript" src="script/app.js"></script>\n<!-- endbuild -->');
           }
+        }
       }
     <%}%>
   });
@@ -535,6 +541,10 @@ module.exports = function (grunt) {
     'ngAnnotate',
     <%}%>
     'copy:dist',
+    <%if(seajs && usecombo){%>
+    'combo',
+    'rewrite:dist',
+    <%}%>
     'cdnify',
     'cssmin',
     'uglify',

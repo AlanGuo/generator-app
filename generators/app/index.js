@@ -40,7 +40,7 @@ module.exports = generators.Base.extend({
 		      	options.plugins = answers3;
 
 		      	//如果选择的seajs
-		      	if(options.plugins.indexOf('seajs') > -1){
+		      	if(options.plugins.pluginlist.indexOf('seajs') > -1){
 
 		      		this.prompt({
 				      type    : 'confirm',
@@ -56,7 +56,7 @@ module.exports = generators.Base.extend({
 		      		done();
 		      	}
 
-		      });
+		      }.bind(this));
 		    }.bind(this));
 	    }.bind(this));
 	},
@@ -180,7 +180,9 @@ module.exports = generators.Base.extend({
 			bowerPackage.push('confui');
 		}
 		if(pluginlist.indexOf('seajs')>-1){
+			//seajs
 			npmPackage.push('grunt-seajs-combo');
+			npmPackage.push('grunt-rewrite');
 		}
 
 		this.log('you can run "npm install & bower install & spm install" to install dependencies.');

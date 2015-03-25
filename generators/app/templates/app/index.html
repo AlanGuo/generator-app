@@ -100,10 +100,8 @@
     <!-- endbuild -->
 
     <%if(plugins.pluginlist.indexOf('seajs')>1 && usecombo==true){%>
-    <!-- build:js(dist) script/app.js -->
-    <script type="text/javascript" src="script/app.js"></script>
-    <!-- endbuild -->
-    <%}else{%>
+    <!--{{combo}}-->
+    <%}%>
     <script type="text/javascript">
       seajs.config({
         base:'/'
