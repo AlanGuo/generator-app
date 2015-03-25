@@ -7,10 +7,11 @@
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
 
-<% var tmodjs = false,compass = false, seajs = false; %>
-<% if(plugins.pluginlist.indexOf('tmodjs')>-1){tmodjs=true}%>
-<% if(plugins.pluginlist.indexOf('compass')>-1){compass=true}%>
-<% if(plugins.pluginlist.indexOf('seajs')>-1){seajs=true}%>
+<% var tmodjs = false,compass = false, seajs = false, bootstrap = false; %>
+<% if(plugins.pluginlist.indexOf('tmodjs')>-1){tmodjs=true} %>
+<% if(plugins.pluginlist.indexOf('compass')>-1){compass=true} %>
+<% if(plugins.pluginlist.indexOf('seajs')>-1){seajs=true} %>
+<% if(plugins.pluginlist.indexOf('bootstrap')>-1){bootstrap=true} %>
 
 module.exports = function (grunt) {
 
@@ -404,7 +405,6 @@ module.exports = function (grunt) {
             '../spm_modules/seajs/2.3.0/dist/sea.js',
             <%if(!usecombo){%>
             'script/**/*.js', //for no combo
-            <%}%>
             <%}else{%>
             '*.js',
             <%}%>
@@ -429,8 +429,8 @@ module.exports = function (grunt) {
           src:['sea.js']
         }
         <%}%>
-        <%if(compass){%>
-        , {
+        <%if(compass && bootstrap){%>
+        ,{
           expand: true,
           cwd: '.',
           src: ['bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*'],
