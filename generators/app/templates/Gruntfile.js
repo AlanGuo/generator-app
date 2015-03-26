@@ -64,7 +64,7 @@ module.exports = function (grunt) {
       <%if(compass){%>
       compass: {
         files: ['<%%= yeoman.app %>/style/**/*.{scss,sass}'],
-        tasks: ['compass:server', 'autoprefixer']
+        tasks: ['css','compass:server', 'autoprefixer']
       },
       <%}%>
       gruntfile: {
@@ -177,7 +177,8 @@ module.exports = function (grunt) {
           ]
         }]
       },
-      server: '.tmp'
+      server: '.tmp',
+      css:'.tmp/style/*.css'
     },
 
     // Add vendor prefixed styles
