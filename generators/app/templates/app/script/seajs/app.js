@@ -10,6 +10,14 @@ define(function(require, exports) {
 			require.async('script/'+page,function(result){
 				var pageView = result[page+'View'];
 				self._container.innerHTML = pageView.show();
+				if(self[viewName].events && !self[viewName].events.binded){
+				//绑定事件
+				for(var p in self[viewName].events){
+					self.eventHandler.on(p,self[viewName].events[p]);
+				}
+				self[viewName].events.binded = true;
+			}
+			this[viewName].init && this[viewName].init();
 			});
 		},
 		/**
