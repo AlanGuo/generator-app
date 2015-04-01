@@ -426,7 +426,7 @@ module.exports = function (grunt) {
         ,{
           expand:true,
           cwd:'spm_modules/seajs/2.3.0/dist/',
-          dest:'<%=yeoman.dist%>/script',
+          dest:'<%%=yeoman.dist%>/script',
           src:['sea.js']
         }
         <%}%>
