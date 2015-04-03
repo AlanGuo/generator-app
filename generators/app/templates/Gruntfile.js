@@ -109,7 +109,8 @@ module.exports = function (grunt) {
                 '/spm_modules',
                 connect.static('./spm_modules')
               ),
-              connect.static(appConfig.app)
+              connect.static(appConfig.app),
+              connect.static('.')
             ];
           }
         }
@@ -129,7 +130,8 @@ module.exports = function (grunt) {
                 '/spm_modules',
                 connect.static('./spm_modules')
               ),
-              connect.static(appConfig.app)
+              connect.static(appConfig.app),
+              connect.static('.')
             ];
           }
         }
@@ -353,6 +355,7 @@ module.exports = function (grunt) {
       }
     },
 
+    <%if(useangular){%>
     // ng-annotate tries to make the code safe for minification automatically
     // by using the Angular long form for dependency injection.
     ngAnnotate: {
@@ -365,6 +368,7 @@ module.exports = function (grunt) {
         }]
       }
     },
+    <%}%>
 
   // Replace Google CDN references
   // cdnify: {

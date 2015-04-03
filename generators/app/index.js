@@ -123,6 +123,12 @@ module.exports = generators.Base.extend({
 			this.template('app/script/seajs/contact.js','app/script/contact.js',options);
 		}
 
+		if(pluginlist.indexOf('tmodjs')>-1){
+			this.src.copy('view/home.html','view/home.html',true);
+			this.src.copy('view/contact.html','view/contact.html',true);
+			this.src.copy('view/about.html','view/about.html',true);
+		}
+
 		//test
 		this.src.copy('test/.jshintrc','test/.jshintrc',true);
 		this.src.copy('test/karma.conf.js','test/karma.conf.js',true);
