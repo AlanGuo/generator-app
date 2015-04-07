@@ -385,11 +385,16 @@ module.exports = function (grunt) {
   //   }
   // }
     cdnify: {
-      options: {
-        base: ''
-      },
-      dist: {
-        html: ['<%%= yeoman.dist %>/*.html']
+      someTarget: {
+        options: {
+          base: ''
+        },
+        files: [{
+          expand: true,
+          cwd: '<%%= yeoman.dist %>',
+          src: '**/*.{css,html}',
+          dest: 'dist'
+        }]
       }
     },
 
@@ -564,11 +569,12 @@ module.exports = function (grunt) {
     'combo',
     'rewrite:dist',
     <%}%>
-    'cdnify',
+    
     'cssmin',
     'uglify',
     'filerev',
     'usemin',
+    'cdnify',
     'htmlmin'
   ]);
 
