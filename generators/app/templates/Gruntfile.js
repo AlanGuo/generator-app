@@ -492,6 +492,7 @@ module.exports = function (grunt) {
     combo: {
         options: {
           base:'/',
+          destPath:'/',
           dest:'dist/script/app.js'
         },
         build: {
