@@ -3,21 +3,23 @@
 
 //app
 define(function(require, exports) {
+	var eventHandler = require('app/script/event').eventHandler;
 	var webapp = {
 		_container:document.getElementById('body-container'),
 		show:function(page){
 			var self = this;
 			require.async('app/script/'+page,function(result){
-				var pageView = result[page+'View'];
+				var viewName = page+'View';
+				var pageView = result[viewName];
 				self._container.innerHTML = pageView.show();
-				if(self[viewName].events && !self[viewName].events.binded){
+				if(pageView.events && !pageView.events.binded){
 				//绑定事件
-				for(var p in self[viewName].events){
-					self.eventHandler.on(p,self[viewName].events[p]);
+				for(var p in pageView.events){
+					eventHandler.on(p,pageView.events[p]);
 				}
-				self[viewName].events.binded = true;
+				pageView.events.binded = true;
 			}
-			this[viewName].init && this[viewName].init();
+			pageView.init && pageView.init();
 			});
 		},
 		/**
