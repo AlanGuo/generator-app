@@ -1,8 +1,8 @@
 'use strict';
 
 define(function(require, exports) {
-	var router = require('script/router').router;
-	var eventHandler = require('script/event').eventHandler;
+	var router = require('app/script/router').router;
+	var eventHandler = require('app/script/event').eventHandler;
 	
 	eventHandler.bindEvent('click');
 

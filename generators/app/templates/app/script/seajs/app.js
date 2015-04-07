@@ -7,7 +7,7 @@ define(function(require, exports) {
 		_container:document.getElementById('body-container'),
 		show:function(page){
 			var self = this;
-			require.async('script/'+page,function(result){
+			require.async('app/script/'+page,function(result){
 				var pageView = result[page+'View'];
 				self._container.innerHTML = pageView.show();
 				if(self[viewName].events && !self[viewName].events.binded){

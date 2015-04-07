@@ -124,9 +124,9 @@ module.exports = generators.Base.extend({
 		}
 
 		if(pluginlist.indexOf('tmodjs')>-1){
-			this.src.copy('view/home.html','view/home.html',true);
-			this.src.copy('view/contact.html','view/contact.html',true);
-			this.src.copy('view/about.html','view/about.html',true);
+			this.src.copy('app/view/home.html','app/view/home.html',true);
+			this.src.copy('app/view/contact.html','app/view/contact.html',true);
+			this.src.copy('app/view/about.html','app/view/about.html',true);
 		}
 
 		//test
