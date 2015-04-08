@@ -49,8 +49,10 @@ module.exports = function (grunt) {
         }
       },
       css:{
+        files: ['<%%= yeoman.app %>/style/**/*.css'],
         tasks: ['newer:jshint:all'],
         options: {
+          livereload: '<%%= connect.options.livereload %>'
         }
       },
       <%if(tmodjs){%>
