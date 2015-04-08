@@ -427,8 +427,7 @@ module.exports = function (grunt) {
             <%}%>
             <%}%>
             //'*.js', //for combo
-            'image/**/*.{webp}',
-            'style/font/*.*'
+            'image/**/*.{webp}'
           ]
         //图片
         }, {
@@ -436,6 +435,13 @@ module.exports = function (grunt) {
           cwd: '.tmp/image',
           dest: '<%%= yeoman.dist %>/image',
           src: ['generated/*']
+        //seajs
+        }
+        , {
+          expand: true,
+          cwd: 'app/font',
+          dest: '<%= yeoman.dist %>/font',
+          src: ['*.*']
         //seajs
         }
         <%if(seajs){%>
