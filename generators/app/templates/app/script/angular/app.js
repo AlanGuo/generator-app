@@ -11,20 +11,21 @@
 angular.module('angularApp', [
     'ngAnimate',
     'ngCookies',
-    'ngResource',
     'ngRoute',
-    'ngSanitize',
-    'ngTouch'
   ])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html',
+        templateUrl: 'view/home.html',
         controller: 'MainCtrl'
       })
       .when('/about', {
-        templateUrl: 'views/about.html',
+        templateUrl: 'view/about.html',
         controller: 'AboutCtrl'
+      })
+      .when('/contact', {
+        templateUrl: 'view/contact.html',
+        controller: 'ContactCtrl'
       })
       .otherwise({
         redirectTo: '/'

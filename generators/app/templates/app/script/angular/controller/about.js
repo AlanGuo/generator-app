@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name angularappApp.controller:AboutCtrl
+ * @name angularApp.controller:AboutCtrl
  * @description
  * # AboutCtrl
- * Controller of the angularappApp
+ * Controller of the angularApp
  */
-angular.module('angularappApp')
+angular.module('angularApp')
   .controller('AboutCtrl', function ($scope) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',

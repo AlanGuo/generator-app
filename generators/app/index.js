@@ -24,18 +24,26 @@ module.exports = generators.Base.extend({
 		    }, function (answers2) {
 		      options.useangular = answers2.useangular;
 		      //其他组件
-		      this.prompt({
-		      	type:'checkbox',
-		      	name:'pluginlist',
-		      	message:'Other plugins you may need',
-		      	choices:[
+		      var choices = [
 		      		'seajs',
 		      		'compass',
 		      		'tmodjs',
 		      		'bootstrap',
 		      		'confui',
 		      		'spaseed'
-		      	]
+		      	];
+		      if(options.useangular){
+		      	choices = [
+		      		'compass',
+		      		'bootstrap',
+		      		'confui'
+		      	];
+		      }
+		      this.prompt({
+		      	type:'checkbox',
+		      	name:'pluginlist',
+		      	message:'Other plugins you may need',
+		      	choices:choices
 		      },function(answers3){
 		      	options.plugins = answers3;
 
@@ -122,8 +130,15 @@ module.exports = generators.Base.extend({
 			this.template('app/script/seajs/about.js','app/script/about.js',options);
 			this.template('app/script/seajs/contact.js','app/script/contact.js',options);
 		}
+		else if(options.useangular){
+			//javascript
+			this.template('app/script/angular/app.js','app/script/app.js',options);
+			this.template('app/script/angular/controller/contact.js','app/script/controller/contact.js',options);
+			this.template('app/script/angular/controller/about.js','app/script/controller/about.js',options);
+			this.template('app/script/angular/controller/main.js','app/script/controller/main.js',options);
+		}
 
-		if(pluginlist.indexOf('tmodjs')>-1){
+		if(pluginlist.indexOf('tmodjs')>-1 || options.useangular){
 			this.src.copy('app/view/home.html','app/view/home.html',true);
 			this.src.copy('app/view/contact.html','app/view/contact.html',true);
 			this.src.copy('app/view/about.html','app/view/about.html',true);
@@ -190,6 +205,12 @@ module.exports = generators.Base.extend({
 			//seajs
 			npmPackage.push('grunt-seajs-combo');
 			npmPackage.push('grunt-rewrite');
+		}
+		if(useangular){
+			bowerPackage.push('angular');
+			bowerPackage.push('angular-animate');
+			bowerPackage.push('angular-route');
+			bowerPackage.push('angular-cookies');
 		}
 
 		this.log('you can run "npm install & bower install & spm install" to install dependencies.');

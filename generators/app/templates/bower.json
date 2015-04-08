@@ -13,5 +13,18 @@
         "confui":"*"
       <%}%>
    <%}%>
+   <%if(useangular){%>
+    <%if(plugins.pluginlist.indexOf('confui')>-1 || plugins.pluginlist.indexOf('bootstrap')>-1){%>
+    "angular": "*",
+    "angular-cookies": "*",
+    "angular-animate": "*",
+    "angular-route": "*"
+   <%}else{%>
+   ,"angular": "*",
+    "angular-cookies": "*",
+    "angular-animate": "*",
+    "angular-route": "*"
+   <%}%>
+  <%}%>
   }
 }

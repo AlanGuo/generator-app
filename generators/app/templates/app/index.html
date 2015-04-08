@@ -31,6 +31,29 @@
   <!-- endbuild -->
 </head>
 
+<%if(useangular){%>
+  <body ng-app="angularApp">
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <!-- Add your site or application content here -->
+    <div class="container">
+      <div class="header">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a ng-href="#">Home</a></li>
+          <li><a ng-href="#/about">About</a></li>
+          <li><a ng-href="#">Contact</a></li>
+        </ul>
+        <h3 class="text-muted">yoemanAngularapp</h3>
+      </div>
+
+      <div ng-view=""></div>
+
+      <div class="footer">
+        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+      </div>
+    </div>
+<%}else{%>
 <%if(plugins.pluginlist.indexOf('confui')>-1){%>
 <body class="confui default">
 <%}else{%>
@@ -67,6 +90,7 @@
         <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
       </div>
     </div>
+  <%}%>
 
     <!-- Google Analytics: change UA-xxx-xxx to be your site's ID -->
      <script>
@@ -121,6 +145,10 @@
     </script>
     
     <%}%>
+    <%}else{%>
+    <script src="script/app.js"></script>
+    <script src="script/controller/main.js"></script>
+    <script src="script/controller/about.js"></script>
     <%}%>
 </body>
 </html>
