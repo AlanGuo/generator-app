@@ -48,6 +48,11 @@ module.exports = function (grunt) {
           livereload: '<%%= connect.options.livereload %>'
         }
       },
+      css:{
+        tasks: ['newer:jshint:all'],
+        options: {
+        }
+      },
       <%if(tmodjs){%>
       view:{
         files: ['<%%= yeoman.app %>/view/**/*.html'],

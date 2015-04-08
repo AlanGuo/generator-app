@@ -72,16 +72,11 @@ module.exports = generators.Base.extend({
 	configuring:function(){
 		//配置目录
 		this.mkdir('app');
-		if(!options.useangular){
-			//no angular
-			this.mkdir('app/script');
-			this.mkdir('app/style');
-			this.mkdir('app/view');
-			this.mkdir('app/image');
-		}
-		else{
-			//angular
-		}
+		this.mkdir('app/font');
+		this.mkdir('app/script');
+		this.mkdir('app/style');
+		this.mkdir('app/view');
+		this.mkdir('app/image');
 		this.mkdir('bower_components');
 		this.mkdir('test');
 		this.mkdir('dist');
