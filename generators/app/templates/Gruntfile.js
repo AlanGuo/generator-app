@@ -378,19 +378,6 @@ module.exports = function (grunt) {
     <%}%>
 
   // Replace Google CDN references
-  // cdnify: {
-  //   someTarget: {
-  //     options: {
-  //       base: '//cdn.example.com/stuff/'
-  //     },
-  //     files: [{
-  //       expand: true,
-  //       cwd: 'app',
-  //       src: '**/*.{css,html}',
-  //       dest: 'dist'
-  //     }]
-  //   }
-  // }
     cdnify: {
       someTarget: {
         options: {
@@ -400,7 +387,7 @@ module.exports = function (grunt) {
           expand: true,
           cwd: '<%%= yeoman.dist %>',
           src: '**/*.{css,html}',
-          dest: 'dist'
+          dest: '<%%= yeoman.dist %>'
         }]
       }
     },
