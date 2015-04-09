@@ -440,7 +440,7 @@ module.exports = function (grunt) {
         , {
           expand: true,
           cwd: 'app/font',
-          dest: '<%= yeoman.dist %>/font',
+          dest: '<%%= yeoman.dist %>/font',
           src: ['*.*']
         //seajs
         }

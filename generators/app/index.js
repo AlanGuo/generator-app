@@ -201,7 +201,7 @@ module.exports = generators.Base.extend({
 			npmPackage.push('grunt-seajs-combo');
 			npmPackage.push('grunt-rewrite');
 		}
-		if(useangular){
+		if(options.useangular){
 			bowerPackage.push('angular');
 			bowerPackage.push('angular-animate');
 			bowerPackage.push('angular-route');
