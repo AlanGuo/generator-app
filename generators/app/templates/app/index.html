@@ -15,16 +15,10 @@
   <!-- endbuild -->
 
   <!--for main style-->
-  <%if(plugins.pluginlist.indexOf('scss')>-1){%>
-  <!-- build:css(.tmp) style/main.css -->
+  <!-- build:css({app,.tmp}) style/main.css -->
   <link rel="stylesheet" href="style/main.css">
   <!-- endbuild -->
-  <%}else{%>
-  <!-- build:css(app) style/main.css -->
-  <link rel="stylesheet" href="style/main.css">
-  <!-- endbuild -->
-  <%}%>
-  <!-- build:css(app) style/ie8.css -->
+  <!-- build:css({app,.tmp}) style/ie8.css -->
   <!--[if LTE IE 8]>
   <link rel="stylesheet" href="style/ie8.css">
   <![endif]-->
@@ -109,7 +103,7 @@
 
      </script>
     
-    <!-- build:js(app) script/vendors.js -->
+    <!-- build:js({app,.}) script/vendors.js -->
     <%if(plugins.pluginlist.indexOf('tmodjs')){%>
     <%if(!plugins.pluginlist.indexOf('seajs')){%>
     <script type="text/javascript" src="view/compiled/view.js"></script>
@@ -123,7 +117,7 @@
     
     <%if(useangular==false){%>
     <%if(plugins.pluginlist.indexOf('seajs')==-1){%>
-    <!-- build:js({.tmp,app}) script/scripts.js -->
+    <!-- build:js({app,.}) script/app.js -->
     <script type="text/javascript" src="script/app.js"></script>
     <script type="text/javascript" src="script/event.js"></script>
     <script type="text/javascript" src="script/router.js"></script>
