@@ -10,6 +10,11 @@
 			var self = this;
 			var func = document.body.addEventListener?'addEventListener':'attachEvent';
 			var type = document.body.addEventListener?eventName:'on'+eventName;
+
+			if(/mobile|ios|iphone|android|ipad/i.test(navigator.userAgent)){
+				type = 'touchstart';
+			}
+			
 			document.body[func](type,function(evt){
 				evt = evt || window.event;
 				var target = evt.target || evt.srcElement;

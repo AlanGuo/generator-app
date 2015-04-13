@@ -278,7 +278,7 @@ module.exports = function (grunt) {
         flow: {
           html: {
             steps: {
-              js: ['concat', 'uglifyjs'],
+              js: ['concat'],
               css: ['cssmin']
             },
             post: {}
@@ -309,18 +309,20 @@ module.exports = function (grunt) {
         }
       }
     },
-    // uglify: {
-    //   dist: {
-    //     files: {
-    //       '<%%= yeoman.dist %>/script/script.js': [
-    //         '<%%= yeoman.dist %>/script/script.js'
-    //       ]
-    //     }
-    //   }
-    // },
-    // concat: {
-    //   dist: {}
-    // },
+
+    uglify: {
+      dist: {
+        files: {
+          '<%%= yeoman.dist %>/script/app.combo.js': [
+            '<%%= yeoman.dist %>/script/app.combo.js'
+          ]
+        }
+      }
+    },
+
+    concat: {
+      dist: {}
+    },
 
     imagemin: {
       dist: {
@@ -498,7 +500,7 @@ module.exports = function (grunt) {
         options: {
           base:'/',
           destPath:'/',
-          dest:'dist/script/app.js'
+          dest:'dist/script/app.combo.js'
         },
         build: {
           files: [{
@@ -512,7 +514,7 @@ module.exports = function (grunt) {
         dist: {
           src: 'dist/index.html',
           editor: function(contents, filePath) {
-            return contents.replace(/<\!\-\-\{\{combo\}\}\-\->/ig,'<!-- build:js(dist) script/app.js -->\n<script type="text/javascript" src="script/app.js"></script>\n<!-- endbuild -->');
+            return contents.replace(/<\!\-\-\{\{combo\}\}\-\->/ig,'<!-- build:js(dist) script/app.combo.js -->\n<script type="text/javascript" src="script/app.js"></script>\n<!-- endbuild -->');
           }
         }
       }
@@ -551,7 +553,33 @@ module.exports = function (grunt) {
     'karma'
   ]);
 
+
   grunt.registerTask('build', [
+    'clean:dist',
+    'wiredep',
+    'useminPrepare',
+    'concurrent:dist',
+    'autoprefixer',
+    'concat',
+    <%if(tmodjs){%>
+    'tmod',
+    <%}%>
+    <%if(useangular){%>
+    'ngAnnotate',
+    <%}%>
+    'copy:dist',
+    <%if(seajs && usecombo){%>
+    'combo',
+    'rewrite:dist',
+    <%}%>
+    
+    'cssmin',
+    'usemin',
+    'cdnify',
+    'htmlmin'
+  ]);
+
+  grunt.registerTask('buildmin', [
     'clean:dist',
     'wiredep',
     'useminPrepare',
