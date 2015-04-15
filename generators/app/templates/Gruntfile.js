@@ -7,11 +7,12 @@
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
 
-<% var tmodjs = false,compass = false, seajs = false, bootstrap = false; %>
+<% var tmodjs = false,compass = false, seajs = false, bootstrap = false, karma = false; %>
 <% if(plugins.pluginlist.indexOf('tmodjs')>-1){tmodjs=true} %>
 <% if(plugins.pluginlist.indexOf('compass')>-1){compass=true} %>
 <% if(plugins.pluginlist.indexOf('seajs')>-1){seajs=true} %>
 <% if(plugins.pluginlist.indexOf('bootstrap')>-1){bootstrap=true} %>
+<% if(plugins.pluginlist.indexOf('karma')>-1){karma=true} %>
 
 module.exports = function (grunt) {
 
@@ -64,10 +65,17 @@ module.exports = function (grunt) {
         }
       },
       <%}%>
+      <%if(karma){%>
       jsTest: {
         files: ['test/spec/**/*.js'],
         tasks: ['newer:jshint:test', 'karma']
       },
+      <%}else{%>
+      jsTest: {
+        files: ['test/spec/**/*.js'],
+        tasks: ['newer:jshint:test']
+      },
+      <%}%>
       <%if(compass){%>
       compass: {
         files: ['<%%= yeoman.app %>/style/**/*.{scss,sass}'],
@@ -473,6 +481,7 @@ module.exports = function (grunt) {
       ]
     },
 
+    <%if(karma){%>
     // Test settings
     karma: {
       unit: {
@@ -480,6 +489,7 @@ module.exports = function (grunt) {
         singleRun: true
       }
     },
+    <%}%>
 
     <%if(tmodjs){%>
     tmod: {
@@ -550,7 +560,9 @@ module.exports = function (grunt) {
     'concurrent:test',
     'autoprefixer',
     'connect:test',
+    <%if(karma){%>
     'karma'
+    <%}%>
   ]);
 
 

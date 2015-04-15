@@ -30,7 +30,8 @@ module.exports = generators.Base.extend({
 		      		'tmodjs',
 		      		'bootstrap',
 		      		'confui',
-		      		'spaseed'
+		      		'spaseed',
+		      		'karma',
 		      	];
 		      if(options.useangular){
 		      	choices = [
@@ -141,7 +142,12 @@ module.exports = generators.Base.extend({
 
 		//test
 		this.src.copy('test/.jshintrc','test/.jshintrc',true);
-		this.src.copy('test/karma.conf.js','test/karma.conf.js',true);
+
+		if(pluginlist.indexOf('karma')>-1){
+			this.src.copy('test/karma.conf.js','test/karma.conf.js',true);
+		}
+
+		this.src.copy('README.MD','README.MD',true);
 	},
 
 	install:function(){
@@ -165,7 +171,6 @@ module.exports = generators.Base.extend({
 		    "grunt-filerev",
 		    "grunt-ftpush",
 		    "grunt-qc-cdnify",
-		    "grunt-karma",
 		    "grunt-livereload",
 		    "grunt-newer",
 		    "grunt-svgmin",
@@ -173,9 +178,7 @@ module.exports = generators.Base.extend({
 		    "grunt-wiredep",
 		    "jshint-stylish",
 		    "load-grunt-tasks",
-		    "time-grunt",
-		    "karma-jasmine",
-		    "karma-phantomjs-launcher"
+		    "time-grunt"
 		];
 		var bowerPackage = [];
 
@@ -201,17 +204,24 @@ module.exports = generators.Base.extend({
 			npmPackage.push('grunt-seajs-combo');
 			npmPackage.push('grunt-rewrite');
 		}
+		if(pluginlist.indexOf('karma')>-1){
+			npmPackage.push('grunt-karma');
+			npmPackage.push('karma-jasmine');
+			npmPackage.push('karma-phantomjs-launcher');
+		}
 		if(options.useangular){
 			bowerPackage.push('angular');
 			bowerPackage.push('angular-animate');
 			bowerPackage.push('angular-route');
 			bowerPackage.push('angular-cookies');
 		}
+		
 
 		this.log('you can run "npm install & bower install & spm install" to install dependencies.');
 
 		this.npmInstall(npmPackage, { 'saveDev': true });
 		this.bowerInstall(bowerPackage, { 'save': true });
+		this.spawnCommand('spm', ['install']);
 	},
 
 	end:function(){

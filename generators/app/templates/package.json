@@ -7,6 +7,7 @@
   "scripts": {
     "test": "grunt test"
   },
+  "description":"<%=name%> app",
   "devDependencies": {
     "connect-livereload":"^0.5.3",
     "grunt":"^0.4.5",
@@ -45,10 +46,12 @@
     ,"grunt-seajs-combo":"^1.0.4",
     "grunt-rewrite":"^1.0.1"
     <%}%>
+    <%if(plugins.pluginlist.indexOf('karma')>-1){%>
     ,"karma": "^0.12.31",
     "karma-jasmine":"^0.3.5",
     "grunt-karma":"^0.10.1",
     "karma-phantomjs-launcher":"^0.1.4"
+    <%}%>
   }
   <%if(plugins.pluginlist.indexOf('seajs')>-1){%>
   ,"spm": {
