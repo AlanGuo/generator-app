@@ -4,26 +4,30 @@
   "appPath": "app",
   "dependencies":{
   	<%if(plugins.pluginlist.indexOf('bootstrap')>-1){%>
-  	"bootstrap":"*"
+    <%if(plugins.pluginlist.indexOf('sass')>-1){%>
+    "bootstrap-sass-official": "~3.2.0"
+    <%}else{%>
+  	"bootstrap":"~3.3.4"
   	<%}%>
+    <%}%>
   	<%if(plugins.pluginlist.indexOf('confui')>-1){%>
       <%if(plugins.pluginlist.indexOf('bootstrap')>-1){%>
-        ,"confui":"*"
+        ,"confui":"~0.0.4"
   	  <%}else{%>
-        "confui":"*"
+        "confui":"~0.0.4"
       <%}%>
    <%}%>
    <%if(useangular){%>
     <%if(plugins.pluginlist.indexOf('confui')>-1 || plugins.pluginlist.indexOf('bootstrap')>-1){%>
-    "angular": "*",
-    "angular-cookies": "*",
-    "angular-animate": "*",
-    "angular-route": "*"
+    "angular": "~1.2.0",
+    "angular-cookies": "~1.2.0",
+    "angular-animate": "~1.2.0",
+    "angular-route": "~1.2.0"
    <%}else{%>
-   ,"angular": "*",
-    "angular-cookies": "*",
-    "angular-animate": "*",
-    "angular-route": "*"
+   ,"angular": "~1.2.0",
+    "angular-cookies": "~1.2.0",
+    "angular-animate": "~1.2.0",
+    "angular-route": "~1.2.0"
    <%}%>
   <%}%>
   }
