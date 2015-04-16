@@ -328,10 +328,6 @@ module.exports = function (grunt) {
       }
     },
 
-    concat: {
-      dist: {}
-    },
-
     imagemin: {
       dist: {
         files: [{
@@ -389,7 +385,7 @@ module.exports = function (grunt) {
 
   // Replace Google CDN references
     cdnify: {
-      someTarget: {
+      dist: {
         options: {
           base: ''
         },
