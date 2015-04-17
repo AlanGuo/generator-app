@@ -503,17 +503,18 @@ module.exports = function (grunt) {
 
     <%if(seajs && usecombo){%>
     combo: {
-        options: {
-          base:'/',
-          destPath:'/',
-          dest:'dist/script/app.combo.js'
-        },
-        build: {
-          files: [{
-              expand: true,
-              cwd: './',
-              src: ['app/script/entry.js','app/script/home.js','app/script/about.js','app/script/contact.js']
-          }]
+        dist:{
+          options: {
+            base:'/',
+            destPath:'/',
+            dest:'dist/script/app.combo.js'
+          },{
+            files: [{
+                expand: true,
+                cwd: './',
+                src: ['app/script/entry.js','app/script/home.js','app/script/about.js','app/script/contact.js']
+            }]
+          }
         }
       },
       rewrite: {
