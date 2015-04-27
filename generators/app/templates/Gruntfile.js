@@ -107,7 +107,7 @@ module.exports = function (grunt) {
       },
       rules: [
           // Internal rewrite
-          {from: '^/[a-z0-9/]*$', to: '/index.html'}
+          {from: '^/[a-zA-Z0-9/_]*$', to: '/index.html'}
       ],
       livereload: {
         options: {
@@ -541,6 +541,7 @@ module.exports = function (grunt) {
       <%if(tmodjs){%>
       'tmod',
       <%}%>
+      'jshint',
       'configureRewriteRules',
       'connect:livereload',
       'watch'
