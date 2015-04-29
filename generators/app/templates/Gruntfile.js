@@ -106,7 +106,7 @@ module.exports = function (grunt) {
       },
       rules: [
           // Internal rewrite
-          {from: '^/[a-zA-Z0-9/_]*$', to: '/index.html'}
+          {from: '^/[a-zA-Z0-9/_?&=]*$', to: '/index.html'}
       ],
       livereload: {
         options: {
