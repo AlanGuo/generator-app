@@ -520,7 +520,7 @@ module.exports = function (grunt) {
         dist: {
           src: 'dist/index.html',
           editor: function(contents, filePath) {
-            return contents.replace(/<\!\-\-\{\{combo\}\}\-\->/ig,'<!-- build:js(dist) script/app.combo.js -->\n<script type="text/javascript" src="script/app.js"></script>\n<!-- endbuild -->');
+            return contents.replace(/<\!\-\-\{\{combo\}\}\-\->/ig,'<script type="text/javascript" src="script/app.combo.js"></script>');
           }
         }
       }
