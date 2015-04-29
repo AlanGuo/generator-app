@@ -581,7 +581,8 @@ module.exports = function (grunt) {
     'combo',
     'rewrite:dist',
     <%}%>
-
+    
+    'cssmin',
     'usemin',
     'cdnify'
   ]);
