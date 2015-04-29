@@ -581,11 +581,9 @@ module.exports = function (grunt) {
     'combo',
     'rewrite:dist',
     <%}%>
-    
-    'cssmin',
+
     'usemin',
-    'cdnify',
-    'htmlmin'
+    'cdnify'
   ]);
 
   grunt.registerTask('buildmin', [
