@@ -12,6 +12,11 @@
   "newcap": true,
   "noarg": true,
   "quotmark": "single",
+  <%if(useangular){%>
+  "predef": ["angular"],
+  <%}else{%>
+  "predef": [],
+  <%}%>
   "regexp": true,
   "undef": true,
   "unused": true,

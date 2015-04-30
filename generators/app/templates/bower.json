@@ -12,19 +12,19 @@
     <%}%>
   	<%if(plugins.pluginlist.indexOf('confui')>-1){%>
       <%if(plugins.pluginlist.indexOf('bootstrap')>-1){%>
-        ,"confui":"~0.0.4"
+        ,"confui":"~0.1.1"
   	  <%}else{%>
-        "confui":"~0.0.4"
+        "confui":"~0.1.1"
       <%}%>
    <%}%>
    <%if(useangular){%>
     <%if(plugins.pluginlist.indexOf('confui')>-1 || plugins.pluginlist.indexOf('bootstrap')>-1){%>
-    "angular": "~1.2.0",
+    ,"angular": "~1.2.0",
     "angular-cookies": "~1.2.0",
     "angular-animate": "~1.2.0",
     "angular-route": "~1.2.0"
    <%}else{%>
-   ,"angular": "~1.2.0",
+   "angular": "~1.2.0",
     "angular-cookies": "~1.2.0",
     "angular-animate": "~1.2.0",
     "angular-route": "~1.2.0"

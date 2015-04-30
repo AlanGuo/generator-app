@@ -88,7 +88,7 @@ module.exports = generators.Base.extend({
 		this.template('package.json','package.json',options);
 		this.template('bower.json','bower.json',options);
 		this.template('Gruntfile.js','Gruntfile.js',options);
-		this.src.copy('.jshintrc','.jshintrc',true);
+		this.template('.jshintrc','.jshintrc',options);
 
 		//复制首页文件
 		this.template('app/index.html','app/index.html',options);

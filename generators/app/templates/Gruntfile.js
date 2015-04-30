@@ -428,24 +428,17 @@ module.exports = function (grunt) {
           dest: '<%%= yeoman.dist %>/image',
           src: ['generated/*']
         //seajs
-        }
-        , {
+        }, {
           expand: true,
           cwd: 'app/font',
           dest: '<%%= yeoman.dist %>/font',
           src: ['*.*']
-        //seajs
-        }
-        <%if(seajs){%>
-        ,{
+        }<%if(seajs){%>,{
           expand:true,
           cwd:'spm_modules/seajs/2.3.0/dist/',
           dest:'<%%= yeoman.dist %>/script',
           src:['sea.js']
-        }
-        <%}%>
-        <%if(compass && bootstrap){%>
-        ,{
+        }<%}%><%if(compass && bootstrap){%>,{
           expand: true,
           cwd: '.',
           src: ['bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*'],
