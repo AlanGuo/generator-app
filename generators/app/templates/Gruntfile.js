@@ -562,6 +562,7 @@ module.exports = function (grunt) {
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
+    'jshint',
     'concat',
     <%if(tmodjs){%>
     'tmod',
@@ -586,6 +587,7 @@ module.exports = function (grunt) {
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
+    'jshint',
     'concat',
     <%if(tmodjs){%>
     'tmod',
