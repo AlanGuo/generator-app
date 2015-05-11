@@ -217,9 +217,8 @@ module.exports = function (grunt) {
       app: {
         src: ['<%%= yeoman.app %>/index.html'],
         ignorePath:  /\.\.\//
-      }
-      <%if(compass){%>
-      ,sass: {
+      }<%if(compass){%>,
+      sass: {
         src: ['<%%= yeoman.app %>/style/**/*.{scss,sass}'],
         ignorePath: /(\.\.\/){1,2}bower_components\//
       }
@@ -496,23 +495,22 @@ module.exports = function (grunt) {
     <%if(seajs && usecombo){%>
     combo: {
         dist:{
-          options: {
-            base:'/',
-            destPath:'/',
-            dest:'dist/script/app.combo.js'
-          },{
-            files: [{
-                expand: true,
-                cwd: './',
-                src: ['app/script/entry.js','app/script/home.js','app/script/about.js','app/script/contact.js']
-            }]
-          }
+        options: {
+          base:'/',
+          destPath:'/',
+          dest:'dist/script/app.combo.js'
+          },
+          files: [{
+              expand: true,
+              cwd: './',
+              src: ['app/script/entry.js','app/script/home.js','app/script/about.js','app/script/contact.js']
+          }]
         }
       },
       rewrite: {
         dist: {
           src: 'dist/index.html',
-          editor: function(contents, filePath) {
+          editor: function(contents) {
             return contents.replace(/<\!\-\-\{\{combo\}\}\-\->/ig,'<script type="text/javascript" src="script/app.combo.js"></script>');
           }
         }

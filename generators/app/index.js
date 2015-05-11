@@ -19,7 +19,7 @@ module.exports = generators.Base.extend({
 		    this.prompt({
 		      type    : 'confirm',
 		      name    : 'useangular',
-		      message : 'Use angular',
+		      message : 'use angular',
 		      default : false // Default to current folder name
 		    }, function (answers2) {
 		      options.useangular = answers2.useangular;
@@ -31,7 +31,7 @@ module.exports = generators.Base.extend({
 		      		'bootstrap',
 		      		'confui',
 		      		'spaseed',
-		      		'karma',
+		      		'karma'
 		      	];
 		      if(options.useangular){
 		      	choices = [

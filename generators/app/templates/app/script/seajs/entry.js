@@ -1,6 +1,6 @@
 'use strict';
 
-define(function(require, exports) {
+define(function(require) {
 	var router = require('app/script/router').router;
 	var eventHandler = require('app/script/event').eventHandler;
 	

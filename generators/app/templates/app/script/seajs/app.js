@@ -13,13 +13,15 @@ define(function(require, exports) {
 				var pageView = result[viewName];
 				self._container.innerHTML = pageView.show();
 				if(pageView.events && !pageView.events.binded){
-				//绑定事件
-				for(var p in pageView.events){
-					eventHandler.on(p,pageView.events[p]);
+					//绑定事件
+					for(var p in pageView.events){
+						eventHandler.on(p,pageView.events[p]);
+					}
+					pageView.events.binded = true;
 				}
-				pageView.events.binded = true;
-			}
-			pageView.init && pageView.init();
+				if(pageView.init){
+					pageView.init();
+				}
 			});
 		},
 		/**

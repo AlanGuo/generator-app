@@ -13,6 +13,7 @@
 			<%if(plugins.pluginlist.indexOf('tmodjs')>-1){%>
 			return <%=name%>tmpl.template('home')();
 			<%}else{%>
+				/*jshint multistr: true */
 				return 'My father was a self-taught mandolin player. \
 				He was one of the best string instrument players in our town. \
 				He could not read music, but if he heard a tune a few times, \

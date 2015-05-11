@@ -15,7 +15,9 @@
 				}
 				this[viewName].events.binded = true;
 			}
-			this[viewName].init && this[viewName].init();
+			if(this[viewName].init){
+				this[viewName].init();
+			}
 		},
 		/**
 		 * 隐藏主界面
