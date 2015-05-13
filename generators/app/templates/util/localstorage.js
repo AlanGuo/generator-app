@@ -3,7 +3,9 @@ var localStorageUtil = {
   count:0,
 
   updateLocalStorage:function(obj,needtoload){
-    localStorageUtil.count++;
+    if(needtoload){
+      localStorageUtil.count++;
+    }
     localStorageUtil.loadScript(obj,function(){
         if(window[obj.file]){
           window[obj.file]();
