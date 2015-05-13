@@ -1,0 +1,153 @@
+<style type="text/css">
+	/* --------------- loading --------------- */
+  /*load 1*/
+  @-webkit-keyframes load{
+    0%{background: #ccc;}
+    100%{background: #666;}
+  }
+  @-moz-keyframes load{
+    0%{background: #ccc;}
+    100%{background: #666;}
+  }
+  @-o-keyframes load{
+    0%{background: #ccc;}
+    100%{background: #666;}
+  }
+  @-ms-keyframes load{
+    0%{background: #ccc;}
+    100%{background: #666;}
+  }
+  @keyframes load{
+    0%{background: #ccc;}
+    100%{background: #666;}
+  }
+
+  /*load 2*/
+  @-webkit-keyframes loadb{
+    0%{background: #ccc;}
+    25%{background: #ccc;}
+    100%{background: #666;}
+  }
+  @-moz-keyframes loadb{
+    0%{background: #ccc;}
+    25%{background: #ccc;}
+    100%{background: #666;}
+  }
+  @-o-keyframes loadb{
+    0%{background: #ccc;}
+    25%{background: #ccc;}
+    100%{background: #666;}
+  }
+  @-ms-keyframes loadb{
+    0%{background: #ccc;}
+    25%{background: #ccc;}
+    100%{background: #666;}
+  }
+  @keyframes loadb{
+    0%{background: #ccc;}
+    25%{background: #ccc;}
+    100%{background: #666;}
+  }
+
+  /*load 3*/
+  @-webkit-keyframes loadc{
+    0%{background: #ccc;}
+    50%{background: #ccc;}
+    100%{background: #666;}
+  }
+  @-moz-keyframes loadc{
+    0%{background: #ccc;}
+    50%{background: #ccc;}
+    100%{background: #666;}
+  }
+  @-o-keyframes loadc{
+    0%{background: #ccc;}
+    50%{background: #ccc;}
+    100%{background: #666;}
+  }
+  @-ms-keyframes loadc{
+    0%{background: #ccc;}
+    50%{background: #ccc;}
+    100%{background: #666;}
+  }
+  @keyframes loadc{
+    0%{background: #ccc;}
+    50%{background: #ccc;}
+    100%{background: #666;}
+  }
+
+  /*load 4*/
+  @-webkit-keyframes loadd{
+    0%{background: #ccc;}
+    75%{background: #ccc;}
+    100%{background: #666;}
+  }
+  @-moz-keyframes loadd{
+    0%{background: #ccc;}
+    75%{background: #ccc;}
+    100%{background: #666;}
+  }
+  @-o-keyframes loadd{
+    0%{background: #ccc;}
+    75%{background: #ccc;}
+    100%{background: #666;}
+  }
+  @-ms-keyframes loadd{
+    0%{background: #ccc;}
+    75%{background: #ccc;}
+    100%{background: #666;}
+  }
+  @keyframes loadd{
+    0%{background: #ccc;}
+    75%{background: #ccc;}
+    100%{background: #666;}
+  }
+  .load-1{
+    -webkit-animation:load 1s ease infinite;
+    -moz-animation:load 1s ease infinite;
+    -o-animation:load 1s ease infinite;
+    -ms-animation:load 1s ease infinite;
+    animation:load 1s ease infinite;
+  }
+  .load-2{
+    -webkit-animation:loadb 1s ease infinite;
+    -moz-animation:loadb 1s ease infinite;
+    -o-animation:loadb 1s ease infinite;
+    -ms-animation:loadb 1s ease infinite;
+    animation:loadb 1s ease infinite;
+  }
+  .load-3{
+    -webkit-animation:loadc 1s ease infinite;
+    -moz-animation:loadc 1s ease infinite;
+    -o-animation:loadc 1s ease infinite;
+    -ms-animation:loadc 1s ease infinite;
+    animation:loadc 1s ease infinite;
+  }
+  .load-4{
+    -webkit-animation:loadd 1s ease infinite;
+    -moz-animation:loadd 1s ease infinite;
+    -o-animation:loadd 1s ease infinite;
+    -ms-animation:loadd 1s ease infinite;
+    animation:loadd 1s ease infinite;
+  }
+  .wrap-loading{
+    padding:.67rem 0;
+    text-align: center;
+    
+  }
+  .wrap-loading span{
+    display: inline-block;
+    width:.83rem;
+    height:.83rem;
+    border-radius: 50%;
+  }
+</style>
+<div class="wrap-loading" id="pageLoad" style="margin-top:40%;">
+  <p>
+    <span class="load-1"></span>
+    <span class="load-2"></span>
+    <span class="load-3"></span>
+    <span class="load-4"></span>
+  </p>
+  <p>正在加载...</p>
+</div>

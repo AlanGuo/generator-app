@@ -7,6 +7,8 @@
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
 
+var fs = require('fs');
+
 <% var tmodjs = false,compass = false, seajs = false, bootstrap = false, karma = false; %>
 <% if(plugins.pluginlist.indexOf('tmodjs')>-1){tmodjs=true} %>
 <% if(plugins.pluginlist.indexOf('compass')>-1){compass=true} %>
@@ -26,6 +28,70 @@ module.exports = function (grunt) {
   var appConfig = {
     app: 'app',
     dist: 'dist'
+  };
+
+  var cdn = '/',
+  localstoragePrefix = cdn+'script/',
+  localstoragePriority = [
+    {key:'sea',pri:2},
+    {key:'app.combo',pri:1}
+  ];
+
+  var localStorageRewriteScript=function(contents,filePath,prefix){
+    //把源代码转换成一个function
+    var filenameArray = filePath.split(/\//).slice(-1)[0].split('.');
+    if(filenameArray.length>2){
+      //有版本号, 删除版本号
+      filenameArray.splice(filenameArray.length-2,1);
+    }
+    return 'window[\''+prefix+filenameArray.join('.')+'\'] = function(){'+contents+'}';
+  };
+  var localStorageRewriteIndex=function(contents,prefix){
+    var versions = {};
+    var scripts = fs.readdirSync('dist/script');
+    //脚本按照优先级排序
+    scripts.sort(function(a,b){
+      var ap = localstoragePriority.filter(function(item){
+        if(a.indexOf(item.key)>-1){
+          return item;
+        }
+      });
+      var bp = localstoragePriority.filter(function(item){
+        if(b.indexOf(item.key)>-1){
+          return item;
+        }
+      });
+
+      if(ap) {
+        ap = ap[0].pri;
+      }
+      if(bp) {
+        bp = bp[0].pri;
+      }
+
+      return bp-ap;
+    });
+
+    for(var i=0;i<scripts.length;i++){
+      var p = scripts[i];
+      var filenameArray = p.split('.');
+      var ext = filenameArray[filenameArray.length-1],
+          version = '',
+          filename = '';
+      if(filenameArray.length>2){
+        //有版本号
+        version = filenameArray[filenameArray.length-2];
+        filename = filenameArray.slice(0,filenameArray.length-2).join('.')+'.'+ext;
+      }
+      else{
+        filename = p;
+      }
+      versions[prefix+filename] = version;
+    }
+    return contents.replace(/\/\*\{\{localstorage\}\}\*\//ig,'window.versions='+JSON.stringify(versions)+';\n'+fs.readFileSync('localstorage.js')).
+                    replace(/\/\*\{\{localstorage\-onload\-start\}\}\*\//ig,'window.onlsload=function(){').
+                    replace(/\/\*\{\{localstorage\-onload\-end\}\}\*\//ig,'}').
+                    replace(/<\!\-\-localstorage\-remove\-start\-\-\>[\s\S]*?<\!\-\-localstorage\-remove\-end\-\-\>/ig,'');
   };
 
   var rewriteRulesSnippet = require('grunt-connect-rewrite/lib/utils').rewriteRequest;
@@ -394,6 +460,19 @@ module.exports = function (grunt) {
           dest: '<%%= yeoman.dist %>'
         }]
       }
+    },
+
+    localstorageScript:{
+      src:'dist/script/*.js',
+      editor:function(contents,filePath){
+        return localStorageRewriteScript(contents, filePath, localstoragePrefix);
+      }
+    },
+    localstorageIndex:{
+        src:'dist/index.html',
+        editor:function(contents){
+          return localStorageRewriteIndex(contents, localstoragePrefix);
+        }
     },
 
     // Copies remaining files to places other tasks can use
