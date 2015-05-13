@@ -9,18 +9,22 @@ var localStorageUtil = {
     localStorageUtil.loadScript(obj,function(){
         if(window[obj.file]){
           window[obj.file]();
+
+          var content = /^function\s*?\(\)\s*?\{([\s\S]*)\}$/i.exec(window[obj.file].toString())[1];
+
+          var pInfo = {
+            'version':versions[obj.file],
+            'script':content
+          };
+          localStorage.setItem(obj.file,JSON.stringify(pInfo));
+
           //回调
           if(--localStorageUtil.count===0){
             if(needtoload){
               window.onlsload && window.onlsload();
             }
           }
-          var content = /function\s*\(\)\{([\s\S]*)\}/i.exec(window[obj.file].toString())[1];
-          var pInfo = {
-            'version':versions[obj.file],
-            'script':content
-          };
-          localStorage.setItem(obj.file,JSON.stringify(pInfo));
+
         }
     },function(){
         if(--localStorageUtil.count===0){
