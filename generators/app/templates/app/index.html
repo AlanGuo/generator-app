@@ -128,19 +128,25 @@
     <!-- endbuild -->
     <%}else if(plugins.pluginlist.indexOf('seajs')>-1){%>
 
+    <!--{{localstorage-remove-start}}-->
     <!-- build:js(.) script/sea.js -->
     <script type="text/javascript" src="spm_modules/seajs/2.3.0/dist/sea.js"></script>
     <!-- endbuild -->
 
+
     <%if(usecombo==true){%>
     <!--{{combo}}-->
     <%}%>
+    <!--{{localstorage-remove-end}}-->
 
     <script type="text/javascript">
+      /*{{localstorage-onload-start}}*/
       seajs.config({
         base:'/'
       });
       seajs.use('app/script/entry.js');
+      /*{{localstorage-onload-end}}*/
+      /*{{localstorage}}*/
     </script>
     
     <%}%>

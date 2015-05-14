@@ -63,7 +63,8 @@ var localStorageUtil = {
 for(var p in window.versions){
   //清空本地存储
   //localStorage.removeItem(p);
-  var pInfo = localStorage.getItem(p);
+  var pInfo = localStorage.getItem(p),
+      forceUpdate = false;
 
   if(!pInfo){
       //如果没有本地存储的内容, 从网络请求资源
@@ -75,11 +76,14 @@ for(var p in window.versions){
     try{
       new Function(pInfo.script)();
     }
-    catch(e){console.log(e)}
+    catch(e){
+      console.log(e);
+      forceUpdate = true;
+    }
 
-    if(pInfo.version !== versions[p]){
+    if(forceUpdate || (pInfo.version !== versions[p])){
       //需要更新localstorage
-      localStorageUtil.updateLocalStorage({file:p,version:window.versions[p]},false);
+      localStorageUtil.updateLocalStorage({file:p,version:window.versions[p]},forceUpdate);
     }
   }
 }

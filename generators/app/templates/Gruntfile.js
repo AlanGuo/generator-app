@@ -462,19 +462,6 @@ module.exports = function (grunt) {
       }
     },
 
-    localstorageScript:{
-      src:'dist/script/*.js',
-      editor:function(contents,filePath){
-        return localStorageRewriteScript(contents, filePath, localstoragePrefix);
-      }
-    },
-    localstorageIndex:{
-        src:'dist/index.html',
-        editor:function(contents){
-          return localStorageRewriteIndex(contents, localstoragePrefix);
-        }
-    },
-
     // Copies remaining files to places other tasks can use
     copy: {
       dist: {
@@ -592,6 +579,33 @@ module.exports = function (grunt) {
           editor: function(contents) {
             return contents.replace(/<\!\-\-\{\{combo\}\}\-\->/ig,'<script type="text/javascript" src="script/app.combo.js"></script>');
           }
+        },
+        localstorageScript:{
+          src:'dist/script/*.js',
+          editor:function(contents,filePath){
+            return localStorageRewriteScript(contents, filePath, localstoragePrefix);
+          }
+        },
+        localstorageIndex:{
+            src:'dist/index.html',
+            editor:function(contents){
+              return localStorageRewriteIndex(contents, localstoragePrefix);
+            }
+        }
+      }
+    <%}else{%>
+      rewrite: {
+        localstorageScript:{
+          src:'dist/script/*.js',
+          editor:function(contents,filePath){
+            return localStorageRewriteScript(contents, filePath, localstoragePrefix);
+          }
+        },
+        localstorageIndex:{
+            src:'dist/index.html',
+            editor:function(contents){
+              return localStorageRewriteIndex(contents, localstoragePrefix);
+            }
         }
       }
     <%}%>
@@ -683,6 +697,8 @@ module.exports = function (grunt) {
     'filerev',
     'usemin',
     'cdnify',
+    'rewrite:localstorageScript',
+    'rewrite:localstorageIndex',
     'htmlmin'
   ]);
 
