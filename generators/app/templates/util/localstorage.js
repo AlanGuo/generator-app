@@ -17,6 +17,7 @@ var localStorageUtil = {
             'script':content
           };
           localStorage.setItem(obj.file,JSON.stringify(pInfo));
+          //window.alert('缓存更新成功！'+obj.file);
 
           //回调
           if(--localStorageUtil.count===0){
@@ -63,8 +64,8 @@ var localStorageUtil = {
 for(var p in window.versions){
   //清空本地存储
   //localStorage.removeItem(p);
-  var pInfo = localStorage.getItem(p),
-      forceUpdate = false;
+  var pInfo = localStorage.getItem(p);
+  var forceUpdate = false;
 
   if(!pInfo){
       //如果没有本地存储的内容, 从网络请求资源
@@ -74,19 +75,27 @@ for(var p in window.versions){
     pInfo = JSON.parse(pInfo);
     //解析javascript
     try{
-      new Function(pInfo.script)();
+      if(pInfo.script){
+        new Function(pInfo.script)();
+      }else{
+        forceUpdate = true;
+      }
     }
     catch(e){
-      console.log(e);
       forceUpdate = true;
+      console.log(e);
     }
 
     if(forceUpdate || (pInfo.version !== versions[p])){
       //需要更新localstorage
+      //强制更新脚本时候，重新启动app
+      //window.alert('准备更新缓存！'+p);
       localStorageUtil.updateLocalStorage({file:p,version:window.versions[p]},forceUpdate);
     }
   }
 }
+
+//window.alert('命中缓存!');
 //开始程序
 if(localStorageUtil.count === 0){
   window.onlsload && window.onlsload();
