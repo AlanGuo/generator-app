@@ -385,15 +385,13 @@
     <script src="script/controller/main.js"></script>
     <script src="script/controller/about.js"></script>
     <!-- endbuild -->
-    <script type="text/javascript">
-      document.getElementById('pageLoad').parentNode.removeChild(document.getElementById('pageLoad'));
-    </script>
     <%}%>
 
     <!--cnzz stat start-->
     <!--replace id and web_id with your own -->
     <script src="http://s11.cnzz.com/z_stat.php?id=1000509387&web_id=1000509387" language="JavaScript"></script>
     <script type="text/javascript">
+      document.getElementById('pageLoad').parentNode.removeChild(document.getElementById('pageLoad'));
       var elem = document.body.querySelector('a[title="站长统计"]');
       elem.innerHTML = '';
       elem.title = '';
