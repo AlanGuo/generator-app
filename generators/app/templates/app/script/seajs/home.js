@@ -9,7 +9,7 @@ define(function(require, exports) {
 		init:function(){
 		},
 		show:function(){
-			ga('send', 'event', 'page', 'view', {'pageName': '#/home'});
+			_czc.push(['_trackEvent', 'page', 'view', 'pageName','#/home']);
 			<%if(plugins.pluginlist.indexOf('tmodjs')>-1){%>
 			return <%=name%>tmpl.template('home')();
 			<%}else{%>

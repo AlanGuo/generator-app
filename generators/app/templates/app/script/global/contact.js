@@ -9,7 +9,8 @@
 		init:function(){
 		},
 		show:function(){
-			ga('send', 'event', 'page', 'view', {'pageName': '#/contact'});
+			_czc.push(['_trackEvent', 'page', 'view', 'pageName','#/contact']);
+			
 			<%if(plugins.pluginlist.indexOf('tmodjs')>-1){%>
 			return <%=name%>tmpl.template('contact')();
 			<%}else{%>
