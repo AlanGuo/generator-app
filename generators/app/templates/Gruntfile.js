@@ -31,11 +31,15 @@ module.exports = function (grunt) {
   };
 
   var cdn = '/',
-  localstoragePrefix = cdn+'script/',
-  localstoragePriority = [
-    {key:'sea',pri:2},
-    {key:'app.combo',pri:1}
-  ];
+      local = '/',
+      localstorageJSPrefix = cdn + 'script/',
+      localstorageCSSPrefix = cdn + 'style/',
+      localstorageCSSLocalPrefix = local + 'style/',
+      //pri越大，加载越靠前
+      localstoragePriority = [
+        {key:'sea',pri:2},
+        {key:'app.combo',pri:1}
+      ];
 
   var localStorageRewriteScript=function(contents,filePath,prefix){
     //把源代码转换成一个function
@@ -46,34 +50,47 @@ module.exports = function (grunt) {
     }
     return 'window[\''+prefix+filenameArray.join('.')+'\'] = function(){'+contents+'}';
   };
+
   var localStorageRewriteIndex=function(contents,prefix){
     var versions = {};
-    var scripts = fs.readdirSync('dist/script');
+    //javascripts
+    var scripts = fs.readdirSync('dist/script'),
+        styles = fs.readdirSync('dist/style');
+
+    var assets = scripts.concat(styles);
+    //console.log(assets);
     //脚本按照优先级排序
-    scripts.sort(function(a,b){
+    assets.sort(function(a,b){
+      //item.key 和 item.ext 都相同
       var ap = localstoragePriority.filter(function(item){
-        if(a.indexOf(item.key)>-1){
+        if(a.indexOf(item.key)>-1 && (a.split('.').slice(-1)[0] === item.ext)){
           return item;
         }
       });
       var bp = localstoragePriority.filter(function(item){
-        if(b.indexOf(item.key)>-1){
+        if(b.indexOf(item.key)>-1  && (b.split('.').slice(-1)[0] === item.ext)){
           return item;
         }
       });
 
-      if(ap) {
+      if(ap && ap[0]) {
         ap = ap[0].pri;
       }
-      if(bp) {
+      else{
+        ap = 0;
+      }
+      if(bp && bp[0]) {
         bp = bp[0].pri;
+      }
+      else{
+        bp = 0;
       }
 
       return bp-ap;
     });
 
-    for(var i=0;i<scripts.length;i++){
-      var p = scripts[i];
+    for(var i=0;i<assets.length;i++){
+      var p = assets[i];
       var filenameArray = p.split('.');
       var ext = filenameArray[filenameArray.length-1],
           version = '',
@@ -86,8 +103,9 @@ module.exports = function (grunt) {
       else{
         filename = p;
       }
-      versions[prefix+filename] = version;
+      versions[prefix[ext]+filename] = {v:version,cdn:prefix[ext+'cdn'],ext:ext};
     }
+
     return contents.replace(/\/\*\{\{localstorage\}\}\*\//ig,'window.versions='+JSON.stringify(versions)+';\n'+fs.readFileSync('localstorage.js')).
                     replace(/\/\*\{\{localstorage\-onload\-start\}\}\*\//ig,'window.onlsload=function(){').
                     replace(/\/\*\{\{localstorage\-onload\-end\}\}\*\//ig,'}').
@@ -117,7 +135,7 @@ module.exports = function (grunt) {
       },
       css:{
         files: ['<%%= yeoman.app %>/style/**/*.css'],
-        tasks: ['newer:jshint:all'],
+        tasks: ['newer:jshint:all','newer:autoprefixer:servecss'],
         options: {
           livereload: '<%%= connect.options.livereload %>'
         }
@@ -145,7 +163,7 @@ module.exports = function (grunt) {
       <%if(compass){%>
       compass: {
         files: ['<%%= yeoman.app %>/style/**/*.{scss,sass}'],
-        tasks: ['css','compass:server', 'autoprefixer']
+        tasks: ['css','compass:server', 'autoprefixer:servecss']
       },
       <%}%>
       gruntfile: {
@@ -268,12 +286,31 @@ module.exports = function (grunt) {
       options: {
         browsers: ['last 1 version']
       },
-      dist: {
+      <%if(compass){%>
+      servecss: {
         files: [{
           expand: true,
           cwd: '.tmp/style/',
           src: '**/*.css',
           dest: '.tmp/style/'
+        }]
+      },
+      <%}else{%>
+        servecss: {
+          files: [{
+            expand: true,
+            cwd: '<%%= yeoman.app %>/style/',
+            src: '**/*.css',
+            dest: '.tmp/style/'
+          }]
+        },
+      <%}%>
+      distcss:{
+        files: [{
+          expand: true,
+          cwd: 'dist/style/',
+          src: '**/*.css',
+          dest: 'dist/style/'
         }]
       }
     },
@@ -421,7 +458,9 @@ module.exports = function (grunt) {
           conservativeCollapse: true,
           collapseBooleanAttributes: true,
           removeCommentsFromCDATA: true,
-          removeOptionalTags: true
+          removeOptionalTags: true,
+          minifyJS:true,
+          minifyCSS:true
         },
         files: [{
           expand: true,
@@ -531,6 +570,12 @@ module.exports = function (grunt) {
         <%}%>
         'imagemin',
         'svgmin'
+      ],
+      autoprefixerserve:[
+        'autoprefixer:servecss'
+      ],
+      autoprefixerdist:[
+        'autoprefixer:distcss'
       ]
     },
 
@@ -558,8 +603,27 @@ module.exports = function (grunt) {
     },
     <%}%>
 
-    <%if(seajs && usecombo){%>
-    combo: {
+    rewrite: {
+        localstorageScript:{
+          src:'dist/script/*.js',
+          editor:function(contents,filePath){
+            return localStorageRewriteScript(contents, filePath, localstorageJSPrefix);
+          }
+        },
+        localstorageIndex:{
+            src:'dist/index.html',
+            editor:function(contents){
+              return localStorageRewriteIndex(contents, {js:localstorageJSPrefix,css:localstorageCSSLocalPrefix,csscdn:localstorageCSSPrefix});
+            }
+        }<%if(seajs && usecombo){%>,
+        dist: {
+          src: 'dist/index.html',
+          editor: function(contents) {
+            return contents.replace(/<\!\-\-\{\{combo\}\}\-\->/ig,'<script type="text/javascript" src="script/app.combo.js"></script>');
+          }
+        }
+      },
+      combo: {
         dist:{
         options: {
           base:'/',
@@ -572,42 +636,9 @@ module.exports = function (grunt) {
               src: ['app/script/entry.js','app/script/home.js','app/script/about.js','app/script/contact.js']
           }]
         }
-      },
-      rewrite: {
-        dist: {
-          src: 'dist/index.html',
-          editor: function(contents) {
-            return contents.replace(/<\!\-\-\{\{combo\}\}\-\->/ig,'<script type="text/javascript" src="script/app.combo.js"></script>');
-          }
-        },
-        localstorageScript:{
-          src:'dist/script/*.js',
-          editor:function(contents,filePath){
-            return localStorageRewriteScript(contents, filePath, localstoragePrefix);
-          }
-        },
-        localstorageIndex:{
-            src:'dist/index.html',
-            editor:function(contents){
-              return localStorageRewriteIndex(contents, localstoragePrefix);
-            }
-        }
       }
     <%}else{%>
-      rewrite: {
-        localstorageScript:{
-          src:'dist/script/*.js',
-          editor:function(contents,filePath){
-            return localStorageRewriteScript(contents, filePath, localstoragePrefix);
-          }
-        },
-        localstorageIndex:{
-            src:'dist/index.html',
-            editor:function(contents){
-              return localStorageRewriteIndex(contents, localstoragePrefix);
-            }
-        }
-      }
+    }
     <%}%>
   });
 
@@ -620,7 +651,7 @@ module.exports = function (grunt) {
       'clean:server',
       'wiredep',
       'concurrent:server',
-      'autoprefixer',
+      'concurrent:autoprefixerserve',
       <%if(tmodjs){%>
       'tmod',
       <%}%>
@@ -652,7 +683,6 @@ module.exports = function (grunt) {
     'wiredep',
     'useminPrepare',
     'concurrent:dist',
-    'autoprefixer',
     'jshint',
     'concat',
     <%if(tmodjs){%>
@@ -669,6 +699,7 @@ module.exports = function (grunt) {
     
     'cssmin',
     'usemin',
+    'concurrent:autoprefixerdist',
     'cdnify'
   ]);
 
@@ -696,6 +727,7 @@ module.exports = function (grunt) {
     'uglify',
     'filerev',
     'usemin',
+    'concurrent:autoprefixerdist',
     'cdnify',
     'rewrite:localstorageScript',
     'rewrite:localstorageIndex',

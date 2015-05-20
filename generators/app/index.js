@@ -79,6 +79,7 @@ module.exports = generators.Base.extend({
 		this.mkdir('app/view');
 		this.mkdir('app/image');
 		this.mkdir('bower_components');
+		this.mkdir('util');
 		this.mkdir('test');
 		this.mkdir('dist');
 	},
@@ -93,6 +94,9 @@ module.exports = generators.Base.extend({
 		//复制首页文件
 		this.template('app/index.html','app/index.html',options);
 		this.src.copy('app/favicon.ico','app/favicon.ico',true);
+
+		//复制工程辅助文件
+		this.src.copy('util/localstorage.js','util/localstorage.js',true);
 
 		//css
 		var pluginlist = options.plugins.pluginlist;
