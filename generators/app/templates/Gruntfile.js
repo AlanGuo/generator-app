@@ -106,7 +106,7 @@ module.exports = function (grunt) {
       versions[prefix[ext]+filename] = {v:version,cdn:prefix[ext+'cdn'],ext:ext};
     }
 
-    return contents.replace(/\/\*\{\{localstorage\}\}\*\//ig,'window.versions='+JSON.stringify(versions)+';\n'+fs.readFileSync('localstorage.js')).
+    return contents.replace(/\/\*\{\{localstorage\}\}\*\//ig,'window.versions='+JSON.stringify(versions)+';\n'+fs.readFileSync('util/localstorage.js')).
                     replace(/\/\*\{\{localstorage\-onload\-start\}\}\*\//ig,'window.onlsload=function(){').
                     replace(/\/\*\{\{localstorage\-onload\-end\}\}\*\//ig,'}').
                     replace(/<\!\-\-localstorage\-remove\-start\-\-\>[\s\S]*?<\!\-\-localstorage\-remove\-end\-\-\>/ig,'');

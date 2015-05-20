@@ -35,7 +35,8 @@
     "grunt-wiredep":"^2.0.0",
     "jshint-stylish":"^1.0.1",
     "load-grunt-tasks":"^3.1.0",
-    "time-grunt":"^1.1.0"
+    "time-grunt":"^1.1.0",
+    "grunt-rewrite":"^1.0.1"
     <%if(plugins.pluginlist.indexOf('compass')>-1){%>
     ,"grunt-contrib-compass":"^1.0.3"
     <%}%>
@@ -43,8 +44,7 @@
     ,"grunt-alan-tmod":"^0.2.1"
     <%}%>
     <%if(plugins.pluginlist.indexOf('seajs')>-1){%>
-    ,"grunt-seajs-combo":"^1.0.8",
-    "grunt-rewrite":"^1.0.1"
+    ,"grunt-seajs-combo":"^1.0.8"
     <%}%>
     <%if(plugins.pluginlist.indexOf('karma')>-1){%>
     ,"karma": "^0.12.31",

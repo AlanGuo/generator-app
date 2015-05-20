@@ -331,7 +331,9 @@
     <!-- build:js({app,.}) script/vendors.js -->
     <%if(plugins.pluginlist.indexOf('tmodjs')){%>
     <%if(!plugins.pluginlist.indexOf('seajs')){%>
+    <!--{{localstorage-remove-start}}-->
     <script type="text/javascript" src="view/compiled/view.js"></script>
+    <!--{{localstorage-remove-end}}-->
     <%}%>
     <%}%>
     <!-- bower:js -->
@@ -342,6 +344,7 @@
     
     <%if(useangular==false){%>
     <%if(plugins.pluginlist.indexOf('seajs')==-1){%>
+    <!--{{localstorage-remove-start}}-->
     <!-- build:js({app,.}) script/app.combo.js -->
     <script type="text/javascript" src="script/app.js"></script>
     <script type="text/javascript" src="script/event.js"></script>
@@ -351,9 +354,7 @@
     <script type="text/javascript" src="script/contact.js"></script>
     <script type="text/javascript" src="script/entry.js"></script>
     <!-- endbuild -->
-    <script type="text/javascript">
-      document.getElementById('pageLoad').parentNode.removeChild(document.getElementById('pageLoad'));
-    </script>
+    <!--{{localstorage-remove-end}}-->
     <%}else if(plugins.pluginlist.indexOf('seajs')>-1){%>
 
     <!--{{localstorage-remove-start}}-->
@@ -369,13 +370,11 @@
 
     <script type="text/javascript">
       /*{{localstorage-onload-start}}*/
-      document.getElementById('pageLoad').parentNode.removeChild(document.getElementById('pageLoad'));
       seajs.config({
         base:'/'
       });
       seajs.use('app/script/entry.js');
       /*{{localstorage-onload-end}}*/
-      /*{{localstorage}}*/
     </script>
     
     <%}%>
@@ -395,6 +394,7 @@
       var elem = document.body.querySelector('a[title="站长统计"]');
       elem.innerHTML = '';
       elem.title = '';
+      /*{{localstorage}}*/
     </script>
     <!--cnzz stat end-->
 </body>
