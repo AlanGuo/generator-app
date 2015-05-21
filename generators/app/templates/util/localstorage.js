@@ -152,17 +152,17 @@ var localStorageUtil = {
 
   start:function(){
     if(localStorageUtil.jscount===0) {
-      //统一解析javascript
-      for(var p in window.versions){
-        if(window[p]){
-          //网络拉取
-          window[p]();
-        }
-        else{
-          //localstorage
-          var pInfo = localStorage.getItem(p);
-          pInfo = JSON.parse(pInfo);
-          if(pInfo.ext === 'js'){
+        //统一解析javascript
+        for(var p in window.versions){
+          if(window.versions[p].ext === 'js'){
+          if(window[p]){
+            //网络拉取
+            window[p]();
+          }
+          else{
+            //localstorage
+            var pInfo = localStorage.getItem(p);
+            pInfo = JSON.parse(pInfo);
             if(!window.versions[p].loaded){
               new Function(pInfo.content)();
             }
@@ -173,7 +173,8 @@ var localStorageUtil = {
         window.onlsload && window.onlsload();
       }
     }
-};
+  }
+}
 
 var delayToParse = false;
 
@@ -201,7 +202,7 @@ for(var p in window.versions){
         if(pInfo.content){
           new Function(pInfo.content)();
           //已经解析过
-          windows.versions[p].loaded = true;
+          window.versions[p].loaded = true;
         }else{
           forceUpdate = true;
         }
