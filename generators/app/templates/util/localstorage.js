@@ -11,8 +11,7 @@ var localStorageUtil = {
       //js
       localStorageUtil.loadScript(obj,function(){
           if(window[obj.file]){
-            window[obj.file]();
-
+            //window[obj.file]();
             var content = /^function\s*?\(\)\s*?\{([\s\S]*)\}$/i.exec(window[obj.file].toString())[1];
 
             var pInfo = {
@@ -24,15 +23,19 @@ var localStorageUtil = {
             //window.alert('缓存更新成功！'+obj.file);
 
             //回调
+            if(localStorageUtil.jscount>0){
+              --localStorageUtil.jscount;
+              if(needtoload){
+                localStorageUtil.start();
+              }
+            }
+          }
+      },function(){
+          if(localStorageUtil.jscount>0){
             --localStorageUtil.jscount;
             if(needtoload){
               localStorageUtil.start();
             }
-          }
-      },function(){
-          --localStorageUtil.jscount;
-          if(needtoload){
-            localStorageUtil.start();
           }
       });
     }
@@ -148,11 +151,31 @@ var localStorageUtil = {
   },
 
   start:function(){
-    if(localStorageUtil.jscount===0 && localStorageUtil.csscount===0){
+    if(localStorageUtil.jscount===0) {
+      //统一解析javascript
+      for(var p in window.versions){
+        if(window[p]){
+          //网络拉取
+          window[p]();
+        }
+        else{
+          //localstorage
+          var pInfo = localStorage.getItem(p);
+          pInfo = JSON.parse(pInfo);
+          if(pInfo.ext === 'js'){
+            if(!window.versions[p].loaded){
+              new Function(pInfo.content)();
+            }
+          }
+        }
+      }
+      if(localStorageUtil.csscount===0){
         window.onlsload && window.onlsload();
+      }
     }
-  }
 };
+
+var delayToParse = false;
 
 for(var p in window.versions){
   //清空本地存储
@@ -165,16 +188,20 @@ for(var p in window.versions){
 
   if(!pInfo){
       //如果没有本地存储的内容, 从网络请求资源
+      delayToParse = true;
+      //一旦有js从网络拉取，就停止对剩余js的解析
       localStorageUtil.updateLocalStorage({file:p,v:window.versions[p].v,ext:window.versions[p].ext,cdn:window.versions[p].cdn},true);
   }
   else{
     pInfo = JSON.parse(pInfo);
 
-    if(pInfo.ext === 'js'){
-      //解析javascript
+    if(pInfo.ext === 'js' && !delayToParse){
+      //解析javascript，检测是否有解析出错的脚本
       try{
         if(pInfo.content){
           new Function(pInfo.content)();
+          //已经解析过
+          windows.versions[p].loaded = true;
         }else{
           forceUpdate = true;
         }
@@ -207,6 +234,9 @@ for(var p in window.versions){
       //需要更新localstorage
       //强制更新脚本时候，重新启动app
       //window.alert('准备更新缓存！'+p);
+      if(forceUpdate){
+        delayToParse = true;
+      }
       localStorageUtil.updateLocalStorage({file:p,v:window.versions[p].v,ext:window.versions[p].ext,cdn:window.versions[p].cdn},forceUpdate);
     }
   }
