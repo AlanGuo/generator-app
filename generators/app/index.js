@@ -93,22 +93,22 @@ module.exports = generators.Base.extend({
 
 		//复制首页文件
 		this.template('app/index.html','app/index.html',options);
-		this.src.copy('app/favicon.ico','app/favicon.ico',true);
+		this.src.copy('app/favicon.ico','app/favicon.ico');
 
 		//复制工程辅助文件
-		this.src.copy('util/localstorage.js','util/localstorage.js',true);
+		this.src.copy('util/localstorage.js','util/localstorage.js');
 
 		//css
 		var pluginlist = options.plugins.pluginlist;
 		if(pluginlist.indexOf('compass')>-1){
-			this.src.copy('app/style/main.scss','app/style/main.scss',true);
+			this.src.copy('app/style/main.scss','app/style/main.scss');
 		}
 		else{
-			this.src.copy('app/style/main.css','app/style/main.css',true);
+			this.src.copy('app/style/main.css','app/style/main.css');
 		}
 
 		//image
-		this.src.copy('app/image/yeoman.png','app/image/yeoman.png',true);
+		this.src.copy('app/image/yeoman.png','app/image/yeoman.png');
 
 		if(!options.useangular && pluginlist.indexOf('seajs')==-1){
 			//javascript
@@ -139,19 +139,19 @@ module.exports = generators.Base.extend({
 		}
 
 		if(pluginlist.indexOf('tmodjs')>-1 || options.useangular){
-			this.src.copy('app/view/home.html','app/view/home.html',true);
-			this.src.copy('app/view/contact.html','app/view/contact.html',true);
-			this.src.copy('app/view/about.html','app/view/about.html',true);
+			this.src.copy('app/view/home.html','app/view/home.html');
+			this.src.copy('app/view/contact.html','app/view/contact.html');
+			this.src.copy('app/view/about.html','app/view/about.html');
 		}
 
 		//test
-		this.src.copy('test/.jshintrc','test/.jshintrc',true);
+		this.src.copy('test/.jshintrc','test/.jshintrc');
 
 		if(pluginlist.indexOf('karma')>-1){
-			this.src.copy('test/karma.conf.js','test/karma.conf.js',true);
+			this.src.copy('test/karma.conf.js','test/karma.conf.js');
 		}
 
-		this.src.copy('README.MD','README.MD',true);
+		this.src.copy('README.MD','README.MD');
 	},
 
 	install:function(){
