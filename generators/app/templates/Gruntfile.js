@@ -135,7 +135,7 @@ module.exports = function (grunt) {
       },
       css:{
         files: ['<%%= yeoman.app %>/style/**/*.css'],
-        tasks: ['newer:jshint:all','newer:autoprefixer:servecss'],
+        tasks: ['newer:jshint:all','newer:autoprefixer'],
         options: {
           livereload: '<%%= connect.options.livereload %>'
         }
@@ -163,7 +163,7 @@ module.exports = function (grunt) {
       <%if(compass){%>
       compass: {
         files: ['<%%= yeoman.app %>/style/**/*.{scss,sass}'],
-        tasks: ['css','compass:server', 'autoprefixer:servecss']
+        tasks: ['css','compass:server', 'autoprefixer']
       },
       <%}%>
       gruntfile: {
@@ -303,16 +303,8 @@ module.exports = function (grunt) {
             src: '**/*.css',
             dest: '.tmp/style/'
           }]
-        },
+        }
       <%}%>
-      distcss:{
-        files: [{
-          expand: true,
-          cwd: 'dist/style/',
-          src: '**/*.css',
-          dest: 'dist/style/'
-        }]
-      }
     },
 
     // Automatically inject Bower components into the app
@@ -570,12 +562,6 @@ module.exports = function (grunt) {
         <%}%>
         'imagemin',
         'svgmin'
-      ],
-      autoprefixerserve:[
-        'autoprefixer:servecss'
-      ],
-      autoprefixerdist:[
-        'autoprefixer:distcss'
       ]
     },
 
@@ -651,7 +637,7 @@ module.exports = function (grunt) {
       'clean:server',
       'wiredep',
       'concurrent:server',
-      'concurrent:autoprefixerserve',
+      'autoprefixer',
       <%if(tmodjs){%>
       'tmod',
       <%}%>
@@ -681,6 +667,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'wiredep',
+    'autoprefixer',
     'useminPrepare',
     'concurrent:dist',
     'jshint',
@@ -699,13 +686,13 @@ module.exports = function (grunt) {
     
     'cssmin',
     'usemin',
-    'concurrent:autoprefixerdist',
     'cdnify'
   ]);
 
   grunt.registerTask('buildmin', [
     'clean:dist',
     'wiredep',
+    'autoprefixer',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
@@ -727,7 +714,6 @@ module.exports = function (grunt) {
     'uglify',
     'filerev',
     'usemin',
-    'concurrent:autoprefixerdist',
     'cdnify',
     'rewrite:localstorageScript',
     'rewrite:localstorageIndex',
