@@ -19,7 +19,10 @@ var localStorageUtil = {
               'content':content,
               'ext':obj.ext
             };
-            localStorage.setItem(obj.file, JSON.stringify(pInfo));
+            try{
+              localStorage.setItem(obj.file, JSON.stringify(pInfo));
+          }
+          catch(e){}
             //window.alert('缓存更新成功！'+obj.file);
 
             //回调
@@ -88,7 +91,10 @@ var localStorageUtil = {
           'content':content,
           'ext':obj.ext
         };
-        localStorage.setItem(obj.file,JSON.stringify(pInfo));
+        try{
+          localStorage.setItem(obj.file,JSON.stringify(pInfo));
+      }
+      catch(e){}
 
         if(localStorageUtil.csscount>0){
           --localStorageUtil.csscount;
@@ -161,11 +167,17 @@ var localStorageUtil = {
           }
           else{
             //localstorage
-            var pInfo = localStorage.getItem(p);
-            pInfo = JSON.parse(pInfo);
-            if(!window.versions[p].loaded){
-              new Function(pInfo.content)();
+            var pInfo = null;
+            try{
+              localStorage.getItem(p);
             }
+            catch(e){}
+            if(pInfo){
+              pInfo = JSON.parse(pInfo);
+              if(!window.versions[p].loaded){
+                new Function(pInfo.content)();
+              }
+          }
           }
         }
       }
@@ -184,10 +196,16 @@ for(var p in window.versions){
   //   localStorage.removeItem(p);
   // }
 
-  var pInfo = localStorage.getItem(p);
+  var pInfo = null;
+  try{
+    pInfo = localStorage.getItem(p);
+  }
+  catch(e){}
+
   var forceUpdate = false;
 
   if(!pInfo){
+
       //如果没有本地存储的内容, 从网络请求资源
       delayToParse = true;
       //一旦有js从网络拉取，就停止对剩余js的解析
