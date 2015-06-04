@@ -1,0 +1,94 @@
+/*
+website：aladingo2o
+date:2015/4/8;
+author:alandlguo;
+*/
+/* h5 common css */
+html{font-size:62.5%;-webkit-touch-callout: none;-webkit-appearance:none;height:100%;}/* 10÷16=62.5% */
+body{font-size:1.2rem;
+  background-color: #FFF;
+  color:#666;
+  font-family: sans-serif;
+  line-height: 1.46rem;
+  -webkit-user-select: none;
+    -moz-user-select: none;
+    -webkit-overflow-scrolling:touch;
+    height:100%;
+    overflow: hidden;
+ }
+ .page-wrapper{
+ 	height: 100%;
+ 	overflow: hidden;
+ }
+ .scroll-content{
+  height: 100%;
+  overflow: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+ul, li, ol, p, body, h1, input{margin:0;padding:0;}
+ul, li{list-style: none}
+a{text-decoration: none;color:#888;}
+input{background: #e8e8e8;border:0 none;border-radius:0; -webkit-appearance : none ;}
+img{display: block;border:0 none;}
+
+
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+/*------- media query -------*/
+@media only screen and (min-width: 320px){
+    html {
+       /*  font-size: 62.5%!important;10÷16=62.5% */
+        font-size: 10px!important;  
+    }
+}
+@media only screen and (min-width: 376px){
+    html {
+       /*  font-size: 75%!important; 12÷16=75% */
+        font-size: 12px!important;
+    }
+}
+@media only screen and (min-width: 385px){
+    html {
+       /*  font-size: 88%!important; 14÷16=88% */
+        font-size: 14px!important;
+    }
+}
+@media only screen and (min-width: 481px){
+    html {
+       /*  font-size: 94%!important; 15.04÷16=94% */
+        font-size: 15px!important;
+  }
+}
+  
+@media only screen and (min-width: 561px){
+    html {
+       /*  font-size: 112%!important; 17.44÷16=109% *//* 18÷16=112% */
+        font-size: 17px!important;
+    }
+}
+@media only screen and (min-width: 641px){
+    html {
+        /* font-size: 138%!important; 20÷16=125% *//* 22÷16=138% */
+        font-size: 22px!important;
+    }
+}
+
+@media only screen and (min-width: 829px){ 
+    html {
+        /*font-size: 150%!important;  24÷16=150% */
+        font-size: 24px!important;
+    }
+}
+@media only screen and (min-width: 1281px){ 
+    html {
+        /*font-size: 188%!important;  30÷16=188% */
+        font-size: 30px!important;
+    }
+}

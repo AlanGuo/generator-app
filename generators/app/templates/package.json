@@ -61,7 +61,7 @@
     "dependencies": {
       "seajs": "2.3.0"
       <%if(plugins.pluginlist.indexOf('spaseed')>-1){%>
-      ,"spaseed":"1.1.2"
+      ,"spaseed":"1.1.14"
       <%}%>
     }
   }
