@@ -355,7 +355,10 @@
     <script type="text/javascript" src="script/entry.js"></script>
     <!-- endbuild -->
     <!--{{localstorage-remove-end}}-->
-    <%}else if(plugins.pluginlist.indexOf('seajs')>-1){%>
+    <script type="text/javascript">
+      /*{{localstorage}}*/
+    </script>
+    <%}else{%>
 
     <!--{{localstorage-remove-start}}-->
     <!-- build:js(.) script/sea.js -->
@@ -377,6 +380,7 @@
         seajs.use('app/script/entry.js');
       }
       /*{{localstorage-onload-end}}*/
+      /*{{localstorage}}*/
     </script>
     
     <%}%>
@@ -387,18 +391,5 @@
     <script src="script/controller/about.js"></script>
     <!-- endbuild -->
     <%}%>
-
-    <!--baidu stat start-->
-    <!--replace hm.js?<id> with your id-->
-    <script>
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?a2ede337a0b21b2991bd02c69befdc07";
-      var s = document.getElementsByTagName("script")[0]; 
-      s.parentNode.insertBefore(hm, s);
-    })();
-    </script>
-    <!--baidu stat end-->
 </body>
 </html>
