@@ -31,7 +31,8 @@ module.exports = generators.Base.extend({
 		      		'bootstrap',
 		      		'confui',
 		      		'spaseed',
-		      		'karma'
+		      		'karma',
+		      		'backend'
 		      	];
 		      if(options.useangular){
 		      	choices = [
@@ -82,6 +83,11 @@ module.exports = generators.Base.extend({
 		this.mkdir('util');
 		this.mkdir('test');
 		this.mkdir('dist');
+
+		var pluginlist = options.plugins.pluginlist;
+		if(pluginlist.indexOf('backend')>-1){
+			this.mkdir('backend');
+		}
 	},
 
 	writing:function(){
@@ -151,6 +157,11 @@ module.exports = generators.Base.extend({
 			this.src.copy('test/karma.conf.js','test/karma.conf.js');
 		}
 
+		//backend
+		if(pluginlist.indexOf('backend')>-1){
+			this.src.copy('backend/requesthandler.js','backend/requesthandler.js');
+		}
+
 		this.src.copy('README.MD','README.MD');
 	},
 
@@ -212,6 +223,10 @@ module.exports = generators.Base.extend({
 			npmPackage.push('grunt-karma');
 			npmPackage.push('karma-jasmine');
 			npmPackage.push('karma-phantomjs-launcher');
+		}
+		if(pluginlist.indexOf('backend')>-1){
+			//backend
+			npmPackage.push('grunt-task-rerun');
 		}
 		if(options.useangular){
 			bowerPackage.push('angular');

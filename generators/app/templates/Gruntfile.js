@@ -9,12 +9,19 @@
 
 var fs = require('fs');
 
-<% var tmodjs = false,compass = false, seajs = false, bootstrap = false, karma = false; %>
+<% var tmodjs = false,compass = false, seajs = false, bootstrap = false, karma = false, backend = false; %>
 <% if(plugins.pluginlist.indexOf('tmodjs')>-1){tmodjs=true} %>
 <% if(plugins.pluginlist.indexOf('compass')>-1){compass=true} %>
 <% if(plugins.pluginlist.indexOf('seajs')>-1){seajs=true} %>
 <% if(plugins.pluginlist.indexOf('bootstrap')>-1){bootstrap=true} %>
 <% if(plugins.pluginlist.indexOf('karma')>-1){karma=true} %>
+<% if(plugins.pluginlist.indexOf('backend')>-1){backend=true} %>
+
+<%if(backend){%>
+//for cgi
+var bodyParser = require('body-parser');
+var path = require('path');
+<%}%>
 
 module.exports = function (grunt) {
 
@@ -40,6 +47,31 @@ module.exports = function (grunt) {
         {key:'sea',pri:2},
         {key:'app.combo',pri:1}
       ];
+
+  <%if(backend){%>
+  //for cgi
+  //后台相关配置
+  var webconfig = {
+    'handler':{
+        'prefix':'/cgi-bin',
+        'module':'backend/requesthandler'
+    },
+    'port':8080,
+    'expires':[{
+      'fileMatch': '.gif|png|jpg|jpeg|js|css|mp3|ogg',
+      'maxAge': 606024365
+    }],
+    'log':'web.log',
+    'index':'index.html',
+    'singlePage': true,
+    'webSocket':{
+      'handle':{
+          'prefix':'websocket'
+      },
+      'sub-protocol':['echo-protocol-pc','echo-protocol-mobile']
+    }
+  };
+  <%}%>
 
   var localStorageRewriteScript=function(contents,filePath,prefix){
     //把源代码转换成一个function
@@ -112,6 +144,36 @@ module.exports = function (grunt) {
                     replace(/<\!\-\-localstorage\-remove\-start\-\-\>[\s\S]*?<\!\-\-localstorage\-remove\-end\-\-\>/ig,'');
   };
 
+  <%if(backend){%>
+  //for cgi
+  var createHandlerRecursive = function(cgirouteParam, handleParam, prefix){
+
+    var makeHandler = function(handler){
+      return function(pathname, request, response){
+        response.writeHead('200');
+        response.writeHead('Content-Type','appliction/json');
+        response.end(handler,'utf-8');
+      };
+    };
+
+    for(var p in handleParam){
+      if(/function/i.test(typeof handleParam[p])){
+        cgirouteParam[prefix+'/'+p] = handleParam[p];
+      }
+      else if(/object/i.test(typeof handleParam[p])){
+        //cgirouteParam[prefix+'/'+p] = {};
+        createHandlerRecursive(cgirouteParam, handleParam[p],prefix+'/'+p);
+      }
+      else if(/string/i.test(typeof handleParam[p])){
+        //字符串直接输出
+        cgirouteParam[prefix+'/'+p] = makeHandler(handleParam[p]);
+      }
+    }
+
+  };
+  <%}%>
+
+
   var rewriteRulesSnippet = require('grunt-connect-rewrite/lib/utils').rewriteRequest;
 
   // Define the configuration for all the tasks
@@ -166,6 +228,19 @@ module.exports = function (grunt) {
         tasks: ['css','compass:server', 'autoprefixer']
       },
       <%}%>
+
+
+      <%if(backend){%>
+      //for cgi
+      backend:{
+        files: ['backend/**/*.js'],
+        tasks:['rerun:conn:connect:livereload:keepalive:go'],
+        options: {
+          livereload: '<%= connect.options.livereload %>'
+        }
+      },
+      <%}%>
+
       gruntfile: {
         files: ['Gruntfile.js']
       },
@@ -179,6 +254,17 @@ module.exports = function (grunt) {
         ]
       }
     },
+
+    <%if(backend){%>
+    //for cgi
+    rerun: {
+      conn: {
+        options: {
+          tasks: ['connect:livereload:keepalive']
+        }
+      }
+    },
+    <%}%>
 
     // The actual grunt server settings
     connect: {
@@ -194,22 +280,61 @@ module.exports = function (grunt) {
       ],
       livereload: {
         options: {
-          open: 'http://localhost:9000/',
+          //open: 'http://localhost:9000/',
           middleware: function (connect) {
-            return [
-              rewriteRulesSnippet,
-              connect.static('.tmp'),
-              connect().use(
-                '/bower_components',
-                connect.static('./bower_components')
-              ),
-              connect().use(
-                '/spm_modules',
-                connect.static('./spm_modules')
-              ),
-              connect.static(appConfig.app),
-              connect.static('.')
-            ];
+            <% if(backend){ %>
+              //for cgi
+              var cgiArray = [],
+                  cgiroute = {},
+                  requestHandler = null;
+
+              var requestPath = path.resolve(__dirname, webconfig.handler.module + '.js');
+              if(fs.existsSync(requestPath)){
+                requestHandler = require(requestPath);
+              }
+
+              if(requestHandler){
+                createHandlerRecursive(cgiroute, requestHandler, webconfig.handler.prefix);
+                var makefunc = function(p,handler){
+                  return function(req, res){
+                     handler(p, req, res, webconfig);
+                  };
+                };
+                for(var p in cgiroute){
+                  cgiArray.push(connect().use(p,makefunc(p,cgiroute[p])));
+                }
+              }
+
+              return [rewriteRulesSnippet,
+                bodyParser.raw({ extended: false })].
+                concat(cgiArray).
+                concat([connect.static('.tmp'),
+                connect().use(
+                  '/bower_components',
+                  connect.static('./bower_components')
+                ),
+                connect().use(
+                  '/spm_modules',
+                  connect.static('./spm_modules')
+                ),
+                connect.static(appConfig.app),
+                connect.static('.')]);
+            <%}else{%>
+              return [
+                rewriteRulesSnippet,
+                connect.static('.tmp'),
+                connect().use(
+                  '/bower_components',
+                  connect.static('./bower_components')
+                ),
+                connect().use(
+                  '/spm_modules',
+                  connect.static('./spm_modules')
+                ),
+                connect.static(appConfig.app),
+                connect.static('.')
+              ];
+            <%}%>
           }
         }
       },
@@ -629,10 +754,7 @@ module.exports = function (grunt) {
   });
 
 
-  grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
-    if (target === 'dist') {
-      return grunt.task.run(['build', 'connect:dist:keepalive']);
-    }
+  grunt.registerTask('serve', 'Compile then start a connect web server', function () {
     grunt.task.run([
       'clean:server',
       'wiredep',
@@ -643,7 +765,11 @@ module.exports = function (grunt) {
       <%}%>
       'jshint',
       'configureRewriteRules',
+      <%if(backend){%>
+      'rerun:conn',
+      <%}else{%>
       'connect:livereload',
+      <%}%>
       'watch'
     ]);
   });
