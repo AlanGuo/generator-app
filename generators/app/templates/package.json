@@ -56,6 +56,7 @@
     ,"grunt-ng-annotate": "^0.3.0"
     <%}%>
     <%if(backend){%>
+    ,"body-parser": "^1.12.4",
     ,"grunt-task-rerun": "^0.0.1"
     <%}%>
   }

@@ -20,6 +20,7 @@ var fs = require('fs');
 <%if(backend){%>
 //for cgi
 var bodyParser = require('body-parser');
+var url = require('url');
 var path = require('path');
 <%}%>
 
@@ -306,6 +307,10 @@ module.exports = function (grunt) {
               }
 
               return [rewriteRulesSnippet,
+                function midd(req,res,next){
+                  req.parsedUrl = url.parse(req.url);
+                  next();
+                },
                 bodyParser.raw({ extended: false })].
                 concat(cgiArray).
                 concat([connect.static('.tmp'),
