@@ -17,6 +17,15 @@ var fs = require('fs');
 <% if(plugins.pluginlist.indexOf('karma')>-1){karma=true} %>
 <% if(plugins.pluginlist.indexOf('backend')>-1){backend=true} %>
 
+<<<<<<< HEAD
+=======
+<%if(backend){%>
+//for cgi
+var bodyParser = require('body-parser');
+var url = require('url');
+var path = require('path');
+<%}%>
+>>>>>>> origin/master
 
 module.exports = function (grunt) {
 
@@ -240,6 +249,51 @@ module.exports = function (grunt) {
         options: {
           //open: 'http://localhost:9000/',
           middleware: function (connect) {
+<<<<<<< HEAD
+=======
+            <% if(backend){ %>
+              //for cgi
+              var cgiArray = [],
+                  cgiroute = {},
+                  requestHandler = null;
+
+              var requestPath = path.resolve(__dirname, webconfig.handler.module + '.js');
+              if(fs.existsSync(requestPath)){
+                requestHandler = require(requestPath);
+              }
+
+              if(requestHandler){
+                createHandlerRecursive(cgiroute, requestHandler, webconfig.handler.prefix);
+                var makefunc = function(p,handler){
+                  return function(req, res){
+                     handler(p, req, res, webconfig);
+                  };
+                };
+                for(var p in cgiroute){
+                  cgiArray.push(connect().use(p,makefunc(p,cgiroute[p])));
+                }
+              }
+
+              return [rewriteRulesSnippet,
+                function midd(req,res,next){
+                  req.parsedUrl = url.parse(req.url);
+                  next();
+                },
+                bodyParser.raw({ extended: false })].
+                concat(cgiArray).
+                concat([connect.static('.tmp'),
+                connect().use(
+                  '/bower_components',
+                  connect.static('./bower_components')
+                ),
+                connect().use(
+                  '/spm_modules',
+                  connect.static('./spm_modules')
+                ),
+                connect.static(appConfig.app),
+                connect.static('.')]);
+            <%}else{%>
+>>>>>>> origin/master
               return [
                 <%if(backend){%>
                 require('grunt-connect-proxy/lib/utils').proxyRequest,
