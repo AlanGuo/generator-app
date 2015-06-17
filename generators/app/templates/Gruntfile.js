@@ -506,6 +506,17 @@ module.exports = function (grunt) {
 
   // Replace Google CDN references
     cdnify: {
+      serve:{
+        options: {
+          base: ''
+        },
+        files: [{
+          expand: true,
+          cwd: '<%%= yeoman.app %>',
+          src: '**/*.{css,html}',
+          dest: '.tmp'
+        }]
+      },
       view:{
         options: {
           base: ''
@@ -672,8 +683,8 @@ module.exports = function (grunt) {
       'wiredep',
       'concurrent:server',
       'autoprefixer',
+      'cdnify:serve',
       <%if(tmodjs){%>
-      'cdnify:view',
       'tmod',
       <%}%>
       'jshint',
