@@ -160,6 +160,7 @@ module.exports = generators.Base.extend({
 		//backend
 		if(pluginlist.indexOf('backend')>-1){
 			this.src.copy('backend/requesthandler.js','backend/requesthandler.js');
+			this.src.copy('web.json','web.json');
 		}
 
 		this.src.copy('README.MD','README.MD');

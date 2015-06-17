@@ -145,7 +145,7 @@ module.exports = function (grunt) {
       <%if(tmodjs){%>
       view:{
         files: ['<%%= yeoman.app %>/view/**/*.html'],
-        tasks: ['newer:tmod'],
+        tasks: ['cdnify:view','newer:tmod'],
         options: {
           livereload: '<%%= connect.options.livereload %>'
         }
@@ -188,27 +188,7 @@ module.exports = function (grunt) {
     nodeServer:{
       cgi:{
         path:'.',
-        port:9100,
-        webconfig:{
-          'handler':{
-              'prefix':'/cgi-bin',
-              'module':'backend/requesthandler'
-          },
-          'port':8080,
-          'expires':[{
-            'fileMatch': '.gif|png|jpg|jpeg|js|css|mp3|ogg',
-            'maxAge': 606024365
-          }],
-          'log':'web.log',
-          'index':'index.html',
-          'singlePage': true,
-          'webSocket':{
-            'handle':{
-                'prefix':'websocket'
-            },
-            'sub-protocol':['echo-protocol-pc','echo-protocol-mobile']
-          }
-        }
+        port:9100
       }
     },
     <%}%>
@@ -526,6 +506,17 @@ module.exports = function (grunt) {
 
   // Replace Google CDN references
     cdnify: {
+      view:{
+        options: {
+          base: ''
+        },
+        files: [{
+          expand: true,
+          cwd: '<%%= yeoman.app %>/view',
+          src: '**/*.{css,html}',
+          dest: '.tmp/view'
+        }]
+      },
       dist: {
         options: {
           base: ''
@@ -624,10 +615,10 @@ module.exports = function (grunt) {
     <%if(tmodjs){%>
     tmod: {
       template: {
-        src: '<%%= yeoman.app %>/view/**/*.html',
+        src: '.tmp/view/**/*.html',
         dest: '<%%= yeoman.app %>/view/compiled/view.js',
         options: {
-            base: '<%%= yeoman.app %>/view',
+            base: '.tmp/view',
             minify:false,
             namespace:'<%= name %>tmpl'
         } 
@@ -682,6 +673,7 @@ module.exports = function (grunt) {
       'concurrent:server',
       'autoprefixer',
       <%if(tmodjs){%>
+      'cdnify:view',
       'tmod',
       <%}%>
       'jshint',
@@ -720,6 +712,7 @@ module.exports = function (grunt) {
     'jshint',
     'concat',
     <%if(tmodjs){%>
+    'cdnify:view',
     'tmod',
     <%}%>
     <%if(useangular){%>
@@ -733,7 +726,7 @@ module.exports = function (grunt) {
     
     'cssmin',
     'usemin',
-    'cdnify'
+    'cdnify:dist'
   ]);
 
   grunt.registerTask('buildmin', [
@@ -745,6 +738,7 @@ module.exports = function (grunt) {
     'jshint',
     'concat',
     <%if(tmodjs){%>
+    'cdnify:view',
     'tmod',
     <%}%>
     <%if(useangular){%>
@@ -760,7 +754,7 @@ module.exports = function (grunt) {
     'uglify',
     'filerev',
     'usemin',
-    'cdnify',
+    'cdnify:dist',
     'rewrite:localstorageScript',
     'rewrite:localstorageIndex',
     'htmlmin'
