@@ -57,7 +57,7 @@
     <%}%>
 <<<<<<< HEAD
     <%if(backend){%>
-    ,"grunt-node-server": "^0.2.5",
+    ,"grunt-node-server": "^0.2.6",
 =======
     <%if(plugins.pluginlist.indexOf('backend')>-1){%>
     ,"body-parser": "^1.12.4",
