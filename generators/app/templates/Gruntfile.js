@@ -313,7 +313,7 @@ module.exports = function (grunt) {
                 },
                 bodyParser.raw({ extended: false })].
                 concat(cgiArray).
-                concat([connect.static('.tmp'),
+                concat([connect.static('tmp'),
                 connect().use(
                   '/bower_components',
                   connect.static('./bower_components')
@@ -327,7 +327,7 @@ module.exports = function (grunt) {
             <%}else{%>
               return [
                 rewriteRulesSnippet,
-                connect.static('.tmp'),
+                connect.static('tmp'),
                 connect().use(
                   '/bower_components',
                   connect.static('./bower_components')
@@ -348,7 +348,7 @@ module.exports = function (grunt) {
           port: 9001,
           middleware: function (connect) {
             return [
-              connect.static('.tmp'),
+              connect.static('tmp'),
               connect.static('test'),
               connect().use(
                 '/bower_components',
@@ -398,7 +398,7 @@ module.exports = function (grunt) {
         files: [{
           dot: true,
           src: [
-            '.tmp',
+            'tmp',
             <%if(compass){%>
             '.sass-cache',
             <%}%>
@@ -407,8 +407,8 @@ module.exports = function (grunt) {
           ]
         }]
       },
-      server: '.tmp',
-      css:'.tmp/style/*.css'
+      server: 'tmp',
+      css:'tmp/style/*.css'
     },
 
     // Add vendor prefixed styles
@@ -420,9 +420,9 @@ module.exports = function (grunt) {
       servecss: {
         files: [{
           expand: true,
-          cwd: '.tmp/style/',
+          cwd: 'tmp/style/',
           src: '**/*.css',
-          dest: '.tmp/style/'
+          dest: 'tmp/style/'
         }]
       },
       <%}else{%>
@@ -431,7 +431,7 @@ module.exports = function (grunt) {
             expand: true,
             cwd: '<%%= yeoman.app %>/style/',
             src: '**/*.css',
-            dest: '.tmp/style/'
+            dest: 'tmp/style/'
           }]
         }
       <%}%>
@@ -455,9 +455,9 @@ module.exports = function (grunt) {
     compass: {
       options: {
         sassDir: '<%%= yeoman.app %>/style',
-        cssDir: '.tmp/style',
+        cssDir: 'tmp/style',
         //用于合成雪碧图
-        generatedImagesDir: '.tmp/image/generated',
+        generatedImagesDir: 'tmp/image/generated',
         imagesDir: '<%%= yeoman.app %>/image',
         javascriptsDir: '<%%= yeoman.app %>/script',
         fontsDir: '<%%= yeoman.app %>/style/font',
@@ -600,9 +600,9 @@ module.exports = function (grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: '.tmp/concat/script',
+          cwd: 'tmp/concat/script',
           src: ['*.js', '!oldieshim.js'],
-          dest: '.tmp/concat/script'
+          dest: 'tmp/concat/script'
         }]
       }
     },
@@ -650,7 +650,7 @@ module.exports = function (grunt) {
         //图片
         }, {
           expand: true,
-          cwd: '.tmp/image',
+          cwd: 'tmp/image',
           dest: '<%%= yeoman.dist %>/image',
           src: ['generated/*']
         //seajs
