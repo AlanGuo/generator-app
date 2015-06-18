@@ -55,14 +55,8 @@
     <%if(useangular){%>
     ,"grunt-ng-annotate": "^0.3.0"
     <%}%>
-<<<<<<< HEAD
     <%if(backend){%>
-    ,"grunt-node-server": "^0.2.6",
-=======
-    <%if(plugins.pluginlist.indexOf('backend')>-1){%>
-    ,"body-parser": "^1.12.4",
-    ,"grunt-task-rerun": "^0.0.1"
->>>>>>> origin/master
+    ,"grunt-node-server": "^0.2.8",
     <%}%>
   }
   <%if(plugins.pluginlist.indexOf('seajs')>-1){%>
