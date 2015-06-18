@@ -15,7 +15,7 @@
   <%if(useangular){%>
   "predef": ["angular"],
   <%}else{%>
-  "predef": ["webapp","ga","generatorapptmpl","define"],
+  "predef": ["webapp","ga","generatorapptmpl","define","_hmt"],
   <%}%>
   "regexp": true,
   "undef": true,

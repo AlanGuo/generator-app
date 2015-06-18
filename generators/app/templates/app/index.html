@@ -356,6 +356,7 @@
     <!-- endbuild -->
     <!--{{localstorage-remove-end}}-->
     <script type="text/javascript">
+      document.getElementById('pageLoad').parentNode.removeChild(document.getElementById('pageLoad'));
       /*{{localstorage}}*/
     </script>
     <%}else{%>
@@ -377,7 +378,9 @@
         seajs.config({
           base:'/'
         });
-        seajs.use('app/script/entry.js');
+        seajs.use('app/script/entry.js',function(){
+          document.getElementById('pageLoad').parentNode.removeChild(document.getElementById('pageLoad'));
+        });
       }
       /*{{localstorage-onload-end}}*/
       /*{{localstorage}}*/
