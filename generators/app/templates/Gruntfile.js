@@ -38,8 +38,8 @@ module.exports = function (grunt) {
       localstorageCSSLocalPrefix = local + 'style/',
       //pri越大，加载越靠前
       localstoragePriority = [
-        {key:'sea',pri:2},
-        {key:'app.combo',pri:1}
+        {key:'sea',pri:2,ext:'js'},
+        {key:'app.combo',pri:1,ext:'js'}
       ];
 
   var localStorageRewriteScript=function(contents,filePath,prefix){
