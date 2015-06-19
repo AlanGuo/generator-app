@@ -55,7 +55,7 @@
     <%if(useangular){%>
     ,"grunt-ng-annotate": "^0.3.0"
     <%}%>
-    <%if(backend){%>
+    <%if(plugins.pluginlist.indexOf('tmodjs')>-1){%>
     ,"grunt-node-server": "^0.2.8",
     <%}%>
   }
