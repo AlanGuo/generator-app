@@ -514,7 +514,7 @@ module.exports = function (grunt) {
           expand: true,
           cwd: '<%%= yeoman.app %>',
           src: '**/*.{css,html}',
-          dest: '.tmp'
+          dest: 'tmp'
         }]
       },
       view:{
@@ -525,7 +525,7 @@ module.exports = function (grunt) {
           expand: true,
           cwd: '<%%= yeoman.app %>/view',
           src: '**/*.{css,html}',
-          dest: '.tmp/view'
+          dest: 'tmp/view'
         }]
       },
       dist: {
@@ -626,10 +626,10 @@ module.exports = function (grunt) {
     <%if(tmodjs){%>
     tmod: {
       template: {
-        src: '.tmp/view/**/*.html',
-        dest: '<%%= yeoman.app %>/view/compiled/view.js',
+        src: 'tmp/view/**/*.html',
+        dest: 'tmp/view/compiled/view.js',
         options: {
-            base: '.tmp/view',
+            base: 'tmp/view',
             minify:false,
             namespace:'<%= name %>tmpl'
         } 
