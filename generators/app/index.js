@@ -150,6 +150,19 @@ module.exports = generators.Base.extend({
 			this.src.copy('app/view/about.html','app/view/about.html');
 		}
 
+		//spaseed
+		if(pluginlist.indexOf('spaseed') > -1){
+			this.mkdir('app/script/main');
+			this.mkdir('app/script/module');
+			this.mkdir('app/script/module/index');
+			this.mkdir('app/script/model');
+
+			this.src.copy('app/script/spaseed/entry.js','app/script/entry.js');
+			this.src.copy('app/script/spaseed/config.js','app/script/config.js');
+			this.src.copy('app/script/spaseed/module/index/index.js','app/script/module/index/index.js');
+			this.src.copy('app/view/home.html','app/view/index/home.html');
+		}
+
 		//test
 		this.src.copy('test/.jshintrc','test/.jshintrc');
 
