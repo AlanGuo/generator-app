@@ -9,13 +9,14 @@
 
 var fs = require('fs');
 
-<% var tmodjs = false,compass = false, seajs = false, bootstrap = false, karma = false, backend = false; %>
+<% var tmodjs = false,compass = false, seajs = false, bootstrap = false, karma = false, backend = false, spaseed = false; %>
 <% if(plugins.pluginlist.indexOf('tmodjs')>-1){tmodjs=true} %>
 <% if(plugins.pluginlist.indexOf('compass')>-1){compass=true} %>
 <% if(plugins.pluginlist.indexOf('seajs')>-1){seajs=true} %>
 <% if(plugins.pluginlist.indexOf('bootstrap')>-1){bootstrap=true} %>
 <% if(plugins.pluginlist.indexOf('karma')>-1){karma=true} %>
 <% if(plugins.pluginlist.indexOf('backend')>-1){backend=true} %>
+<% if(plugins.pluginlist.indexOf('spaseed')>-1){spaseed=true} %>
 
 module.exports = function (grunt) {
 
@@ -662,6 +663,37 @@ module.exports = function (grunt) {
         options: {
           base:'/',
           destPath:'/',
+          <%if(spaseed){%>
+          alias: {
+              //spaseed
+              '$': 'spm_modules/spaseed/1.1.15/lib/zepto',                  
+              'util': 'spm_modules/spaseed/1.1.15/lib/util',
+              'net': 'spm_modules/spaseed/1.1.15/lib/net',
+              'cookie': 'spm_modules/spaseed/1.1.15/lib/cookie',
+              'event': 'spm_modules/spaseed/1.1.15/lib/event',
+              'querystring':'spm_modules/spaseed/1.1.15/lib/querystring',
+              'datamanager': 'spm_modules/spaseed/1.1.15/lib/datamanager',
+              'binder':'spm_modules/spaseed/1.1.15/lib/binder',
+              'formatcheck':'spm_modules/spaseed/1.1.15/lib/formatcheck',
+              'model':'spm_modules/spaseed/1.1.15/lib/model',
+              'requestconstructor':'spm_modules/spaseed/1.1.15/lib/requestconstructor',
+              'requestmanager':'spm_modules/spaseed/1.1.15/lib/requestmanager',
+              
+              'router': 'spm_modules/spaseed/1.1.15/main/router',
+              'entry': 'spm_modules/spaseed/1.1.15/main/entry',
+
+              //external
+              'config': 'app/script/config',
+              
+              //带pageswitcher的pagemanager
+              'pagemanager': 'spm_modules/spaseed/1.1.15/main/pagemanagerwithtopbottom',
+              'pageswitcher': 'spm_modules/spaseed/1.1.15/lib/pageswitcher',
+              'template': 'app/script/main/template',
+              'apptemplate': 'tmp/view/compiled/view',
+              'request':'app/script/model/request',
+              'env': 'app/script/main/env'
+          },
+          <%}%>
           dest:'dist/script/app.combo.js'
           },
           files: [{

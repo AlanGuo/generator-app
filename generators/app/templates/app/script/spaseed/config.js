@@ -3,7 +3,7 @@
 
 define(function(require, exports, module) {
 	var $ = require('$');
-	var spaseedConfig = require('spm_modules/spaseed/1.1.14/config');
+	var spaseedConfig = require('spm_modules/spaseed/1.1.15/config');
 	//参数配置
 	var config = $.extend(true,spaseedConfig,{
 		//首页模块名

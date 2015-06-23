@@ -1,25 +1,24 @@
 'use strict';
 
 define(function (require, exports, module) {
-    var $ = require('$');
     var pageManager = require('pagemanager');
-    var manager = require('../../model/manager');
-    var util = require('util');
-    var evt = require('event');
+    var stats = require('stats');
     var template = require('apptemplate');
+    var request = require('request');
     var asyncRequest = require('asyncrequest');
 
-    var index = {
+    var home = {
 
-        title: 'index',
+        title: 'home',
 
         render: function () {
 
+            stats.trackEvent('page', 'view', 'pageName','#/home');
             asyncRequest.all([{
                 params:null,
-                request:manager.queryPage1
+                request:request.sample
             }],function(values){
-                pageManager.container.html(template('index/index',{
+                pageManager.container.html(template('home',{
                     data: values[0]
                 }));
             });
@@ -37,5 +36,5 @@ define(function (require, exports, module) {
         }
     };
         
-    module.exports = index;
+    module.exports = home;
 });
