@@ -175,7 +175,7 @@ module.exports = function (grunt) {
         files: ['<%%= yeoman.app %>/*.html'],
         tasks: ['cdnify:serve'],
         options: {
-          livereload: '<%= connect.options.livereload %>'
+          livereload: '<%%= connect.options.livereload %>'
         }
       },
 
