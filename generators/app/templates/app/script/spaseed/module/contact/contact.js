@@ -13,9 +13,7 @@ define(function (require, exports, module) {
 
         	stats.trackEvent('page', 'view', 'pageName','#/contact');
 
-            pageManager.container.html(template('contact',{
-                data: values[0]
-            }));
+            pageManager.container.html(template('contact')());
         },
 
         events:{

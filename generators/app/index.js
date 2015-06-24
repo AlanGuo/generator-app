@@ -48,7 +48,10 @@ module.exports = generators.Base.extend({
 		      	choices:choices
 		      },function(answers3){
 		      	options.plugins = answers3;
-
+		      	//spaseed依赖seajs
+		      	if(options.plugins.pluginlist.indexOf('spaseed')){
+		      		options.plugins.pluginlist.push('seajs');
+		      	}
 		      	//如果选择的seajs
 		      	if(options.plugins.pluginlist.indexOf('seajs') > -1){
 
@@ -127,14 +130,36 @@ module.exports = generators.Base.extend({
 			this.template('app/script/global/contact.js','app/script/contact.js',options);
 		}
 		else if(!options.useangular && pluginlist.indexOf('seajs')>-1){
-			//javascript
-			this.template('app/script/seajs/entry.js','app/script/entry.js',options);
-			this.template('app/script/seajs/event.js','app/script/event.js',options);
-			this.template('app/script/seajs/router.js','app/script/router.js',options);
-			this.template('app/script/seajs/app.js','app/script/app.js',options);
-			this.template('app/script/seajs/home.js','app/script/home.js',options);
-			this.template('app/script/seajs/about.js','app/script/about.js',options);
-			this.template('app/script/seajs/contact.js','app/script/contact.js',options);
+			//spaseed
+			if(pluginlist.indexOf('spaseed') > -1){
+				this.mkdir('app/script/main');
+				this.mkdir('app/script/module');
+				this.mkdir('app/script/module/home');
+				this.mkdir('app/script/module/about');
+				this.mkdir('app/script/module/contact');
+				this.mkdir('app/script/model');
+
+				this.src.copy('app/script/spaseed/entry.js','app/script/entry.js');
+				this.src.copy('app/script/spaseed/model/request.js','app/script/model/request.js');
+				this.src.copy('app/script/spaseed/main/env.js','app/script/model/env.js');
+				this.src.copy('app/script/spaseed/main/template.js','app/script/model/template.js');
+
+				this.src.copy('app/script/spaseed/module/home/home.js','app/script/module/home/home.js');
+				this.src.copy('app/script/spaseed/module/about/about.js','app/script/module/about/about.js');
+				this.src.copy('app/script/spaseed/module/contact/contact.js','app/script/module/contact/contact.js');
+				
+				this.src.copy('app/view/home.html','app/view/index/home.html');
+			}
+			else{
+				//javascript
+				this.template('app/script/seajs/entry.js','app/script/entry.js',options);
+				this.template('app/script/seajs/event.js','app/script/event.js',options);
+				this.template('app/script/seajs/router.js','app/script/router.js',options);
+				this.template('app/script/seajs/app.js','app/script/app.js',options);
+				this.template('app/script/seajs/home.js','app/script/home.js',options);
+				this.template('app/script/seajs/about.js','app/script/about.js',options);
+				this.template('app/script/seajs/contact.js','app/script/contact.js',options);
+			}
 		}
 		else if(options.useangular){
 			//javascript
@@ -148,19 +173,6 @@ module.exports = generators.Base.extend({
 			this.src.copy('app/view/home.html','app/view/home.html');
 			this.src.copy('app/view/contact.html','app/view/contact.html');
 			this.src.copy('app/view/about.html','app/view/about.html');
-		}
-
-		//spaseed
-		if(pluginlist.indexOf('spaseed') > -1){
-			this.mkdir('app/script/main');
-			this.mkdir('app/script/module');
-			this.mkdir('app/script/module/index');
-			this.mkdir('app/script/model');
-
-			this.src.copy('app/script/spaseed/entry.js','app/script/entry.js');
-			this.src.copy('app/script/spaseed/config.js','app/script/config.js');
-			this.src.copy('app/script/spaseed/module/index/index.js','app/script/module/index/index.js');
-			this.src.copy('app/view/home.html','app/view/index/home.html');
 		}
 
 		//test

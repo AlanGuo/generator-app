@@ -13,9 +13,7 @@ define(function (require, exports, module) {
 
         	stats.trackEvent('page', 'view', 'pageName','#/about');
 
-            pageManager.container.html(template('about',{
-                data: values[0]
-            }));
+            pageManager.container.html(template('about')());
         },
 
         events:{

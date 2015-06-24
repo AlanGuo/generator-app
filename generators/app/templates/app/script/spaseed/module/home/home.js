@@ -27,7 +27,7 @@ define(function (require, exports, module) {
         events:{
             'click':{
                 'tt_click':function(){
-                    alert('tt_click');
+                    window.alert('tt_click');
                 }
             }
         },

@@ -31,7 +31,7 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     <!-- Add your site or application content here -->
-    <div class="container">
+    <div class="wrapper-all" id="wrapper-all">
       <!--loading start-->
       <style type="text/css">
         /* --------------- loading --------------- */
@@ -178,7 +178,7 @@
 <body>
 <%}%>
     <!-- Add your site or application content here -->
-    <div class="container">
+    <div class="wrapper-all" id="wrapper-all">
       <!--loading start-->
       <style type="text/css">
         /* --------------- loading --------------- */
@@ -301,9 +301,9 @@
       <div class="header">
         <%if(plugins.pluginlist.indexOf('confui')>-1){%>
         <nav class="nav nav-pills pull-right">
-          <a class="listlink current" href="#/">Home</a>
-          <a class="listlink ml30 p15" href="#/about">About</a>
-          <a class="listlink ml30 p15" href="#/contact">Contact</a>
+          <a class="listlink current" href="/">Home</a>
+          <a class="listlink ml30 p15" href="/about">About</a>
+          <a class="listlink ml30 p15" href="/contact">Contact</a>
         </nav>
         <%}else{%>
         <ul class="nav nav-pills pull-right">
@@ -328,9 +328,9 @@
       </div>
     </div>
   <%}%> 
-    <!-- build:js({app,.}) script/vendors.js -->
-    <%if(plugins.pluginlist.indexOf('tmodjs')){%>
-    <%if(!plugins.pluginlist.indexOf('seajs')){%>
+    <!-- build:js({tmp,app}) script/vendors.js -->
+    <%if(plugins.pluginlist.indexOf('tmodjs')>-1){%>
+    <%if(plugins.pluginlist.indexOf('seajs')==-1){%>
     <!--{{localstorage-remove-start}}-->
     <script type="text/javascript" src="view/compiled/view.js"></script>
     <!--{{localstorage-remove-end}}-->
@@ -345,7 +345,7 @@
     <%if(useangular==false){%>
     <%if(plugins.pluginlist.indexOf('seajs')==-1){%>
     <!--{{localstorage-remove-start}}-->
-    <!-- build:js({app,.}) script/app.combo.js -->
+    <!-- build:js({tmp,app}) script/app.combo.js -->
     <script type="text/javascript" src="script/app.js"></script>
     <script type="text/javascript" src="script/event.js"></script>
     <script type="text/javascript" src="script/router.js"></script>
@@ -375,33 +375,36 @@
     <script type="text/javascript">
       /*{{localstorage-onload-start}}*/
       if(window.seajs){
-        <%if(plugins.pluginlist.indexOf('spaseed'){%>
+        <%if(plugins.pluginlist.indexOf('spaseed')>-1){%>
           seajs.config({
             base:'/',
             alias: {
                 //spaseed
-                '$': 'spm_modules/spaseed/1.1.15/lib/zepto',                  
-                'util': 'spm_modules/spaseed/1.1.15/lib/util',
-                'net': 'spm_modules/spaseed/1.1.15/lib/net',
-                'cookie': 'spm_modules/spaseed/1.1.15/lib/cookie',
-                'event': 'spm_modules/spaseed/1.1.15/lib/event',
-                'querystring':'spm_modules/spaseed/1.1.15/lib/querystring',
-                'datamanager': 'spm_modules/spaseed/1.1.15/lib/datamanager',
-                'binder':'spm_modules/spaseed/1.1.15/lib/binder',
-                'formatcheck':'spm_modules/spaseed/1.1.15/lib/formatcheck',
-                'model':'spm_modules/spaseed/1.1.15/lib/model',
-                'requestconstructor':'spm_modules/spaseed/1.1.15/lib/requestconstructor',
-                'requestmanager':'spm_modules/spaseed/1.1.15/lib/requestmanager',
+                '$': 'spm_modules/spaseed/1.1.16/lib/zepto',                  
+                'util': 'spm_modules/spaseed/1.1.16/lib/util',
+                'net': 'spm_modules/spaseed/1.1.16/lib/net',
+                'cookie': 'spm_modules/spaseed/1.1.16/lib/cookie',
+                'event': 'spm_modules/spaseed/1.1.16/lib/event',
+                'querystring':'spm_modules/spaseed/1.1.16/lib/querystring',
+                'datamanager': 'spm_modules/spaseed/1.1.16/lib/datamanager',
+                'binder':'spm_modules/spaseed/1.1.16/lib/binder',
+                'formatcheck':'spm_modules/spaseed/1.1.16/lib/formatcheck',
+                'model':'spm_modules/spaseed/1.1.16/lib/model',
+                'stats':'spm_modules/spaseed/1.1.16/lib/stats',
+                'requestconstructor':'spm_modules/spaseed/1.1.16/lib/requestconstructor',
+                'requestmanager':'spm_modules/spaseed/1.1.16/lib/requestmanager',
+                'asyncrequest':'spm_modules/spaseed/1.1.16/lib/asyncrequest',
+                'dialog':'spm_modules/spaseed/1.1.16/lib/dialog',
                 
-                'router': 'spm_modules/spaseed/1.1.15/main/router',
-                'entry': 'spm_modules/spaseed/1.1.15/main/entry',
+                'router': 'spm_modules/spaseed/1.1.16/main/router',
+                'entry': 'spm_modules/spaseed/1.1.16/main/entry',
 
                 //external
-                'config': 'app/script/config',
+                'config': 'spm_modules/spaseed/1.1.16/config',
                 
                 //带pageswitcher的pagemanager
-                'pagemanager': 'spm_modules/spaseed/1.1.15/main/pagemanagerwithtopbottom',
-                'pageswitcher': 'spm_modules/spaseed/1.1.15/lib/pageswitcher',
+                'pagemanager': 'spm_modules/spaseed/1.1.16/main/pagemanagerwithtopbottom',
+                'pageswitcher': 'spm_modules/spaseed/1.1.16/lib/pageswitcher',
                 'template': 'app/script/main/template',
                 'apptemplate': 'tmp/view/compiled/view',
                 'request':'app/script/model/request',
@@ -429,11 +432,24 @@
     
     <%}%>
     <%}else{%>
-    <!-- build:js({app,.}) script/app.combo.js -->
+    <!-- build:js({tmp,app}) script/app.combo.js -->
     <script src="script/app.js"></script>
     <script src="script/controller/main.js"></script>
     <script src="script/controller/about.js"></script>
     <!-- endbuild -->
+    <%}%>
+
+    <%if(plugins.pluginlist.indexOf('spaseed')==-1){%>
+    <script>
+    /*change id with your own*/
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?a2ede337a0b21b2991bd02c69befdc07";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
     <%}%>
 </body>
 </html>

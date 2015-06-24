@@ -3,7 +3,13 @@
 define(function(require, exports, module) {
 	var requestmanager = require('requestmanager');
 
-	requestmanager.add('sample','/cgi/sample');
+	requestmanager.add('sample','/cgi/sample', function(data, cb){
+		setTimeout(function(){
+			if(cb){
+				cb(data);
+			}
+		},100);
+	});
 
 	module.exports = requestmanager;
 });
