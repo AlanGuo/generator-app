@@ -141,8 +141,8 @@ module.exports = generators.Base.extend({
 
 				this.src.copy('app/script/spaseed/entry.js','app/script/entry.js');
 				this.src.copy('app/script/spaseed/model/request.js','app/script/model/request.js');
-				this.src.copy('app/script/spaseed/main/env.js','app/script/model/env.js');
-				this.src.copy('app/script/spaseed/main/template.js','app/script/model/template.js');
+				this.src.copy('app/script/spaseed/main/env.js','app/script/main/env.js');
+				this.src.copy('app/script/spaseed/main/template.js','app/script/main/template.js');
 
 				this.src.copy('app/script/spaseed/module/home/home.js','app/script/module/home/home.js');
 				this.src.copy('app/script/spaseed/module/about/about.js','app/script/module/about/about.js');
