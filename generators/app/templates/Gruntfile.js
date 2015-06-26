@@ -198,7 +198,10 @@ module.exports = function (grunt) {
     nodeServer:{
       cgi:{
         path:'.',
-        port:9100
+        port:9100,
+        files:[{
+          src :'backend/*.js'
+        }]
       }
     },
     <%}%>
@@ -518,7 +521,7 @@ module.exports = function (grunt) {
     cdnify: {
       serve:{
         options: {
-          base: ''
+          base: local
         },
         files: [{
           expand: true,
@@ -529,7 +532,18 @@ module.exports = function (grunt) {
       },
       view:{
         options: {
-          base: ''
+          base: local
+        },
+        files: [{
+          expand: true,
+          cwd: '<%%= yeoman.app %>/view',
+          src: '**/*.{css,html}',
+          dest: 'tmp/view'
+        }]
+      },
+      viewdist:{
+        options: {
+          base: cdn
         },
         files: [{
           expand: true,
@@ -564,8 +578,6 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '.htaccess',
             '*.html',
-            <%if(seajs){%>
-            '../spm_modules/seajs/2.3.0/dist/sea.js',
             <%if(!usecombo){%>
             'script/**/*.js', //for no combo
             <%}else{%>
@@ -581,7 +593,11 @@ module.exports = function (grunt) {
           cwd: 'tmp/image',
           dest: '<%%= yeoman.dist %>/image',
           src: ['generated/*']
-        //seajs
+        }, {
+          expand: true,
+          cwd: '.',
+          dest: '<%%= yeoman.dist %>',
+          src: ['web.json','backend/*.js']
         }, {
           expand: true,
           cwd: 'app/font',
@@ -667,6 +683,7 @@ module.exports = function (grunt) {
           }
         }
       },
+
       combo: {
         dist:{
         options: {
@@ -767,7 +784,7 @@ module.exports = function (grunt) {
     'jshint',
     'concat',
     <%if(tmodjs){%>
-    'cdnify:view',
+    'cdnify:viewdist',
     'tmod',
     <%}%>
     <%if(useangular){%>
@@ -793,7 +810,7 @@ module.exports = function (grunt) {
     'jshint',
     'concat',
     <%if(tmodjs){%>
-    'cdnify:view',
+    'cdnify:viewdist',
     'tmod',
     <%}%>
     <%if(useangular){%>
