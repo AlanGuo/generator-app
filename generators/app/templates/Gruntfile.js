@@ -584,7 +584,6 @@ module.exports = function (grunt) {
             <%}else{%>
             '*.js',
             <%}%>
-            <%}%>
             //'*.js', //for combo
             'image/**/*.{webp}'
           ]
@@ -696,7 +695,8 @@ module.exports = function (grunt) {
             editor:function(contents){
               return localStorageRewriteIndex(contents, {js:localstorageJSPrefix,css:localstorageCSSLocalPrefix,csscdn:localstorageCSSPrefix});
             }
-        }<%if(seajs && usecombo){%>,
+        }
+        <%if(seajs && usecombo){%>,
         dist: {
           src: 'dist/index.html',
           editor: function(contents) {

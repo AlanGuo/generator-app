@@ -49,13 +49,13 @@ module.exports = generators.Base.extend({
 		      	choices:choices
 		      },function(answers3){
 		      	options.plugins = answers3;
+		      	options.usecombo = false;
 		      	//spaseed依赖seajs
-		      	if(options.plugins.pluginlist.indexOf('spaseed')){
+		      	if(options.plugins.pluginlist.indexOf('spaseed')>-1){
 		      		options.plugins.pluginlist.push('seajs');
 		      	}
 		      	//如果选择的seajs
 		      	if(options.plugins.pluginlist.indexOf('seajs') > -1){
-
 		      		this.prompt({
 				      type    : 'confirm',
 				      name    : 'usecombo',
@@ -95,7 +95,6 @@ module.exports = generators.Base.extend({
 	},
 
 	writing:function(){
-		console.log(options)
 		this.template('package.json','package.json',options);
 		this.template('bower.json','bower.json',options);
 		this.template('Gruntfile.js','Gruntfile.js',options);
