@@ -3,12 +3,10 @@
 define(function (require, exports, module) {
     var $ = require('$');
     var template = require('template');
-    var asyncRequest = require('asyncrequest');
-    var request = require('request');
     var stats = require('stats');
     var View = require('View');
 
-    var contact = View.extend({
+    var Contact = View.extend({
         $elem:$('#body-container'),
         title: 'contact',
 
@@ -23,5 +21,5 @@ define(function (require, exports, module) {
         }
     });
         
-    module.exports = contact;
+    module.exports = Contact;
 });

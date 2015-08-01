@@ -55,7 +55,7 @@
     <%if(useangular){%>
     ,"grunt-ng-annotate": "^0.3.0"
     <%}%>
-    <%if(plugins.pluginlist.indexOf('tmodjs')>-1){%>
+    <%if(plugins.pluginlist.indexOf('backend')>-1){%>
     ,"grunt-node-server": "^0.2.11"
     <%}%>
   }
@@ -64,7 +64,7 @@
     "dependencies": {
       "seajs": "2.3.0"
       <%if(plugins.pluginlist.indexOf('spaseed')>-1){%>
-      ,"spaseed":"1.1.18"
+      ,"spaseed":"1.1.19"
       <%}%>
     }
   }

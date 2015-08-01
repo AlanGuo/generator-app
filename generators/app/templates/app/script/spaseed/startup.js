@@ -6,12 +6,12 @@ define(function(require, exports, module) {
 	var $ = require('$');
 	//应用入口函数
     var startup = function(container){
-		container = container || $('#switchWrapper');
+		container = container || $('#wrapper-all');
 		var app = App.create($.extend(config,{
-			root:'/page1',
-			viewfolder:'tmp/app/script/module',
+			root:'/home',
+			viewfolder:'app/script/module',
 			$elem:container,
-			netback:function(options,ret,info){
+			netback:function(options,ret){
 				if(ret.code === 403){
 					//跳转到登录
 				}

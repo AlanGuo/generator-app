@@ -139,7 +139,7 @@ module.exports = function (grunt) {
       },
       css:{
         files: ['<%%= yeoman.app %>/style/**/*.css'],
-        tasks: ['newer:jshint:all','newer:autoprefixer'],
+        tasks: ['newer:jshint:all','newer:autoprefixer','cdnify:serve'],
         options: {
           livereload: '<%%= connect.options.livereload %>'
         }
@@ -227,7 +227,7 @@ module.exports = function (grunt) {
       <%}%>
       rules: [
           // Internal rewrite
-          {from: '^/[a-zA-Z0-9/_?&=]*$', to: '/index.html'}
+          {from: '^/[a-zA-Z0-9/_?&=%]*$', to: '/index.html'}
       ],
       livereload: {
         options: {
@@ -695,8 +695,7 @@ module.exports = function (grunt) {
             editor:function(contents){
               return localStorageRewriteIndex(contents, {js:localstorageJSPrefix,css:localstorageCSSLocalPrefix,csscdn:localstorageCSSPrefix});
             }
-        }
-        <%if(seajs && usecombo){%>,
+        }<%if(seajs && usecombo){%>,
         dist: {
           src: 'dist/index.html',
           editor: function(contents) {

@@ -1,7 +1,5 @@
 'use strict';
 
-'use strict';
-
 define(function (require, exports, module) {
     var $ = require('$');
     var template = require('template');
