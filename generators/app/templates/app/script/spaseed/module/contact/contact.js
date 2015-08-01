@@ -1,29 +1,27 @@
 'use strict';
 
 define(function (require, exports, module) {
-    var pageManager = require('pagemanager');
+    var $ = require('$');
+    var template = require('template');
+    var asyncRequest = require('asyncrequest');
+    var request = require('request');
     var stats = require('stats');
-    var template = require('apptemplate');
+    var View = require('View');
 
-    var contact = {
-
+    var contact = View.extend({
+        $elem:$('#body-container'),
         title: 'contact',
 
         render: function () {
 
         	stats.trackEvent('page', 'view', 'pageName','#/contact');
 
-            pageManager.container.html(template('contact')());
-        },
-
-        events:{
-            'click':{
-            }
+            this.$elem.html(template('contact',{}));
         },
 
         destroy: function () {
         }
-    };
+    });
         
     module.exports = contact;
 });

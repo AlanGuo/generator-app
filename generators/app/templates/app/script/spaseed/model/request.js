@@ -1,15 +1,14 @@
 'use strict';
 
 define(function(require, exports, module) {
-	var requestmanager = require('requestmanager');
 
-	requestmanager.add('sample', '/cgi/sample', 'GET', function(data, cb){
-		setTimeout(function(){
-			if(cb){
+	var request = {
+		sample:{url:'/cgi/sample',method:'get',fakecallback:function(data,cb){
+			setTimeout(function(){
 				cb(data);
-			}
-		},100);
-	});
+			}, 200);
+		}}
+	};
 
-	module.exports = requestmanager;
+	module.exports = request;
 });

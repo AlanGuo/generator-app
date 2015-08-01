@@ -356,7 +356,7 @@
     <!-- endbuild -->
     <!--{{localstorage-remove-end}}-->
     <script type="text/javascript">
-      document.getElementById('pageLoad').parentNode.removeChild(document.getElementById('pageLoad'));
+      document.getElementById('page-loader').parentNode.removeChild(document.getElementById('page-loader'));
       /*{{localstorage}}*/
     </script>
     <%}else{%>
@@ -380,49 +380,48 @@
             base:'/',
             alias: {
                 //spaseed
-                '$': 'spm_modules/spaseed/1.1.17/lib/zepto',                  
-                'util': 'spm_modules/spaseed/1.1.17/lib/util',
-                'net': 'spm_modules/spaseed/1.1.17/lib/net',
-                'cookie': 'spm_modules/spaseed/1.1.17/lib/cookie',
-                'event': 'spm_modules/spaseed/1.1.17/lib/event',
-                'querystring':'spm_modules/spaseed/1.1.17/lib/querystring',
-                'datamanager': 'spm_modules/spaseed/1.1.17/lib/datamanager',
-                'binder':'spm_modules/spaseed/1.1.17/lib/binder',
-                'formatcheck':'spm_modules/spaseed/1.1.17/lib/formatcheck',
-                'model':'spm_modules/spaseed/1.1.17/lib/model',
-                'stats':'spm_modules/spaseed/1.1.17/lib/stats',
-                'requestconstructor':'spm_modules/spaseed/1.1.17/lib/requestconstructor',
-                'requestmanager':'spm_modules/spaseed/1.1.17/lib/requestmanager',
-                'asyncrequest':'spm_modules/spaseed/1.1.17/lib/asyncrequest',
-                'dialog':'spm_modules/spaseed/1.1.17/lib/dialog',
+                '$':'spm_modules/spaseed/1.1.19/lib/dom',
+                'mp':'spm_modules/spaseed/1.1.19/main/mp',
+                'App':'spm_modules/spaseed/1.1.19/main/App',
+                'Router':'spm_modules/spaseed/1.1.19/main/Router',
+                'AppRouter':'spm_modules/spaseed/1.1.19/main/H5Router',
+                'Node':'spm_modules/spaseed/1.1.19/main/Node',
+                'View':'spm_modules/spaseed/1.1.19/main/View',
+                'Event':'spm_modules/spaseed/1.1.19/lib/Event',
+                'Net':'spm_modules/spaseed/1.1.19/lib/Net',
                 
-                'router': 'spm_modules/spaseed/1.1.17/main/router',
-                'entry': 'spm_modules/spaseed/1.1.17/main/entry',
+                'Dialog':'spm_modules/spaseed/1.1.19/lib/Dialog',
 
-                //external
-                'config': 'spm_modules/spaseed/1.1.17/config',
+
+                'Mask':'spm_modules/spaseed/1.1.19/lib/Mask',
+                'ErrorTips':'spm_modules/spaseed/1.1.19/lib/ErrorTips',
+                'Loading':'spm_modules/spaseed/1.1.19/lib/Loading',
+
+                'binder':'spm_modules/spaseed/1.1.19/lib/binder',
+                'cookie':'spm_modules/spaseed/1.1.19/lib/cookie',
+                'env':'spm_modules/spaseed/1.1.19/lib/env',
+                'asyncrequest':'spm_modules/spaseed/1.1.19/lib/asyncrequest',
+                'stats':'spm_modules/spaseed/1.1.19/lib/stats',
+                'template':'spm_modules/spaseed/1.1.19/lib/template',
+
+                'config':'spm_modules/spaseed/1.1.19/config',
                 
-                //带pageswitcher的pagemanager
-                'pagemanager': 'spm_modules/spaseed/1.1.17/main/pagemanagerwithtopbottom',
-                'pageswitcher': 'spm_modules/spaseed/1.1.17/lib/pageswitcher',
-                'template': 'app/script/main/template',
-                'apptemplate': 'tmp/view/compiled/view',
-                'request':'app/script/model/request',
-                'env': 'app/script/main/env'
+                'apptemplate':'tmp/app/view/view',
+                'request':'app/script/model/request'
             }
           });
-          seajs.use('app/script/entry.js',function(entry){
+          seajs.use('app/script/startup.js',function(startup){
             document.getElementById('page-loader').parentNode.removeChild(document.getElementById('page-loader'));
-            if(entry){
-              entry.startup();
+            if(startup){
+              startup();
             }
           });
         <%}else{%>
         seajs.config({
           base:'/'
         });
-        seajs.use('app/script/entry.js',function(){
-          document.getElementById('pageLoad').parentNode.removeChild(document.getElementById('pageLoad'));
+        seajs.use('app/script/startup.js',function(){
+          document.getElementById('page-loader').parentNode.removeChild(document.getElementById('page-loader'));
         });
         <%}%>
       }

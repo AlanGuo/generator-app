@@ -31,6 +31,7 @@ module.exports = generators.Base.extend({
 		      		'bootstrap',
 		      		'confui',
 		      		'spaseed',
+		      		'react',
 		      		'karma',
 		      		'backend'
 		      	];
@@ -132,17 +133,14 @@ module.exports = generators.Base.extend({
 		else if(!options.useangular && pluginlist.indexOf('seajs')>-1){
 			//spaseed
 			if(pluginlist.indexOf('spaseed') > -1){
-				this.mkdir('app/script/main');
 				this.mkdir('app/script/module');
 				this.mkdir('app/script/module/home');
 				this.mkdir('app/script/module/about');
 				this.mkdir('app/script/module/contact');
 				this.mkdir('app/script/model');
 
-				this.src.copy('app/script/spaseed/entry.js','app/script/entry.js');
+				this.src.copy('app/script/spaseed/startup.js','app/script/startup.js');
 				this.src.copy('app/script/spaseed/model/request.js','app/script/model/request.js');
-				this.src.copy('app/script/spaseed/main/env.js','app/script/main/env.js');
-				this.src.copy('app/script/spaseed/main/template.js','app/script/main/template.js');
 
 				this.src.copy('app/script/spaseed/module/home/home.js','app/script/module/home/home.js');
 				this.src.copy('app/script/spaseed/module/about/about.js','app/script/module/about/about.js');

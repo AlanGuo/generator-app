@@ -9,7 +9,7 @@
 
 var fs = require('fs');
 
-<% var tmodjs = false,compass = false, seajs = false, bootstrap = false, karma = false, backend = false, spaseed = false; %>
+<% var tmodjs = false,compass = false, seajs = false, bootstrap = false, karma = false, backend = false, spaseed = false, react=false; %>
 <% if(plugins.pluginlist.indexOf('tmodjs')>-1){tmodjs=true} %>
 <% if(plugins.pluginlist.indexOf('compass')>-1){compass=true} %>
 <% if(plugins.pluginlist.indexOf('seajs')>-1){seajs=true} %>
@@ -17,6 +17,7 @@ var fs = require('fs');
 <% if(plugins.pluginlist.indexOf('karma')>-1){karma=true} %>
 <% if(plugins.pluginlist.indexOf('backend')>-1){backend=true} %>
 <% if(plugins.pluginlist.indexOf('spaseed')>-1){spaseed=true} %>
+<% if(plugins.pluginlist.indexOf('react')>-1){react=true} %>
 
 module.exports = function (grunt) {
 
@@ -663,6 +664,26 @@ module.exports = function (grunt) {
     },
     <%}%>
 
+    <%if(react){%>
+    react: {
+        dest: {
+          files:[{
+            expand: true,
+            cwd: 'app/script/reactmodule',
+            src: ['**/*.jsx'],
+              dest:'tmp/app/script/module',
+              ext: '.js'
+          },{
+            expand: true,
+            cwd:'spm_modules/spaseed/1.1.14',
+            src: ['**/*.jsx'],
+              dest:'tmp/spaseed/react',
+              ext: '.js'
+          }]
+        }
+    },
+    <%}%>
+
     rewrite: {
         localstorageScript:{
           src:'dist/script/*.js',
@@ -692,35 +713,34 @@ module.exports = function (grunt) {
           <%if(spaseed){%>
           alias: {
               //spaseed
-              '$': 'spm_modules/spaseed/1.1.17/lib/zepto',                  
-              'util': 'spm_modules/spaseed/1.1.17/lib/util',
-              'net': 'spm_modules/spaseed/1.1.17/lib/net',
-              'cookie': 'spm_modules/spaseed/1.1.17/lib/cookie',
-              'event': 'spm_modules/spaseed/1.1.17/lib/event',
-              'querystring':'spm_modules/spaseed/1.1.17/lib/querystring',
-              'datamanager': 'spm_modules/spaseed/1.1.17/lib/datamanager',
-              'binder':'spm_modules/spaseed/1.1.17/lib/binder',
-              'formatcheck':'spm_modules/spaseed/1.1.17/lib/formatcheck',
-              'model':'spm_modules/spaseed/1.1.17/lib/model',
-              'stats':'spm_modules/spaseed/1.1.17/lib/stats',
-              'requestconstructor':'spm_modules/spaseed/1.1.17/lib/requestconstructor',
-              'requestmanager':'spm_modules/spaseed/1.1.17/lib/requestmanager',
-              'asyncrequest':'spm_modules/spaseed/1.1.17/lib/asyncrequest',
-              'dialog':'spm_modules/spaseed/1.1.17/lib/dialog',
+              '$':'spm_modules/spaseed/1.1.19/lib/dom',
+              'mp':'spm_modules/spaseed/1.1.19/main/mp',
+              'App':'spm_modules/spaseed/1.1.19/main/App',
+              'Router':'spm_modules/spaseed/1.1.19/main/Router',
+              'AppRouter':'spm_modules/spaseed/1.1.19/main/H5Router',
+              'Node':'spm_modules/spaseed/1.1.19/main/Node',
+              'View':'spm_modules/spaseed/1.1.19/main/View',
+              'Event':'spm_modules/spaseed/1.1.19/lib/Event',
+              'Net':'spm_modules/spaseed/1.1.19/lib/Net',
               
-              'router': 'spm_modules/spaseed/1.1.17/main/router',
-              'entry': 'spm_modules/spaseed/1.1.17/main/entry',
+              'Dialog':'spm_modules/spaseed/1.1.19/lib/Dialog',
 
-              //external
-              'config': 'spm_modules/spaseed/1.1.17/config',
+
+              'Mask':'spm_modules/spaseed/1.1.19/lib/Mask',
+              'ErrorTips':'spm_modules/spaseed/1.1.19/lib/ErrorTips',
+              'Loading':'spm_modules/spaseed/1.1.19/lib/Loading',
+
+              'binder':'spm_modules/spaseed/1.1.19/lib/binder',
+              'cookie':'spm_modules/spaseed/1.1.19/lib/cookie',
+              'env':'spm_modules/spaseed/1.1.19/lib/env',
+              'asyncrequest':'spm_modules/spaseed/1.1.19/lib/asyncrequest',
+              'stats':'spm_modules/spaseed/1.1.19/lib/stats',
+              'template':'spm_modules/spaseed/1.1.19/lib/template',
+
+              'config':'spm_modules/spaseed/1.1.19/config',
               
-              //带pageswitcher的pagemanager
-              'pagemanager': 'spm_modules/spaseed/1.1.17/main/pagemanagerwithtopbottom',
-              'pageswitcher': 'spm_modules/spaseed/1.1.17/lib/pageswitcher',
-              'template': 'app/script/main/template',
-              'apptemplate': 'tmp/view/compiled/view',
-              'request':'app/script/model/request',
-              'env': 'app/script/main/env'
+              'apptemplate':'tmp/view/compiled/view',
+              'request':'app/script/model/request'
           },
           <%}%>
           dest:'dist/script/app.combo.js'
@@ -728,7 +748,7 @@ module.exports = function (grunt) {
           files: [{
               expand: true,
               cwd: './',
-              src: ['app/script/entry.js','app/script/home.js','app/script/about.js','app/script/contact.js']
+              src: ['app/script/startup.js','app/script/module/**/*.js']
           }]
         }
       }
