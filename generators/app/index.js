@@ -138,7 +138,7 @@ module.exports = generators.Base.extend({
 				this.mkdir('app/script/module/contact');
 				this.mkdir('app/script/model');
 
-				this.src.copy('app/script/spaseed/startup.js','app/script/startup.js');
+				this.template('app/script/spaseed/startup.js','app/script/startup.js', options);
 				this.src.copy('app/script/spaseed/model/request.js','app/script/model/request.js');
 
 				this.src.copy('app/script/spaseed/module/home/home.js','app/script/module/home/home.js');

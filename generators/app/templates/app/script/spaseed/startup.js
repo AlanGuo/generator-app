@@ -9,7 +9,11 @@ define(function(require, exports, module) {
 		container = container || $('#wrapper-all');
 		var app = App.create($.extend(config,{
 			root:'/home',
+			<%if(react){%>
+			viewfolder:'tmp/app/script/module',
+			<%}else{%>
 			viewfolder:'app/script/module',
+			<%}%>
 			$elem:container,
 			netback:function(options,ret){
 				if(ret.code === 403){

@@ -674,7 +674,7 @@ module.exports = function (grunt) {
               ext: '.js'
           },{
             expand: true,
-            cwd:'spm_modules/spaseed/1.1.14',
+            cwd:'spm_modules/spaseed/1.1.19',
             src: ['**/*.jsx'],
               dest:'tmp/spaseed/react',
               ext: '.js'
@@ -747,7 +747,11 @@ module.exports = function (grunt) {
           files: [{
               expand: true,
               cwd: './',
+              <%if(react){%>
+              src: ['app/script/startup.js','tmp/app/script/module/**/*.js']
+              <%}else{%>
               src: ['app/script/startup.js','app/script/module/**/*.js']
+              <%}%>
           }]
         }
       }
