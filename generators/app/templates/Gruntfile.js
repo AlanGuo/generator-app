@@ -131,6 +131,15 @@ module.exports = function (grunt) {
         files: ['bower.json'],
         tasks: ['wiredep']
       },
+      <%if(react){%>
+      js: {
+        files: ['<%%= yeoman.app %>/script/**/*.js','<%%= yeoman.app %>/script/reactmodule/**/*.jsx'],
+        tasks: ['newer:jshint:all','react'],
+        options: {
+          livereload: '<%%= connect.options.livereload %>'
+        }
+      },
+      <%}else{%>
       js: {
         files: ['<%%= yeoman.app %>/script/**/*.js'],
         tasks: ['newer:jshint:all'],
@@ -138,6 +147,7 @@ module.exports = function (grunt) {
           livereload: '<%%= connect.options.livereload %>'
         }
       },
+      <%}%>
       css:{
         files: ['<%%= yeoman.app %>/style/**/*.css'],
         tasks: ['newer:jshint:all','newer:autoprefixer','cdnify:serve'],

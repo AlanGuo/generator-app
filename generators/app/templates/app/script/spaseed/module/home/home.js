@@ -17,7 +17,7 @@ define(function (require, exports, module) {
         render: function () {
             var self = this;
             stats.trackEvent('page', 'view', 'pageName','#/home');
-            asyncRequest.all([{
+            asyncRequest.all(this.$net,[{
                 params:{code:0,data:{}},
                 request:request.sample
             }],function(values){
