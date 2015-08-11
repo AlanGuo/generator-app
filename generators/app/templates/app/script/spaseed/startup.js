@@ -9,7 +9,7 @@ define(function(require, exports, module) {
 		container = container || $('#wrapper-all');
 		var app = App.create($.extend(config,{
 			root:'/home',
-			<%if(react){%>
+			<%if(plugins.pluginlist.indexOf('react')>-1){%>
 			viewfolder:'tmp/app/script/module',
 			<%}else{%>
 			viewfolder:'app/script/module',

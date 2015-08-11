@@ -8,6 +8,7 @@
 // 'test/spec/**/*.js'
 
 var fs = require('fs');
+var serveStatic = require('serve-static');
 
 <% var tmodjs = false,compass = false, seajs = false, bootstrap = false, karma = false, backend = false, spaseed = false, react=false; %>
 <% if(plugins.pluginlist.indexOf('tmodjs')>-1){tmodjs=true} %>
@@ -238,17 +239,17 @@ module.exports = function (grunt) {
                 require('grunt-connect-proxy/lib/utils').proxyRequest,
                 <%}%>
                 rewriteRulesSnippet,
-                connect.static('tmp'),
+                serveStatic('tmp'),
                 connect().use(
                   '/bower_components',
-                  connect.static('./bower_components')
+                  serveStatic('./bower_components')
                 ),
                 connect().use(
                   '/spm_modules',
-                  connect.static('./spm_modules')
+                  serveStatic('./spm_modules')
                 ),
-                connect.static(appConfig.app),
-                connect.static('.')
+                serveStatic(appConfig.app),
+                serveStatic('.')
               ];
           }
         }
@@ -258,18 +259,18 @@ module.exports = function (grunt) {
           port: 9001,
           middleware: function (connect) {
             return [
-              connect.static('tmp'),
-              connect.static('test'),
+              serveStatic('tmp'),
+              serveStatic('test'),
               connect().use(
                 '/bower_components',
-                connect.static('./bower_components')
+                serveStatic('./bower_components')
               ),
               connect().use(
                 '/spm_modules',
-                connect.static('./spm_modules')
+                serveStatic('./spm_modules')
               ),
-              connect.static(appConfig.app),
-              connect.static('.')
+              serveStatic(appConfig.app),
+              serveStatic('.')
             ];
           }
         }
