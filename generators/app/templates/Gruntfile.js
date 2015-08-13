@@ -243,7 +243,7 @@ module.exports = function (grunt) {
       livereload: {
         options: {
           //open: 'http://localhost:9000/',
-          middleware: function (connect) {
+          middleware: function () {
               return [
                 <%if(backend){%>
                 require('grunt-connect-proxy/lib/utils').proxyRequest,
@@ -282,7 +282,7 @@ module.exports = function (grunt) {
       test: {
         options: {
           port: 9001,
-          middleware: function (connect) {
+          middleware: function () {
             return [
               serveStatic('tmp'),
               serveStatic('test'),
@@ -692,7 +692,7 @@ module.exports = function (grunt) {
               ext: '.js'
           },{
             expand: true,
-            cwd:'spm_modules/spaseed/1.1.19',
+            cwd:'spm_modules/spaseed/1.1.20',
             src: ['**/*.jsx'],
               dest:'tmp/spaseed/react',
               ext: '.js'
@@ -730,34 +730,35 @@ module.exports = function (grunt) {
           <%if(spaseed){%>
           alias: {
               //spaseed
-              '$':'spm_modules/spaseed/1.1.19/lib/dom',
-              'mp':'spm_modules/spaseed/1.1.19/main/mp',
-              'App':'spm_modules/spaseed/1.1.19/main/App',
-              'Router':'spm_modules/spaseed/1.1.19/main/Router',
-              'AppRouter':'spm_modules/spaseed/1.1.19/main/H5Router',
-              'Node':'spm_modules/spaseed/1.1.19/main/Node',
-              'View':'spm_modules/spaseed/1.1.19/main/View',
-              'Event':'spm_modules/spaseed/1.1.19/lib/Event',
-              'Net':'spm_modules/spaseed/1.1.19/lib/Net',
+              '$':'spm_modules/spaseed/1.1.20/lib/dom',
+              'mp':'spm_modules/spaseed/1.1.20/main/mp',
+              'App':'spm_modules/spaseed/1.1.20/main/App',
+              'Router':'spm_modules/spaseed/1.1.20/main/Router',
+              'AppRouter':'spm_modules/spaseed/1.1.20/main/HashRouter',
+              'Node':'spm_modules/spaseed/1.1.20/main/Node',
+              'View':'spm_modules/spaseed/1.1.20/main/View',
+              'Event':'spm_modules/spaseed/1.1.20/lib/Event',
+              'Net':'spm_modules/spaseed/1.1.20/lib/Net',
               
-              'Dialog':'spm_modules/spaseed/1.1.19/lib/Dialog',
+              'Dialog':'spm_modules/spaseed/1.1.20/lib/Dialog',
 
 
-              'Mask':'spm_modules/spaseed/1.1.19/lib/Mask',
-              'ErrorTips':'spm_modules/spaseed/1.1.19/lib/ErrorTips',
-              'Loading':'spm_modules/spaseed/1.1.19/lib/Loading',
+              'Mask':'spm_modules/spaseed/1.1.20/lib/Mask',
+              'ErrorTips':'spm_modules/spaseed/1.1.20/lib/ErrorTips',
+              'Loading':'spm_modules/spaseed/1.1.20/lib/Loading',
 
-              'binder':'spm_modules/spaseed/1.1.19/lib/binder',
-              'cookie':'spm_modules/spaseed/1.1.19/lib/cookie',
-              'env':'spm_modules/spaseed/1.1.19/lib/env',
-              'asyncrequest':'spm_modules/spaseed/1.1.19/lib/asyncrequest',
-              'stats':'spm_modules/spaseed/1.1.19/lib/stats',
-              'template':'spm_modules/spaseed/1.1.19/lib/template',
+              'binder':'spm_modules/spaseed/1.1.20/lib/binder',
+              'cookie':'spm_modules/spaseed/1.1.20/lib/cookie',
+              'env':'spm_modules/spaseed/1.1.20/lib/env',
+              'asyncrequest':'spm_modules/spaseed/1.1.20/lib/asyncrequest',
+              'stats':'spm_modules/spaseed/1.1.20/lib/stats',
+              'template':'spm_modules/spaseed/1.1.20/lib/template',
 
-              'config':'spm_modules/spaseed/1.1.19/config',
+              'config':'spm_modules/spaseed/1.1.20/config',
               
               'apptemplate':'tmp/view/compiled/view',
-              'request':'app/script/model/request'
+              'request':'app/script/model/request',
+              'react':'spm_modules/react/0.13.3/dist2/react'
           },
           <%}%>
           dest:'dist/script/app.combo.js'

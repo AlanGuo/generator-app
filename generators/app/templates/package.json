@@ -54,7 +54,7 @@
     "karma-phantomjs-launcher":"^0.1.4"
     <%}%>
     <%if(plugins.pluginlist.indexOf('react')>-1){%>
-    ,"grunt-react": "^0.12.2",
+    ,"grunt-react": "^0.12.2"
     <%}%>
     <%if(useangular){%>
     ,"grunt-ng-annotate": "^0.3.0"
@@ -68,7 +68,7 @@
     "dependencies": {
       "seajs": "~2.3.0"
       <%if(plugins.pluginlist.indexOf('spaseed')>-1){%>
-      ,"spaseed":"~1.1.19"
+      ,"spaseed":"~1.1.20"
       <%}%>
       <%if(plugins.pluginlist.indexOf('react')>-1){%>
       ,"react":"~0.13.3"
