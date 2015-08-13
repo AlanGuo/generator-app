@@ -132,21 +132,27 @@ module.exports = generators.Base.extend({
 		else if(!options.useangular && pluginlist.indexOf('seajs')>-1){
 			//spaseed
 			if(pluginlist.indexOf('spaseed') > -1){
-				this.mkdir('app/script/module');
-				this.mkdir('app/script/module/home');
-				this.mkdir('app/script/module/about');
-				this.mkdir('app/script/module/contact');
 				this.mkdir('app/script/model');
 
 				this.template('app/script/spaseed/startup.js','app/script/startup.js', options);
 				this.src.copy('app/script/spaseed/model/request.js','app/script/model/request.js');
 
 				if(pluginlist.indexOf('react') > -1){
+					this.mkdir('app/script/reactmodule');
+					this.mkdir('app/script/reactmodule/home');
+					this.mkdir('app/script/reactmodule/about');
+					this.mkdir('app/script/reactmodule/contact');
+					
 					this.src.copy('app/script/spaseed/reactmodule/home/home.jsx','app/script/reactmodule/home/home.jsx');
 					this.src.copy('app/script/spaseed/reactmodule/about/about.jsx','app/script/reactmodule/about/about.jsx');
 					this.src.copy('app/script/spaseed/reactmodule/contact/contact.jsx','app/script/reactmodule/contact/contact.jsx');
 				}
 				else{
+					this.mkdir('app/script/module');
+					this.mkdir('app/script/module/home');
+					this.mkdir('app/script/module/about');
+					this.mkdir('app/script/module/contact');
+					
 					this.src.copy('app/script/spaseed/module/home/home.js','app/script/module/home/home.js');
 					this.src.copy('app/script/spaseed/module/about/about.js','app/script/module/about/about.js');
 					this.src.copy('app/script/spaseed/module/contact/contact.js','app/script/module/contact/contact.js');
