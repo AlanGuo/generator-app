@@ -1,23 +1,24 @@
 'use strict';
 
+var React = require('react');
 var $ = require('$');
-var template = require('template');
 var stats = require('stats');
 var View = require('View');
 
-var Contact = View.extend({
+var About = View.extend({
     $elem:$('#body-container'),
     title: 'contact',
 
     render: function () {
-
-    	stats.trackEvent('page', 'view', 'pageName','#/contact');
-
-        this.$elem.html(template('contact',{}));
+    	stats.trackEvent('page', 'view', 'pageName','#/about');
+    	React.render(
+    		<div>about</div>,
+    		this.$elem[0]
+    	);
     },
 
     destroy: function () {
     }
 });
     
-module.exports = Contact;
+module.exports = About;

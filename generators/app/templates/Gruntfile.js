@@ -249,15 +249,30 @@ module.exports = function (grunt) {
                 require('grunt-connect-proxy/lib/utils').proxyRequest,
                 <%}%>
                 rewriteRulesSnippet,
+                function(req, res, next){
+                  if(/\.js/.test(req.url)){
+                    //如果是js文件
+                    fs.readFile('.'+req.url, function(error, content) {
+                      if(error){
+                        res.writeHead(500);
+                        res.end();
+                      }else{
+                        res.writeHead(200,{
+                          'content-type':'application/javascript'
+                        });
+                        //加cmd prefix
+                        if(/module\.exports/.test(content) && !/define\(function\s*?\(/.test(content)){
+                          content = 'define(function (require, exports, module) {\n'+content+'\n});';
+                        }
+                        res.end(content);
+                      }
+                    });
+                  }
+                  else{
+                    return next();
+                  }
+                },
                 serveStatic('tmp'),
-                connect().use(
-                  '/bower_components',
-                  serveStatic('./bower_components')
-                ),
-                connect().use(
-                  '/spm_modules',
-                  serveStatic('./spm_modules')
-                ),
                 serveStatic(appConfig.app),
                 serveStatic('.')
               ];
@@ -271,14 +286,6 @@ module.exports = function (grunt) {
             return [
               serveStatic('tmp'),
               serveStatic('test'),
-              connect().use(
-                '/bower_components',
-                serveStatic('./bower_components')
-              ),
-              connect().use(
-                '/spm_modules',
-                serveStatic('./spm_modules')
-              ),
               serveStatic(appConfig.app),
               serveStatic('.')
             ];
@@ -777,6 +784,9 @@ module.exports = function (grunt) {
       'clean:server',
       'wiredep',
       'concurrent:server',
+      <%if(react){%>
+      'react',
+      <%}%>
       'autoprefixer',
       'cdnify:serve',
       <%if(tmodjs){%>
@@ -824,6 +834,9 @@ module.exports = function (grunt) {
     <%if(useangular){%>
     'ngAnnotate',
     <%}%>
+    <%if(react){%>
+    'react',
+    <%}%>
     'copy:dist',
     <%if(seajs && usecombo){%>
     'combo',
@@ -849,6 +862,9 @@ module.exports = function (grunt) {
     <%}%>
     <%if(useangular){%>
     'ngAnnotate',
+    <%}%>
+    <%if(react){%>
+    'react',
     <%}%>
     'copy:dist',
     <%if(seajs && usecombo){%>

@@ -45,7 +45,7 @@
     ,"grunt-alan-tmod":"^0.2.2"
     <%}%>
     <%if(plugins.pluginlist.indexOf('seajs')>-1){%>
-    ,"grunt-seajs-combo":"^1.0.15"
+    ,"grunt-seajs-combo":"^1.0.16"
     <%}%>
     <%if(plugins.pluginlist.indexOf('karma')>-1){%>
     ,"karma": "^0.12.31",
@@ -66,9 +66,12 @@
   <%if(plugins.pluginlist.indexOf('seajs')>-1){%>
   ,"spm": {
     "dependencies": {
-      "seajs": "2.3.0"
+      "seajs": "~2.3.0"
       <%if(plugins.pluginlist.indexOf('spaseed')>-1){%>
-      ,"spaseed":"1.1.19"
+      ,"spaseed":"~1.1.19"
+      <%}%>
+      <%if(plugins.pluginlist.indexOf('react')>-1){%>
+      ,"react":"~0.13.3"
       <%}%>
     }
   }

@@ -141,11 +141,18 @@ module.exports = generators.Base.extend({
 				this.template('app/script/spaseed/startup.js','app/script/startup.js', options);
 				this.src.copy('app/script/spaseed/model/request.js','app/script/model/request.js');
 
-				this.src.copy('app/script/spaseed/module/home/home.js','app/script/module/home/home.js');
-				this.src.copy('app/script/spaseed/module/about/about.js','app/script/module/about/about.js');
-				this.src.copy('app/script/spaseed/module/contact/contact.js','app/script/module/contact/contact.js');
+				if(pluginlist.indexOf('react') > -1){
+					this.src.copy('app/script/spaseed/reactmodule/home/home.jsx','app/script/reactmodule/home/home.jsx');
+					this.src.copy('app/script/spaseed/reactmodule/about/about.jsx','app/script/reactmodule/about/about.jsx');
+					this.src.copy('app/script/spaseed/reactmodule/contact/contact.jsx','app/script/reactmodule/contact/contact.jsx');
+				}
+				else{
+					this.src.copy('app/script/spaseed/module/home/home.js','app/script/module/home/home.js');
+					this.src.copy('app/script/spaseed/module/about/about.js','app/script/module/about/about.js');
+					this.src.copy('app/script/spaseed/module/contact/contact.js','app/script/module/contact/contact.js');
+					this.src.copy('app/view/home.html','app/view/index/home.html');
+				}
 				
-				this.src.copy('app/view/home.html','app/view/index/home.html');
 			}
 			else{
 				//javascript
