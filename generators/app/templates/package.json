@@ -60,7 +60,7 @@
     ,"grunt-ng-annotate": "^0.3.0"
     <%}%>
     <%if(plugins.pluginlist.indexOf('backend')>-1){%>
-    ,"grunt-node-server": "^0.2.11"
+    ,"grunt-node-server": "^0.2.12"
     <%}%>
   }
   <%if(plugins.pluginlist.indexOf('seajs')>-1){%>

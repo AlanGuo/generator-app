@@ -263,7 +263,7 @@ module.exports = generators.Base.extend({
 		}
 		if(pluginlist.indexOf('backend')>-1){
 			//backend
-			npmPackage.push('grunt-task-rerun');
+			npmPackage.push('grunt-node-server');
 		}
 		if(options.useangular){
 			bowerPackage.push('angular');
