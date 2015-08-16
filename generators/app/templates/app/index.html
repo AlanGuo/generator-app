@@ -408,7 +408,9 @@
                 
                 'apptemplate':'tmp/view/compiled/view',
                 'request':'app/script/model/request',
+                <%if(plugins.pluginlist.indexOf('react')==-1){%>
                 'react':'spm_modules/react/0.13.3/dist2/react'
+                <%}%>
             }
           });
           seajs.use('app/script/startup.js',function(startup){

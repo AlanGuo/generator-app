@@ -156,7 +156,6 @@ module.exports = generators.Base.extend({
 					this.src.copy('app/script/spaseed/module/home/home.js','app/script/module/home/home.js');
 					this.src.copy('app/script/spaseed/module/about/about.js','app/script/module/about/about.js');
 					this.src.copy('app/script/spaseed/module/contact/contact.js','app/script/module/contact/contact.js');
-					this.src.copy('app/view/home.html','app/view/index/home.html');
 				}
 				
 			}

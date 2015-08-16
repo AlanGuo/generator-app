@@ -758,7 +758,9 @@ module.exports = function (grunt) {
               
               'apptemplate':'tmp/view/compiled/view',
               'request':'app/script/model/request',
+              <%if(react){%>
               'react':'spm_modules/react/0.13.3/dist2/react'
+              <%}%>
           },
           <%}%>
           dest:'dist/script/app.combo.js'
