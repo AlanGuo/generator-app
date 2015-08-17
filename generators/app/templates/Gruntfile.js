@@ -157,7 +157,7 @@ module.exports = function (grunt) {
       },
       <%if(tmodjs){%>
       view:{
-        files: ['<%%= yeoman.app %>/view/**/*.html'],
+        files: ['<%%= yeoman.app %>/view/**/*.html','spm_modules/spaseed/1.1.23/view/**/*.html'],
         tasks: ['cdnify:view','newer:tmod'],
         options: {
           livereload: '<%%= connect.options.livereload %>'
@@ -669,6 +669,17 @@ module.exports = function (grunt) {
 
     <%if(tmodjs){%>
     tmod: {
+      <%if(spaseed){%>
+      spaseedtemplate: {
+        src: ['spm_modules/spaseed/1.1.23/view/**/*.html'],
+        dest: 'tmp/spaseed/view/view.js',
+        options: {
+            base: 'spm_modules/spaseed/1.1.23/view',
+            minify: false,
+            namespace:'spaseedtemplate'
+        }
+      },
+      <%}%>
       template: {
         src: 'tmp/view/**/*.html',
         dest: 'tmp/view/compiled/view.js',
