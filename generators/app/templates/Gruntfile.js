@@ -573,7 +573,7 @@ module.exports = function (grunt) {
       },
       dist: {
         options: {
-          base: ''
+          base: cdn
         },
         files: [{
           expand: true,
