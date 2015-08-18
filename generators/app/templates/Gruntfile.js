@@ -158,7 +158,7 @@ module.exports = function (grunt) {
       <%if(tmodjs){%>
       view:{
         files: ['<%%= yeoman.app %>/view/**/*.html'],
-        tasks: ['cdnify:view','newer:tmod'],
+        tasks: ['cdnify:view','tmod'],
         options: {
           livereload: '<%%= connect.options.livereload %>'
         }
