@@ -9,7 +9,7 @@
 		init:function(){
 		},
 		show:function(){
-			_hmt.push(['_trackEvent', 'page', 'view', 'pageName','#/contact']);
+			_hmt.push(['_trackEvent', 'page', 'view', 'contact','']);
 			
 			<%if(plugins.pluginlist.indexOf('tmodjs')>-1){%>
 			return <%=name%>tmpl.template('contact')();

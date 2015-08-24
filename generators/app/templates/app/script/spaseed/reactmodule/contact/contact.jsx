@@ -11,7 +11,7 @@ var Contact = View.extend({
     title: 'contact',
 
     render: function () {
-    	stats.trackEvent('page', 'view', 'pageName','#/contact');
+    	stats.trackEvent('page', 'view', 'contact','');
     	React.render(
     		<div>contact</div>,
     		this.$elem[0]

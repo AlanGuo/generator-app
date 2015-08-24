@@ -2,6 +2,7 @@
 
 var App = require('App');
 var config = require('config');
+var stats = require('stats');
 var $ = require('$');
 //应用入口函数
 var startup = function(container){
@@ -20,7 +21,9 @@ var startup = function(container){
 			}
 		}
 	}));
+	stats.pv(0,0);
 	app.launch();
+	stats.trackEvent('page','speed','renderTime',new Date()-window.startTime);
 };
 
 module.exports = startup;

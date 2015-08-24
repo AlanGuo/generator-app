@@ -10,7 +10,7 @@ var About = View.extend({
     title: 'contact',
 
     render: function () {
-    	stats.trackEvent('page', 'view', 'pageName','#/about');
+    	stats.trackEvent('page', 'view', 'about','');
     	React.render(
     		<div>about</div>,
     		this.$elem[0]

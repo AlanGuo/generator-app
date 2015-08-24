@@ -9,4 +9,5 @@ window.onhashchange = function(){
 };
 
 window.onhashchange();
+_hmt.push(['_trackEvent','page','speed','renderTime',new Date()-window.startTime]);
 webapp.eventHandler.bindEvent('click');

@@ -10,7 +10,7 @@ var About = View.extend({
     title: 'about',
 
     render: function () {
-    	stats.trackEvent('page', 'view', 'pageName','#/about');
+    	stats.trackEvent('page', 'view', 'about','');
         this.$elem.html(template('about',{}));
     },
 

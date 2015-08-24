@@ -11,7 +11,7 @@ var Contact = View.extend({
 
     render: function () {
 
-    	stats.trackEvent('page', 'view', 'pageName','#/contact');
+    	stats.trackEvent('page', 'view', 'contact','');
 
         this.$elem.html(template('contact',{}));
     },

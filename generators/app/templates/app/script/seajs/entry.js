@@ -13,3 +13,4 @@ window.onhashchange = function(){
      router.route(newHash);
 };
 window.onhashchange();
+_hmt.push(['_trackEvent','page','speed','renderTime',new Date()-window.startTime]);

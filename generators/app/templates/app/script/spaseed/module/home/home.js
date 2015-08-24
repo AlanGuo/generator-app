@@ -15,7 +15,7 @@ var Home = View.extend({
 
     render: function () {
         var self = this;
-        stats.trackEvent('page', 'view', 'pageName','#/home');
+        stats.trackEvent('page', 'view', 'home','');
         asyncRequest.all(this.$net,[{
             params:{code:0,data:{}},
             request:request.sample
