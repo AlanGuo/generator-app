@@ -178,7 +178,10 @@ module.exports = function (grunt) {
       <%if(compass){%>
       compass: {
         files: ['<%%= yeoman.app %>/style/**/*.{scss,sass}'],
-        tasks: ['css','compass:server', 'autoprefixer']
+        tasks: ['compass:server', 'autoprefixer'],
+        options: {
+          livereload: '<%%= connect.options.livereload %>'
+        }
       },
       <%}%>
 
