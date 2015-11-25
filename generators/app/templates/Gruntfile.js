@@ -150,7 +150,7 @@ module.exports = function (grunt) {
       <%}%>
       css:{
         files: ['<%%= yeoman.app %>/style/**/*.css'],
-        tasks: ['newer:jshint:all','newer:autoprefixer','cdnify:serve'],
+        tasks: ['newer:jshint:all','autoprefixer','cdnify:serve'],
         options: {
           livereload: '<%%= connect.options.livereload %>'
         }
@@ -178,7 +178,7 @@ module.exports = function (grunt) {
       <%if(compass){%>
       compass: {
         files: ['<%%= yeoman.app %>/style/**/*.{scss,sass}'],
-        tasks: ['compass:server', 'autoprefixer'],
+        tasks: ['compass:server', 'autoprefixer','cdnify:serve'],
         options: {
           livereload: '<%%= connect.options.livereload %>'
         }
@@ -347,13 +347,14 @@ module.exports = function (grunt) {
       options: {
         browsers: ['last 1 version']
       },
+      //autoprefixer把样式文件拷贝到了tmp/style
       <%if(compass){%>
       servecss: {
         files: [{
           expand: true,
-          cwd: 'tmp/style/',
+          cwd: 'tmp/compassstyle/',
           src: '**/*.css',
-          dest: 'tmp/style/'
+          dest: 'tmp/autoprefixerstyle/'
         }]
       },
       <%}else{%>
@@ -362,7 +363,7 @@ module.exports = function (grunt) {
             expand: true,
             cwd: '<%%= yeoman.app %>/style/',
             src: '**/*.css',
-            dest: 'tmp/style/'
+            dest: 'tmp/autoprefixerstyle/'
           }]
         }
       <%}%>
@@ -386,7 +387,7 @@ module.exports = function (grunt) {
     compass: {
       options: {
         sassDir: '<%%= yeoman.app %>/style',
-        cssDir: 'tmp/style',
+        cssDir: 'tmp/compassstyle',
         //用于合成雪碧图
         generatedImagesDir: 'tmp/image/generated',
         imagesDir: '<%%= yeoman.app %>/image',
@@ -545,11 +546,17 @@ module.exports = function (grunt) {
         options: {
           base: local
         },
+        //cdnify把样式和html拷贝到tmp目录
         files: [{
           expand: true,
-          cwd: '<%%= yeoman.app %>',
-          src: '**/*.{css,html}',
+          cwd: '<%= yeoman.app %>',
+          src: '**/*.html',
           dest: 'tmp'
+        },{
+          expand: true,
+          cwd: 'autoprefixerstyle/style',
+          src: '**/*.css',
+          dest: 'tmp/style'
         }]
       },
       view:{
@@ -589,6 +596,14 @@ module.exports = function (grunt) {
 
     // Copies remaining files to places other tasks can use
     copy: {
+      <%if(compass){%>
+      compasscss:{
+        expand: true,
+          cwd: 'tmp/autoprefixerstyle',
+          dest: 'tmp/style',
+          src: ['*.css']
+      },
+      <%}%>
       dist: {
         files: [{
           expand: true,
@@ -839,9 +854,12 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'wiredep',
-    'autoprefixer',
-    'useminPrepare',
     'concurrent:dist',
+    'autoprefixer',
+    <%if(compass)%>
+    'copy:compasscss',
+    <%}%>
+    'useminPrepare',
     'jshint',
     'concat',
     <%if(tmodjs){%>
@@ -868,9 +886,12 @@ module.exports = function (grunt) {
   grunt.registerTask('buildmin', [
     'clean:dist',
     'wiredep',
-    'autoprefixer',
-    'useminPrepare',
     'concurrent:dist',
+    'autoprefixer',
+    <%if(compass)%>
+    'copy:compasscss',
+    <%}%>
+    'useminPrepare',
     'jshint',
     'concat',
     <%if(tmodjs){%>

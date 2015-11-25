@@ -417,8 +417,8 @@
             }
           });
           seajs.use('app/script/startup.js',function(startup){
-            document.getElementById('page-loader').parentNode.removeChild(document.getElementById('page-loader'));
             if(startup){
+              document.getElementById('page-loader').parentNode.removeChild(document.getElementById('page-loader'));
               startup();
             }
           });
