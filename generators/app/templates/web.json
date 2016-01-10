@@ -10,12 +10,12 @@
   }],
   "log":"web.log",
   "index":"index.html",
-  "singlePage": true
-  // "webSocket":{
-  //   "handler":{
-  //       "objectName":"websocket",
-  //       "module":"backend/requesthandler"
-  //   },
-  //   "sub-protocol":["echo-protocol-pc","echo-protocol-mobile"]
-  // }
+  "singlePage": true,
+  "webSocket":{
+    "handler":{
+        "objectName":"websocket",
+        "module":"backend/requesthandler"
+    },
+    "sub-protocol":["echo-protocol-pc","echo-protocol-mobile"]
+  }
 }
