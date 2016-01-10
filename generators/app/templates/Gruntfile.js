@@ -549,7 +549,7 @@ module.exports = function (grunt) {
         //cdnify把样式和html拷贝到tmp目录
         files: [{
           expand: true,
-          cwd: '<%= yeoman.app %>',
+          cwd: '<%%= yeoman.app %>',
           src: '**/*.html',
           dest: 'tmp'
         },{
@@ -856,7 +856,7 @@ module.exports = function (grunt) {
     'wiredep',
     'concurrent:dist',
     'autoprefixer',
-    <%if(compass)%>
+    <%if(compass){%>
     'copy:compasscss',
     <%}%>
     'useminPrepare',
@@ -888,7 +888,7 @@ module.exports = function (grunt) {
     'wiredep',
     'concurrent:dist',
     'autoprefixer',
-    <%if(compass)%>
+    <%if(compass){%>
     'copy:compasscss',
     <%}%>
     'useminPrepare',
