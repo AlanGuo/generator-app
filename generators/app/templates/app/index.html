@@ -345,6 +345,19 @@
 
     <!--主程序脚本-->
     
+    <%if(plugins.pluginlist.indexOf('spaseed')==-1){%>
+    <script>
+    /*change id with your own*/
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?a2ede337a0b21b2991bd02c69befdc07";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+    <%}%>
+    
     <%if(useangular==false){%>
     <%if(plugins.pluginlist.indexOf('seajs')==-1){%>
     <!--{{localstorage-remove-start}}-->
@@ -442,19 +455,6 @@
     <script src="script/controller/main.js"></script>
     <script src="script/controller/about.js"></script>
     <!-- endbuild -->
-    <%}%>
-
-    <%if(plugins.pluginlist.indexOf('spaseed')==-1){%>
-    <script>
-    /*change id with your own*/
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?a2ede337a0b21b2991bd02c69befdc07";
-      var s = document.getElementsByTagName("script")[0]; 
-      s.parentNode.insertBefore(hm, s);
-    })();
-    </script>
     <%}%>
 </body>
 </html>
