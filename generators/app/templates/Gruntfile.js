@@ -252,6 +252,7 @@ module.exports = function (grunt) {
                 require('grunt-connect-proxy/lib/utils').proxyRequest,
                 <%}%>
                 rewriteRulesSnippet,
+                <%if(seajs){%>
                 function(req, res, next){
                   if(/\.js/.test(req.url)){
                     //如果是js文件
@@ -275,6 +276,7 @@ module.exports = function (grunt) {
                     return next();
                   }
                 },
+                <%}%>
                 serveStatic('tmp'),
                 serveStatic(appConfig.app),
                 serveStatic('.')
@@ -549,7 +551,7 @@ module.exports = function (grunt) {
         //cdnify把样式和html拷贝到tmp目录
         files: [{
           expand: true,
-          cwd: '<%= yeoman.app %>',
+          cwd: '<%%= yeoman.app %>',
           src: '**/*.html',
           dest: 'tmp'
         },{
@@ -615,7 +617,7 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '.htaccess',
             '*.html',
-            <%if(!usecombo){%>
+            <%if(seajs && !usecombo){%>
             'script/**/*.js', //for no combo
             <%}else{%>
             '*.js',
@@ -856,7 +858,7 @@ module.exports = function (grunt) {
     'wiredep',
     'concurrent:dist',
     'autoprefixer',
-    <%if(compass)%>
+    <%if(compass){%>
     'copy:compasscss',
     <%}%>
     'useminPrepare',
@@ -888,7 +890,7 @@ module.exports = function (grunt) {
     'wiredep',
     'concurrent:dist',
     'autoprefixer',
-    <%if(compass)%>
+    <%if(compass){%>
     'copy:compasscss',
     <%}%>
     'useminPrepare',
