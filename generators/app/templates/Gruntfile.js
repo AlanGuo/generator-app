@@ -556,7 +556,7 @@ module.exports = function (grunt) {
           dest: 'tmp'
         },{
           expand: true,
-          cwd: 'autoprefixerstyle/style',
+          cwd: 'tmp/autoprefixerstyle',
           src: '**/*.css',
           dest: 'tmp/style'
         }]
