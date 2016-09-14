@@ -132,20 +132,32 @@ module.exports = generators.Base.extend({
 		else if(!options.useangular && pluginlist.indexOf('seajs')>-1){
 			//spaseed
 			if(pluginlist.indexOf('spaseed') > -1){
-				this.mkdir('app/script/module');
-				this.mkdir('app/script/module/home');
-				this.mkdir('app/script/module/about');
-				this.mkdir('app/script/module/contact');
 				this.mkdir('app/script/model');
 
-				this.src.copy('app/script/spaseed/startup.js','app/script/startup.js');
+				this.template('app/script/spaseed/startup.js','app/script/startup.js', options);
 				this.src.copy('app/script/spaseed/model/request.js','app/script/model/request.js');
 
-				this.src.copy('app/script/spaseed/module/home/home.js','app/script/module/home/home.js');
-				this.src.copy('app/script/spaseed/module/about/about.js','app/script/module/about/about.js');
-				this.src.copy('app/script/spaseed/module/contact/contact.js','app/script/module/contact/contact.js');
+				if(pluginlist.indexOf('react') > -1){
+					this.mkdir('app/script/reactmodule');
+					this.mkdir('app/script/reactmodule/home');
+					this.mkdir('app/script/reactmodule/about');
+					this.mkdir('app/script/reactmodule/contact');
+					
+					this.src.copy('app/script/spaseed/reactmodule/home/home.jsx','app/script/reactmodule/home/home.jsx');
+					this.src.copy('app/script/spaseed/reactmodule/about/about.jsx','app/script/reactmodule/about/about.jsx');
+					this.src.copy('app/script/spaseed/reactmodule/contact/contact.jsx','app/script/reactmodule/contact/contact.jsx');
+				}
+				else{
+					this.mkdir('app/script/module');
+					this.mkdir('app/script/module/home');
+					this.mkdir('app/script/module/about');
+					this.mkdir('app/script/module/contact');
+					
+					this.src.copy('app/script/spaseed/module/home/home.js','app/script/module/home/home.js');
+					this.src.copy('app/script/spaseed/module/about/about.js','app/script/module/about/about.js');
+					this.src.copy('app/script/spaseed/module/contact/contact.js','app/script/module/contact/contact.js');
+				}
 				
-				this.src.copy('app/view/home.html','app/view/index/home.html');
 			}
 			else{
 				//javascript
@@ -206,9 +218,10 @@ module.exports = generators.Base.extend({
 		    "grunt-contrib-jshint",
 		    "grunt-contrib-uglify",
 		    "grunt-contrib-watch",
+		    "serve-static",
 		    "grunt-filerev",
 		    "grunt-ftpush",
-		    "grunt-qc-cdnify",
+		    "grunt-alan-cdnify",
 		    "grunt-livereload",
 		    "grunt-newer",
 		    "grunt-svgmin",
@@ -249,7 +262,7 @@ module.exports = generators.Base.extend({
 		}
 		if(pluginlist.indexOf('backend')>-1){
 			//backend
-			npmPackage.push('grunt-task-rerun');
+			npmPackage.push('grunt-node-server');
 		}
 		if(options.useangular){
 			bowerPackage.push('angular');

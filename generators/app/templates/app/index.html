@@ -15,7 +15,7 @@
   <!-- endbuild -->
 
   <!--for main style-->
-  <!-- build:css({tmp,app}) style/main.css -->
+  <!-- build:css({tmp,app,.}) style/main.css -->
   <link rel="stylesheet" href="style/main.css">
   <!-- endbuild -->
   <!-- build:css({tmp,app}) style/ie8.css -->
@@ -177,6 +177,9 @@
 <%}else{%>
 <body>
 <%}%>
+    <script type="text/javascript">
+    window.startTime = +new Date();
+    </script>
     <!-- Add your site or application content here -->
     <div class="wrapper-all" id="wrapper-all">
       <!--loading start-->
@@ -319,8 +322,8 @@
         <div class="tc">
           <img src="image/yeoman.png">
         </div>
-        <p  id="body-container">
-        </p>
+        <div id="body-container">
+        </div>
       </div>
 
       <div class="footer">
@@ -341,6 +344,19 @@
     <!-- endbuild -->
 
     <!--主程序脚本-->
+    
+    <%if(plugins.pluginlist.indexOf('spaseed')==-1){%>
+    <script>
+    /*change id with your own*/
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?a2ede337a0b21b2991bd02c69befdc07";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+    <%}%>
     
     <%if(useangular==false){%>
     <%if(plugins.pluginlist.indexOf('seajs')==-1){%>
@@ -380,39 +396,42 @@
             base:'/',
             alias: {
                 //spaseed
-                '$':'spm_modules/spaseed/1.1.19/lib/dom',
-                'mp':'spm_modules/spaseed/1.1.19/main/mp',
-                'App':'spm_modules/spaseed/1.1.19/main/App',
-                'Router':'spm_modules/spaseed/1.1.19/main/Router',
-                'AppRouter':'spm_modules/spaseed/1.1.19/main/H5Router',
-                'Node':'spm_modules/spaseed/1.1.19/main/Node',
-                'View':'spm_modules/spaseed/1.1.19/main/View',
-                'Event':'spm_modules/spaseed/1.1.19/lib/Event',
-                'Net':'spm_modules/spaseed/1.1.19/lib/Net',
+                '$':'spm_modules/spaseed/1.1.24/lib/dom',
+                'mp':'spm_modules/spaseed/1.1.24/main/mp',
+                'App':'spm_modules/spaseed/1.1.24/main/App',
+                'Router':'spm_modules/spaseed/1.1.24/main/Router',
+                'AppRouter':'spm_modules/spaseed/1.1.24/main/HashRouter',
+                'Node':'spm_modules/spaseed/1.1.24/main/Node',
+                'View':'spm_modules/spaseed/1.1.24/main/View',
+                'Event':'spm_modules/spaseed/1.1.24/lib/Event',
+                'Net':'spm_modules/spaseed/1.1.24/lib/Net',
                 
-                'Dialog':'spm_modules/spaseed/1.1.19/lib/Dialog',
+                'Dialog':'spm_modules/spaseed/1.1.24/lib/Dialog',
 
 
-                'Mask':'spm_modules/spaseed/1.1.19/lib/Mask',
-                'ErrorTips':'spm_modules/spaseed/1.1.19/lib/ErrorTips',
-                'Loading':'spm_modules/spaseed/1.1.19/lib/Loading',
+                'Mask':'spm_modules/spaseed/1.1.24/lib/Mask',
+                'ErrorTips':'spm_modules/spaseed/1.1.24/lib/ErrorTips',
+                'Loading':'spm_modules/spaseed/1.1.24/lib/Loading',
 
-                'binder':'spm_modules/spaseed/1.1.19/lib/binder',
-                'cookie':'spm_modules/spaseed/1.1.19/lib/cookie',
-                'env':'spm_modules/spaseed/1.1.19/lib/env',
-                'asyncrequest':'spm_modules/spaseed/1.1.19/lib/asyncrequest',
-                'stats':'spm_modules/spaseed/1.1.19/lib/stats',
-                'template':'spm_modules/spaseed/1.1.19/lib/template',
+                'binder':'spm_modules/spaseed/1.1.24/lib/binder',
+                'cookie':'spm_modules/spaseed/1.1.24/lib/cookie',
+                'env':'spm_modules/spaseed/1.1.24/lib/env',
+                'asyncrequest':'spm_modules/spaseed/1.1.24/lib/asyncrequest',
+                'stats':'spm_modules/spaseed/1.1.24/lib/stats',
+                'template':'spm_modules/spaseed/1.1.24/lib/template',
 
-                'config':'spm_modules/spaseed/1.1.19/config',
+                'config':'spm_modules/spaseed/1.1.24/config',
                 
-                'apptemplate':'tmp/app/view/view',
-                'request':'app/script/model/request'
+                'apptemplate':'tmp/view/compiled/view',
+                'request':'app/script/model/request',
+                <%if(plugins.pluginlist.indexOf('react')==-1){%>
+                'react':'spm_modules/react/0.13.3/dist2/react'
+                <%}%>
             }
           });
           seajs.use('app/script/startup.js',function(startup){
-            document.getElementById('page-loader').parentNode.removeChild(document.getElementById('page-loader'));
             if(startup){
+              document.getElementById('page-loader').parentNode.removeChild(document.getElementById('page-loader'));
               startup();
             }
           });
@@ -436,19 +455,6 @@
     <script src="script/controller/main.js"></script>
     <script src="script/controller/about.js"></script>
     <!-- endbuild -->
-    <%}%>
-
-    <%if(plugins.pluginlist.indexOf('spaseed')==-1){%>
-    <script>
-    /*change id with your own*/
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?a2ede337a0b21b2991bd02c69befdc07";
-      var s = document.getElementsByTagName("script")[0]; 
-      s.parentNode.insertBefore(hm, s);
-    })();
-    </script>
     <%}%>
 </body>
 </html>

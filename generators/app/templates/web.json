@@ -12,8 +12,9 @@
   "index":"index.html",
   "singlePage": true,
   "webSocket":{
-    "handle":{
-        "prefix":"websocket"
+    "handler":{
+        "objectName":"websocket",
+        "module":"backend/requesthandler"
     },
     "sub-protocol":["echo-protocol-pc","echo-protocol-mobile"]
   }

@@ -12,30 +12,31 @@
     "connect-livereload":"^0.5.3",
     "grunt":"^0.4.5",
     "grunt-autoprefixer":"^3.0.0",
-    "grunt-concurrent":"^1.0.0",
+    "grunt-concurrent":"^2.0.1",
     "grunt-connect-rewrite":"^0.2.1",
-    "grunt-connect-proxy":"^0.1.11",
+    "grunt-connect-proxy":"^0.2.0",
     "grunt-contrib-clean":"^0.6.0",
     "grunt-contrib-concat":"^0.5.1",
-    "grunt-contrib-connect":"^0.10.1",
+    "grunt-contrib-connect":"^0.11.2",
     "grunt-contrib-copy":"^0.8.0",
-    "grunt-contrib-cssmin": "^0.12.2",
+    "grunt-contrib-cssmin": "^0.13.0",
     "grunt-contrib-htmlmin": "^0.4.0",
     "grunt-contrib-imagemin": "^0.9.4",
-    "grunt-contrib-jshint": "^0.11.1",
-    "grunt-contrib-uglify": "^0.9.0",
+    "grunt-contrib-jshint": "^0.11.2",
+    "grunt-contrib-uglify": "^0.9.1",
     "grunt-contrib-watch": "^0.6.1",
-    "grunt-filerev":"^2.2.0",
+    "grunt-filerev":"^2.3.1",
     "grunt-ftpush":"^0.3.3",
-    "grunt-qc-cdnify":"^0.1.1",
+    "grunt-alan-cdnify":"^0.0.2",
     "grunt-livereload":"^0.1.3",
-    "grunt-newer":"^1.1.0",
+    "grunt-newer":"^1.1.1",
     "grunt-svgmin":"^2.0.1",
     "grunt-usemin":"^3.0.0",
     "grunt-wiredep":"^2.0.0",
     "jshint-stylish":"^1.0.1",
     "load-grunt-tasks":"^3.1.0",
     "time-grunt":"^1.1.0",
+    "serve-static": "^1.10.0",
     "grunt-rewrite":"^1.0.1"
     <%if(plugins.pluginlist.indexOf('compass')>-1){%>
     ,"grunt-contrib-compass":"^1.0.3"
@@ -44,7 +45,7 @@
     ,"grunt-alan-tmod":"^0.2.2"
     <%}%>
     <%if(plugins.pluginlist.indexOf('seajs')>-1){%>
-    ,"grunt-seajs-combo":"^1.0.11"
+    ,"grunt-seajs-combo":"^1.0.16"
     <%}%>
     <%if(plugins.pluginlist.indexOf('karma')>-1){%>
     ,"karma": "^0.12.31",
@@ -52,19 +53,25 @@
     "grunt-karma":"^0.10.1",
     "karma-phantomjs-launcher":"^0.1.4"
     <%}%>
+    <%if(plugins.pluginlist.indexOf('react')>-1){%>
+    ,"grunt-react": "^0.12.2"
+    <%}%>
     <%if(useangular){%>
     ,"grunt-ng-annotate": "^0.3.0"
     <%}%>
-    <%if(plugins.pluginlist.indexOf('tmodjs')>-1){%>
-    ,"grunt-node-server": "^0.2.11"
+    <%if(plugins.pluginlist.indexOf('backend')>-1){%>
+    ,"grunt-node-server": "^0.2.27"
     <%}%>
   }
   <%if(plugins.pluginlist.indexOf('seajs')>-1){%>
   ,"spm": {
     "dependencies": {
-      "seajs": "2.3.0"
+      "seajs": "~2.3.0"
       <%if(plugins.pluginlist.indexOf('spaseed')>-1){%>
-      ,"spaseed":"1.1.18"
+      ,"spaseed":"~1.1.24"
+      <%}%>
+      <%if(plugins.pluginlist.indexOf('react')>-1){%>
+      ,"react":"~0.13.3"
       <%}%>
     }
   }

@@ -8,6 +8,7 @@
 // 'test/spec/**/*.js'
 
 var fs = require('fs');
+var serveStatic = require('serve-static');
 
 <% var tmodjs = false,compass = false, seajs = false, bootstrap = false, karma = false, backend = false, spaseed = false, react=false; %>
 <% if(plugins.pluginlist.indexOf('tmodjs')>-1){tmodjs=true} %>
@@ -130,6 +131,15 @@ module.exports = function (grunt) {
         files: ['bower.json'],
         tasks: ['wiredep']
       },
+      <%if(react){%>
+      js: {
+        files: ['<%%= yeoman.app %>/script/**/*.js','<%%= yeoman.app %>/script/reactmodule/**/*.jsx'],
+        tasks: ['newer:jshint:all','react'],
+        options: {
+          livereload: '<%%= connect.options.livereload %>'
+        }
+      },
+      <%}else{%>
       js: {
         files: ['<%%= yeoman.app %>/script/**/*.js'],
         tasks: ['newer:jshint:all'],
@@ -137,17 +147,18 @@ module.exports = function (grunt) {
           livereload: '<%%= connect.options.livereload %>'
         }
       },
+      <%}%>
       css:{
         files: ['<%%= yeoman.app %>/style/**/*.css'],
-        tasks: ['newer:jshint:all','newer:autoprefixer'],
+        tasks: ['newer:jshint:all','autoprefixer','cdnify:serve'],
         options: {
           livereload: '<%%= connect.options.livereload %>'
         }
       },
       <%if(tmodjs){%>
       view:{
-        files: ['<%%= yeoman.app %>/view/**/*.html'],
-        tasks: ['cdnify:view','newer:tmod'],
+        files: ['<%%= yeoman.app %>/view/**/*.html','spm_modules/spaseed/1.1.24/view/**/*.html'],
+        tasks: ['cdnify:view','tmod'],
         options: {
           livereload: '<%%= connect.options.livereload %>'
         }
@@ -167,7 +178,10 @@ module.exports = function (grunt) {
       <%if(compass){%>
       compass: {
         files: ['<%%= yeoman.app %>/style/**/*.{scss,sass}'],
-        tasks: ['css','compass:server', 'autoprefixer']
+        tasks: ['compass:server', 'autoprefixer','cdnify:serve'],
+        options: {
+          livereload: '<%%= connect.options.livereload %>'
+        }
       },
       <%}%>
 
@@ -227,28 +241,45 @@ module.exports = function (grunt) {
       <%}%>
       rules: [
           // Internal rewrite
-          {from: '^/[a-zA-Z0-9/_?&=]*$', to: '/index.html'}
+          {from: '^/[a-zA-Z0-9/_?&=%]*$', to: '/index.html'}
       ],
       livereload: {
         options: {
           //open: 'http://localhost:9000/',
-          middleware: function (connect) {
+          middleware: function () {
               return [
                 <%if(backend){%>
                 require('grunt-connect-proxy/lib/utils').proxyRequest,
                 <%}%>
                 rewriteRulesSnippet,
-                connect.static('tmp'),
-                connect().use(
-                  '/bower_components',
-                  connect.static('./bower_components')
-                ),
-                connect().use(
-                  '/spm_modules',
-                  connect.static('./spm_modules')
-                ),
-                connect.static(appConfig.app),
-                connect.static('.')
+                <%if(seajs){%>
+                function(req, res, next){
+                  if(/\.js/.test(req.url)){
+                    //如果是js文件
+                    fs.readFile('.'+req.url, function(error, content) {
+                      if(error){
+                        res.writeHead(500);
+                        res.end();
+                      }else{
+                        res.writeHead(200,{
+                          'content-type':'application/javascript'
+                        });
+                        //加cmd prefix
+                        if(/module\.exports/.test(content) && !/define\(function\s*?\(/.test(content)){
+                          content = 'define(function (require, exports, module) {\n'+content+'\n});';
+                        }
+                        res.end(content);
+                      }
+                    });
+                  }
+                  else{
+                    return next();
+                  }
+                },
+                <%}%>
+                serveStatic('tmp'),
+                serveStatic(appConfig.app),
+                serveStatic('.')
               ];
           }
         }
@@ -256,20 +287,12 @@ module.exports = function (grunt) {
       test: {
         options: {
           port: 9001,
-          middleware: function (connect) {
+          middleware: function () {
             return [
-              connect.static('tmp'),
-              connect.static('test'),
-              connect().use(
-                '/bower_components',
-                connect.static('./bower_components')
-              ),
-              connect().use(
-                '/spm_modules',
-                connect.static('./spm_modules')
-              ),
-              connect.static(appConfig.app),
-              connect.static('.')
+              serveStatic('tmp'),
+              serveStatic('test'),
+              serveStatic(appConfig.app),
+              serveStatic('.')
             ];
           }
         }
@@ -326,13 +349,14 @@ module.exports = function (grunt) {
       options: {
         browsers: ['last 1 version']
       },
+      //autoprefixer把样式文件拷贝到了tmp/style
       <%if(compass){%>
       servecss: {
         files: [{
           expand: true,
-          cwd: 'tmp/style/',
+          cwd: 'tmp/compassstyle/',
           src: '**/*.css',
-          dest: 'tmp/style/'
+          dest: 'tmp/autoprefixerstyle/'
         }]
       },
       <%}else{%>
@@ -341,7 +365,7 @@ module.exports = function (grunt) {
             expand: true,
             cwd: '<%%= yeoman.app %>/style/',
             src: '**/*.css',
-            dest: 'tmp/style/'
+            dest: 'tmp/autoprefixerstyle/'
           }]
         }
       <%}%>
@@ -365,7 +389,7 @@ module.exports = function (grunt) {
     compass: {
       options: {
         sassDir: '<%%= yeoman.app %>/style',
-        cssDir: 'tmp/style',
+        cssDir: 'tmp/compassstyle',
         //用于合成雪碧图
         generatedImagesDir: 'tmp/image/generated',
         imagesDir: '<%%= yeoman.app %>/image',
@@ -524,11 +548,17 @@ module.exports = function (grunt) {
         options: {
           base: local
         },
+        //cdnify把样式和html拷贝到tmp目录
         files: [{
           expand: true,
           cwd: '<%%= yeoman.app %>',
-          src: '**/*.{css,html}',
+          src: '**/*.html',
           dest: 'tmp'
+        },{
+          expand: true,
+          cwd: 'tmp/autoprefixerstyle',
+          src: '**/*.css',
+          dest: 'tmp/style'
         }]
       },
       view:{
@@ -555,7 +585,7 @@ module.exports = function (grunt) {
       },
       dist: {
         options: {
-          base: ''
+          base: cdn
         },
         files: [{
           expand: true,
@@ -568,6 +598,14 @@ module.exports = function (grunt) {
 
     // Copies remaining files to places other tasks can use
     copy: {
+      <%if(compass){%>
+      compasscss:{
+        expand: true,
+          cwd: 'tmp/autoprefixerstyle',
+          dest: 'tmp/style',
+          src: ['*.css']
+      },
+      <%}%>
       dist: {
         files: [{
           expand: true,
@@ -579,7 +617,7 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '.htaccess',
             '*.html',
-            <%if(!usecombo){%>
+            <%if(seajs && !usecombo){%>
             'script/**/*.js', //for no combo
             <%}else{%>
             '*.js',
@@ -651,6 +689,17 @@ module.exports = function (grunt) {
 
     <%if(tmodjs){%>
     tmod: {
+      <%if(spaseed){%>
+      spaseedtemplate: {
+        src: ['spm_modules/spaseed/1.1.24/view/**/*.html'],
+        dest: 'tmp/spaseed/view/view.js',
+        options: {
+            base: 'spm_modules/spaseed/1.1.24/view',
+            minify: false,
+            namespace:'spaseedtemplate'
+        }
+      },
+      <%}%>
       template: {
         src: 'tmp/view/**/*.html',
         dest: 'tmp/view/compiled/view.js',
@@ -674,7 +723,7 @@ module.exports = function (grunt) {
               ext: '.js'
           },{
             expand: true,
-            cwd:'spm_modules/spaseed/1.1.14',
+            cwd:'spm_modules/spaseed/1.1.24',
             src: ['**/*.jsx'],
               dest:'tmp/spaseed/react',
               ext: '.js'
@@ -695,8 +744,7 @@ module.exports = function (grunt) {
             editor:function(contents){
               return localStorageRewriteIndex(contents, {js:localstorageJSPrefix,css:localstorageCSSLocalPrefix,csscdn:localstorageCSSPrefix});
             }
-        }
-        <%if(seajs && usecombo){%>,
+        }<%if(seajs && usecombo){%>,
         dist: {
           src: 'dist/index.html',
           editor: function(contents) {
@@ -713,34 +761,37 @@ module.exports = function (grunt) {
           <%if(spaseed){%>
           alias: {
               //spaseed
-              '$':'spm_modules/spaseed/1.1.19/lib/dom',
-              'mp':'spm_modules/spaseed/1.1.19/main/mp',
-              'App':'spm_modules/spaseed/1.1.19/main/App',
-              'Router':'spm_modules/spaseed/1.1.19/main/Router',
-              'AppRouter':'spm_modules/spaseed/1.1.19/main/H5Router',
-              'Node':'spm_modules/spaseed/1.1.19/main/Node',
-              'View':'spm_modules/spaseed/1.1.19/main/View',
-              'Event':'spm_modules/spaseed/1.1.19/lib/Event',
-              'Net':'spm_modules/spaseed/1.1.19/lib/Net',
+              '$':'spm_modules/spaseed/1.1.24/lib/dom',
+              'mp':'spm_modules/spaseed/1.1.24/main/mp',
+              'App':'spm_modules/spaseed/1.1.24/main/App',
+              'Router':'spm_modules/spaseed/1.1.24/main/Router',
+              'AppRouter':'spm_modules/spaseed/1.1.24/main/HashRouter',
+              'Node':'spm_modules/spaseed/1.1.24/main/Node',
+              'View':'spm_modules/spaseed/1.1.24/main/View',
+              'Event':'spm_modules/spaseed/1.1.24/lib/Event',
+              'Net':'spm_modules/spaseed/1.1.24/lib/Net',
               
-              'Dialog':'spm_modules/spaseed/1.1.19/lib/Dialog',
+              'Dialog':'spm_modules/spaseed/1.1.24/lib/Dialog',
 
 
-              'Mask':'spm_modules/spaseed/1.1.19/lib/Mask',
-              'ErrorTips':'spm_modules/spaseed/1.1.19/lib/ErrorTips',
-              'Loading':'spm_modules/spaseed/1.1.19/lib/Loading',
+              'Mask':'spm_modules/spaseed/1.1.24/lib/Mask',
+              'ErrorTips':'spm_modules/spaseed/1.1.24/lib/ErrorTips',
+              'Loading':'spm_modules/spaseed/1.1.24/lib/Loading',
 
-              'binder':'spm_modules/spaseed/1.1.19/lib/binder',
-              'cookie':'spm_modules/spaseed/1.1.19/lib/cookie',
-              'env':'spm_modules/spaseed/1.1.19/lib/env',
-              'asyncrequest':'spm_modules/spaseed/1.1.19/lib/asyncrequest',
-              'stats':'spm_modules/spaseed/1.1.19/lib/stats',
-              'template':'spm_modules/spaseed/1.1.19/lib/template',
+              'binder':'spm_modules/spaseed/1.1.24/lib/binder',
+              'cookie':'spm_modules/spaseed/1.1.24/lib/cookie',
+              'env':'spm_modules/spaseed/1.1.24/lib/env',
+              'asyncrequest':'spm_modules/spaseed/1.1.24/lib/asyncrequest',
+              'stats':'spm_modules/spaseed/1.1.24/lib/stats',
+              'template':'spm_modules/spaseed/1.1.24/lib/template',
 
-              'config':'spm_modules/spaseed/1.1.19/config',
+              'config':'spm_modules/spaseed/1.1.24/config',
               
               'apptemplate':'tmp/view/compiled/view',
-              'request':'app/script/model/request'
+              'request':'app/script/model/request',
+              <%if(react){%>
+              'react':'spm_modules/react/0.13.3/dist2/react'
+              <%}%>
           },
           <%}%>
           dest:'dist/script/app.combo.js'
@@ -748,7 +799,11 @@ module.exports = function (grunt) {
           files: [{
               expand: true,
               cwd: './',
+              <%if(react){%>
+              src: ['app/script/startup.js','tmp/app/script/module/**/*.js']
+              <%}else{%>
               src: ['app/script/startup.js','app/script/module/**/*.js']
+              <%}%>
           }]
         }
       }
@@ -763,6 +818,9 @@ module.exports = function (grunt) {
       'clean:server',
       'wiredep',
       'concurrent:server',
+      <%if(react){%>
+      'react',
+      <%}%>
       'autoprefixer',
       'cdnify:serve',
       <%if(tmodjs){%>
@@ -798,9 +856,12 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'wiredep',
-    'autoprefixer',
-    'useminPrepare',
     'concurrent:dist',
+    'autoprefixer',
+    <%if(compass){%>
+    'copy:compasscss',
+    <%}%>
+    'useminPrepare',
     'jshint',
     'concat',
     <%if(tmodjs){%>
@@ -809,6 +870,9 @@ module.exports = function (grunt) {
     <%}%>
     <%if(useangular){%>
     'ngAnnotate',
+    <%}%>
+    <%if(react){%>
+    'react',
     <%}%>
     'copy:dist',
     <%if(seajs && usecombo){%>
@@ -824,9 +888,12 @@ module.exports = function (grunt) {
   grunt.registerTask('buildmin', [
     'clean:dist',
     'wiredep',
-    'autoprefixer',
-    'useminPrepare',
     'concurrent:dist',
+    'autoprefixer',
+    <%if(compass){%>
+    'copy:compasscss',
+    <%}%>
+    'useminPrepare',
     'jshint',
     'concat',
     <%if(tmodjs){%>
@@ -835,6 +902,9 @@ module.exports = function (grunt) {
     <%}%>
     <%if(useangular){%>
     'ngAnnotate',
+    <%}%>
+    <%if(react){%>
+    'react',
     <%}%>
     'copy:dist',
     <%if(seajs && usecombo){%>
